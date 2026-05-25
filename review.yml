@@ -1,0 +1,44 @@
+provider: Microsoft Azure Quantum
+providerId: microsoft-quantum
+reviewer: API Evangelist (Kin Lane)
+reviewedAt: '2026-05-25'
+tier: 1
+verdict: >-
+  Microsoft Azure Quantum earns a Tier-1 rating. It is a managed, multi-vendor
+  quantum cloud with a real REST API surface (Workspace data-plane plus
+  Microsoft.Quantum ARM resource provider), TypeSpec-defined OpenAPI specs
+  shipped to azure-rest-api-specs, an open-source compiler stack (Q# / QDK in
+  Rust), an open-source Resource Estimator, broad SDK coverage (Python, .NET,
+  Azure CLI extension), Qiskit/Cirq/OpenQASM interoperability, and access to
+  every major qubit modality (trapped ion, neutral atom, superconducting)
+  through IonQ, Quantinuum, Pasqal, and Rigetti.
+strengths:
+  - Real, versioned OpenAPI specs published in Azure/azure-rest-api-specs (data-plane 2026-01-15-preview, ARM 2025-12-15-preview)
+  - TypeSpec-first authoring with examples committed alongside swagger output
+  - Hardware-agnostic Q# language with a modern Rust-based compiler and full open-source toolchain
+  - First-class Python (qsharp, azure-quantum), Qiskit, Cirq, and OpenQASM input formats
+  - Explicit, transparent provider pricing surfaced in docs and exposed through the workspace quotas endpoint
+  - Resource Estimator gives near-term R&D teams a concrete fault-tolerance modelling tool
+  - Hybrid Sessions API matches the actual structure of practical hybrid quantum-classical workloads
+  - Strong Azure-native operational story: Entra ID auth, RBAC, ARM, Cost Management, FOCUS exports, regional availability
+weaknesses:
+  - The data-plane swagger lives behind ARM URLs (subscriptions/.../Microsoft.Quantum/workspaces/...) which obscures the data/control split
+  - All API versions are still labeled `-preview` even at v2026-01-15
+  - Provider pricing is heterogeneous: AQT vs HQC vs QPU-hour vs 10ms execution makes apples-to-apples cost comparison hard
+  - Microsoft no longer ships its own Majorana-based QPU as a generally available target; the platform is now primarily a marketplace
+  - Quantum-Inspired Optimization (QIO) was retired in 2023, leaving a hole in the platform's historic optimization story
+  - Many sample repos (microsoft/Quantum, QuantumKatas) have not been actively maintained since 2024 — the action is now in microsoft/qdk
+notes:
+  - Tier-1 alongside Anthropic in this catalog: complete OpenAPI coverage, FinOps surface, multi-language SDKs, and operational maturity.
+  - Azure Quantum Elements is positioned as the scientific-discovery layer (chemistry, materials, HPC) on top of Azure Quantum core.
+  - Recommend re-review when general-availability (non-preview) API versions ship.
+sources:
+  - https://azure.microsoft.com/en-us/products/quantum
+  - https://learn.microsoft.com/en-us/azure/quantum/
+  - https://learn.microsoft.com/en-us/rest/api/azurequantum/
+  - https://learn.microsoft.com/en-us/azure/quantum/pricing
+  - https://learn.microsoft.com/en-us/azure/quantum/qc-target-list
+  - https://github.com/Azure/azure-rest-api-specs/tree/main/specification/quantum
+  - https://github.com/microsoft/qdk
+  - https://github.com/microsoft/azure-quantum-python
+  - https://cloudblogs.microsoft.com/quantum/

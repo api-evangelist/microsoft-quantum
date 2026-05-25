@@ -1,0 +1,107 @@
+specification: API Evangelist Vocabulary
+specificationVersion: '0.1'
+provider: Microsoft Azure Quantum
+providerId: microsoft-quantum
+created: '2026-05-25'
+modified: '2026-05-25'
+description: >-
+  Domain vocabulary for Microsoft Azure Quantum. Captures the operational,
+  capability, and hardware dimensions that span the Azure Quantum workspace
+  service, the Q# language, the Resource Estimator, and the multi-vendor
+  hardware provider ecosystem.
+sources:
+  - https://learn.microsoft.com/en-us/azure/quantum/
+  - https://learn.microsoft.com/en-us/qsharp/api/
+  - https://learn.microsoft.com/en-us/azure/quantum/qc-target-list
+  - https://learn.microsoft.com/en-us/azure/quantum/pricing
+operational:
+  - term: Workspace
+    definition: An Azure Quantum workspace — the unit of access control, quota accounting, and storage scoping for quantum jobs.
+  - term: Job
+    definition: A submitted quantum program with target, input format, parameters, and shot count.
+  - term: Session
+    definition: A reservation of a target that scopes many jobs under a single hybrid quantum-classical context.
+  - term: Target
+    definition: A specific quantum processor, simulator, or emulator (e.g. ionq.qpu.aria-1).
+  - term: Provider
+    definition: A vendor offering quantum targets via Azure Marketplace (IonQ, Quantinuum, Pasqal, Rigetti, Microsoft).
+  - term: Quota
+    definition: A per-provider, per-workspace usage budget expressed in the provider's billing unit (AQT, HQC, QPU-hour, 10ms).
+  - term: SAS URI
+    definition: Shared Access Signature URI used to scope direct blob storage access for job inputs and outputs.
+  - term: Container URI
+    definition: SAS-scoped Azure Blob container holding a job's inputs/outputs.
+  - term: Resource Provider
+    definition: Microsoft.Quantum is the Azure Resource Manager resource provider exposing workspace and offering surfaces.
+  - term: Suite Offer
+    definition: A bundled marketplace SKU spanning multiple provider plans.
+capability:
+  - term: Hybrid Quantum Computing
+    definition: Architectures where classical and quantum hardware coordinate in a tight loop, often inside a session.
+  - term: Resource Estimation
+    definition: Post-layout calculation of physical qubits, T-states, runtime, and code distance for fault-tolerant algorithms.
+  - term: Q#
+    definition: Microsoft's open-source, hardware-agnostic quantum programming language.
+  - term: QDK
+    definition: Microsoft Quantum Development Kit — the Q# toolchain, libraries, VS Code extension, and Python package.
+  - term: QIR
+    definition: Quantum Intermediate Representation — the LLVM-based IR Q# compiles to for hardware execution.
+  - term: OpenQASM
+    definition: The Open Quantum Assembly language standard supported by Azure Quantum providers.
+  - term: Qiskit
+    definition: IBM's quantum SDK supported as an input format by Azure Quantum.
+  - term: Cirq
+    definition: Google's quantum SDK supported as an input format by Azure Quantum.
+  - term: Copilot in Quantum
+    definition: AI-assisted Q# code generation and chemistry workflow assistant on quantum.microsoft.com.
+  - term: Azure Quantum Elements
+    definition: Chemistry, materials, and HPC simulation stack (Generative Chemistry, Accelerated DFT) layered on Azure Quantum.
+hardware:
+  - term: Trapped Ion
+    definition: Qubits realized as charged atomic ions confined in electromagnetic traps; used by IonQ and Quantinuum.
+  - term: Neutral Atom
+    definition: Qubits realized as neutral atoms held in optical tweezer arrays; used by Pasqal.
+  - term: Superconducting
+    definition: Qubits realized as superconducting circuits (transmons) at millikelvin temperatures; used by Rigetti and Quantum Circuits.
+  - term: QCCD
+    definition: Quantum Charge-Coupled Device — the trapped-ion architecture used in Quantinuum System Model H2.
+  - term: Mid-Circuit Measurement
+    definition: Measuring some qubits while the rest of the circuit continues — supported on Quantinuum H2.
+  - term: Qubit Reuse
+    definition: Resetting and reusing measured qubits within the same circuit, enabling more compact programs.
+  - term: Coherence Time
+    definition: Duration over which a qubit retains its quantum state; defines circuit depth budget.
+  - term: Quantum Error Correction (QEC)
+    definition: Encoding logical qubits across many physical qubits to suppress noise; central to the Resource Estimator.
+  - term: Fault Tolerance
+    definition: The ability to execute long quantum algorithms with bounded logical error using QEC.
+billing:
+  - term: AQT (Azure Quantum Token)
+    definition: IonQ billing unit. AQT = m + 0.000220*(N1q*C) + 0.000975*(N2q*C).
+  - term: HQC (Hardware Quantum Credit)
+    definition: Quantinuum QPU billing unit. HQC = 5 + C(N1q + 10*N2q + 5*Nm)/5000.
+  - term: eHQC (Emulator HQC)
+    definition: Quantinuum emulator credit unit.
+  - term: QPU-hour
+    definition: Pasqal billing unit for QPU and emulator wall-clock execution time.
+  - term: 10ms Execution
+    definition: Rigetti billing increment for QPU execution time.
+  - term: Azure Quantum Credits
+    definition: USD 500 of provider credits auto-granted to new workspaces.
+tags:
+  - Quantum
+  - Quantum Computing
+  - Azure
+  - Microsoft
+  - Q#
+  - QDK
+  - Resource Estimation
+  - Hybrid Quantum
+  - IonQ
+  - Quantinuum
+  - Pasqal
+  - Rigetti
+  - OpenQASM
+  - Qiskit
+  - Cirq
+  - FinOps

@@ -1,0 +1,44 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Azure Quantum Workspace — Quotas
+  description: Read per-provider, per-workspace quota utilization across the current billing period.
+  tags:
+    - Azure Quantum
+    - Quotas
+    - FinOps
+  created: '2026-05-25'
+  modified: '2026-05-25'
+binds:
+  - namespace: env
+    keys:
+      AZURE_QUANTUM_BEARER: AZURE_QUANTUM_BEARER
+      AZURE_SUBSCRIPTION_ID: AZURE_SUBSCRIPTION_ID
+      AZURE_RESOURCE_GROUP: AZURE_RESOURCE_GROUP
+      AZURE_QUANTUM_WORKSPACE: AZURE_QUANTUM_WORKSPACE
+capability:
+  consumes:
+    - type: http
+      namespace: quotas-quotas
+      baseUri: https://management.azure.com
+      resources:
+        - name: quotas
+          path: /subscriptions/{{env.AZURE_SUBSCRIPTION_ID}}/resourceGroups/{{env.AZURE_RESOURCE_GROUP}}/providers/Microsoft.Quantum/workspaces/{{env.AZURE_QUANTUM_WORKSPACE}}/quotas
+          operations:
+            - name: listquotas
+              method: GET
+              description: List Workspace Quotas.
+      authentication:
+        type: bearer
+        value: '{{env.AZURE_QUANTUM_BEARER}}'
+        placement: header
+  exposes:
+    - type: mcp
+      namespace: quotas-quotas-mcp
+      port: 9090
+      transport: http
+      tools:
+        - name: azure-quantum-list-quotas
+          description: Read per-provider quota utilization for the workspace.
+          hints:
+            readOnly: true
+          call: quotas-quotas.listquotas

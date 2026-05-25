@@ -1,0 +1,110 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Microsoft Azure Quantum
+providerId: microsoft-quantum
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: true
+tags:
+  - Quantum
+  - Quotas
+  - Rate Limiting
+  - Azure
+description: >-
+  Reconciled rate limits and quotas for Microsoft Azure Quantum. Rate-limiting
+  at the Workspace REST API is governed by Azure Resource Manager throttling and
+  per-workspace provider quotas. Hardware-level limits (per QPU queue depth,
+  monthly HQC / AQT / QPU-hour caps) are enforced by each provider via
+  Marketplace subscription metering, exposed through the Workspace `quotas`
+  endpoint.
+sources:
+  - https://learn.microsoft.com/en-us/azure/quantum/pricing
+  - https://learn.microsoft.com/en-us/azure/quantum/azure-quantum-job-cost-billing
+  - https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling
+  - https://github.com/Azure/azure-rest-api-specs/tree/main/specification/quantum/Quantum.Workspace
+headers:
+  limit: x-ms-ratelimit-remaining-subscription-reads
+  remaining: x-ms-ratelimit-remaining-subscription-writes
+  reset: x-ms-ratelimit-reset
+  retryAfter: retry-after
+  correlationId: x-ms-correlation-request-id
+  requestId: x-ms-request-id
+responseCodes:
+  throttled: 429
+  quotaExceeded: 403
+  forbidden: 403
+algorithm: per-subscription-token-bucket
+authentication:
+  control-plane: Azure Entra ID (OAuth 2.0 bearer)
+  data-plane: Azure Entra ID (OAuth 2.0 bearer) — workspace data-plane is data-plane Azure Resource Manager
+quotas:
+  workspace:
+    - name: workspace-quotas
+      description: Per-workspace, per-provider quota tracking through the data-plane `quotas` endpoint. Quotas express the credit / HQC / AQT / QPU-hour budget remaining in the current period.
+      endpoint: GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/quotas
+      attributes:
+        - dimension
+        - scope
+        - providerId
+        - utilization
+        - holds
+        - limit
+        - period
+    - name: provider-status
+      description: Per-provider target availability and queue depth indicators exposed through the data-plane `providerStatus` endpoint.
+      endpoint: GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/providerStatus
+limits:
+  - scope: ARM control plane
+    direction: read
+    rpm: 12000
+    perSubscriptionPerHour: true
+    note: Azure Resource Manager default subscription read quota (12,000 reads/hour). Applies to Microsoft.Quantum/workspaces management operations.
+  - scope: ARM control plane
+    direction: write
+    rpm: 1200
+    perSubscriptionPerHour: true
+    note: Azure Resource Manager default subscription write quota (1,200 writes/hour). Applies to workspace create/update/delete.
+  - scope: Data plane — jobs.submit
+    direction: write
+    note: Provider-specific. Concurrent job queue depth governed by each QPU vendor (IonQ, Quantinuum, Pasqal, Rigetti). Job submissions exceeding provider concurrency are queued.
+  - scope: Data plane — sessions
+    direction: write
+    note: Sessions are bounded by provider session-level concurrency and per-session job count limits. Closing a session releases all held resources.
+  - scope: Provider — IonQ
+    metric: Azure Quantum Tokens (AQT)
+    perJobMinimum:
+      errorMitigationOn: 97.50
+      errorMitigationOff: 12.4166
+      unit: USD
+    note: Per-program minimum applies regardless of gate-shot count.
+  - scope: Provider — Quantinuum
+    metric: Hardware Quantum Credits (HQC)
+    formula: HQC = 5 + C(N1q + 10*N2q + 5*Nm)/5000
+    plans:
+      standard:
+        hqc: 10000
+        ehqc: 100000
+      premium:
+        hqc: 17000
+        ehqc: 170000
+    note: HQC consumption per job computed from single-qubit, two-qubit, and SPAM operation counts times shots.
+  - scope: Provider — Pasqal
+    metric: QPU and emulator execution-hour
+    note: Billed in seconds of wall-clock QPU or emulator execution. Free tier may apply to research grants.
+  - scope: Provider — Rigetti
+    metric: 10-millisecond job execution increments
+    note: Charges accrue per 10 ms of QPU job execution. QVM simulator is free.
+spendLimits:
+  - tier: Azure Quantum Credits
+    initialGrant: '$500 USD per provider per workspace'
+    note: New workspaces automatically receive USD 500 of credits per supported provider. Research grant program offers additional discretionary credits.
+  - tier: Pay-as-you-go
+    cap: 'Azure subscription spending limit (configurable)'
+    note: Enforced via Azure Cost Management budgets, alerts, and subscription spending limits.
+  - tier: Enterprise Agreement
+    cap: 'Negotiated commercial terms'
+notes:
+  - The Workspace data-plane uses ARM endpoints (data plane sits inside Microsoft.Quantum resource provider URL space).
+  - All API access requires an Azure Entra ID (formerly Azure AD) access token; service principals and managed identities are supported.
+  - Region availability and per-region provider availability is documented at https://learn.microsoft.com/en-us/azure/quantum/provider-global-availability.

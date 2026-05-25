@@ -1,0 +1,266 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Microsoft Azure Quantum
+providerId: microsoft-quantum
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: true
+tags:
+  - Quantum
+  - Quantum Computing
+  - Azure
+  - Marketplace Pricing
+description: >-
+  Reconciled plans and per-provider pricing for Microsoft Azure Quantum. Pricing
+  is defined and controlled by each hardware provider via the Azure Marketplace;
+  Microsoft charges only the underlying Azure storage / infrastructure costs on
+  top of provider charges. Source: learn.microsoft.com/en-us/azure/quantum/pricing.
+sources:
+  - https://learn.microsoft.com/en-us/azure/quantum/pricing
+  - https://learn.microsoft.com/en-us/azure/quantum/credits
+  - https://learn.microsoft.com/en-us/azure/quantum/qc-target-list
+  - https://learn.microsoft.com/en-us/azure/quantum/azure-quantum-job-cost-billing
+plans:
+  - id: azure-quantum-credits
+    name: Azure Quantum Credits
+    type: credit
+    description: USD 500 in free Azure Quantum Credits per provider on workspace creation. Apply to most providers' QPUs and emulators. Additional credit grants available via the research grant program.
+    entries:
+      - label: Initial provider credits
+        name: credits
+        type: credit
+        metric: USD
+        limit: 500
+        timeFrame: per-workspace
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+  - id: ionq-pay-as-you-go
+    name: IonQ — Pay As You Go
+    type: usage-based
+    description: A la carte access to IonQ Aria 1, Forte 1, Forte Enterprise 1, and the IonQ simulator. Billed in Azure Quantum Tokens (AQT) plus Azure storage infrastructure.
+    entries:
+      - label: IonQ Aria 1 — 1-qubit gate shot
+        name: ionq_aria_1q
+        type: metered
+        metric: gate-shot
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '0.000220'
+      - label: IonQ Aria 1 — 2-qubit gate shot
+        name: ionq_aria_2q
+        type: metered
+        metric: gate-shot
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '0.000975'
+      - label: IonQ Aria 1 — Minimum per program (error mitigation on)
+        name: ionq_aria_min_emit_on
+        type: minimum
+        metric: program
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '97.50'
+      - label: IonQ Aria 1 — Minimum per program (error mitigation off)
+        name: ionq_aria_min_emit_off
+        type: minimum
+        metric: program
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '12.4166'
+      - label: IonQ Forte 1 — 1-qubit gate shot
+        name: ionq_forte_1q
+        type: metered
+        metric: gate-shot
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '0.0001645'
+      - label: IonQ Forte 1 — 2-qubit gate shot
+        name: ionq_forte_2q
+        type: metered
+        metric: gate-shot
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '0.001121'
+      - label: IonQ Forte 1 — Minimum per program (error mitigation on)
+        name: ionq_forte_min_emit_on
+        type: minimum
+        metric: program
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '168.195'
+      - label: IonQ Forte 1 — Minimum per program (error mitigation off)
+        name: ionq_forte_min_emit_off
+        type: minimum
+        metric: program
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '25.7899'
+      - label: IonQ simulator
+        name: ionq_simulator
+        type: included
+        metric: usage
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '0.00'
+  - id: ionq-aria-forte
+    name: IonQ — Aria-Forte Monthly Subscription
+    type: subscription
+    description: USD 25,000/month subscription for access to IonQ Aria 1, Forte 1, Forte Enterprise 1, and simulator. Overage billed pay-as-you-go.
+    entries:
+      - label: Monthly subscription
+        name: ionq_subscription
+        type: flat
+        metric: subscription
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '25000.00'
+  - id: quantinuum-standard
+    name: Quantinuum — Standard Subscription
+    type: subscription
+    description: USD 125,000/month subscription. 10k HQCs on Quantinuum System Model H2 plus 100k eHQCs on H2 emulators.
+    entries:
+      - label: Monthly subscription
+        name: quantinuum_standard_sub
+        type: flat
+        metric: subscription
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '125000.00'
+      - label: HQC allocation
+        name: hqc_alloc
+        type: included
+        metric: hqc
+        timeFrame: month
+        geo: global
+        unit: 1
+        limit: 10000
+        price: '0.00'
+      - label: eHQC allocation
+        name: ehqc_alloc
+        type: included
+        metric: ehqc
+        timeFrame: month
+        geo: global
+        unit: 1
+        limit: 100000
+        price: '0.00'
+  - id: quantinuum-premium
+    name: Quantinuum — Premium Subscription
+    type: subscription
+    description: USD 175,000/month subscription. 17k HQCs on Quantinuum System Model H2 plus 170k eHQCs on H2 emulators.
+    entries:
+      - label: Monthly subscription
+        name: quantinuum_premium_sub
+        type: flat
+        metric: subscription
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '175000.00'
+      - label: HQC allocation
+        name: hqc_alloc
+        type: included
+        metric: hqc
+        timeFrame: month
+        geo: global
+        unit: 1
+        limit: 17000
+        price: '0.00'
+      - label: eHQC allocation
+        name: ehqc_alloc
+        type: included
+        metric: ehqc
+        timeFrame: month
+        geo: global
+        unit: 1
+        limit: 170000
+        price: '0.00'
+  - id: quantinuum-payg
+    name: Quantinuum — Pay As You Go
+    type: usage-based
+    description: Per-HQC consumption pricing for Quantinuum System Model H2 and emulator. Contact Sales@Quantinuum.com for current per-HQC rate.
+    entries:
+      - label: HQC usage
+        name: hqc_usage
+        type: metered
+        metric: hqc
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: 'contact-sales'
+  - id: pasqal-payg
+    name: Pasqal — Pay As You Go
+    type: usage-based
+    description: Pasqal FRESNEL/FRESNEL_CAN1 QPUs and EMU-MPS/EMU-SV emulators billed by QPU/emulator execution time.
+    entries:
+      - label: QPU-hour
+        name: pasqal_qpu_hour
+        type: metered
+        metric: hour
+        timeFrame: usage
+        geo: global
+        unit: 1
+        currency: EUR
+        price: '3000.00'
+      - label: Emulator-hour
+        name: pasqal_emulator_hour
+        type: metered
+        metric: hour
+        timeFrame: usage
+        geo: global
+        unit: 1
+        currency: EUR
+        price: '15.00'
+  - id: rigetti-payg
+    name: Rigetti — Pay As You Go
+    type: usage-based
+    description: Rigetti Cepheus-1-108Q billed by job execution time. The Quantum Virtual Machine (QVM) simulator is free.
+    entries:
+      - label: Job execution
+        name: rigetti_execution
+        type: metered
+        metric: 10ms
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '0.02'
+      - label: QVM simulator
+        name: rigetti_qvm
+        type: included
+        metric: usage
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '0.00'
+  - id: azure-infrastructure
+    name: Azure Storage Infrastructure
+    type: passthrough
+    description: Underlying Azure Blob Storage charges for job input/output payloads. Standard Azure Storage pricing applies per region.
+    entries:
+      - label: Azure Blob Storage
+        name: azure_blob
+        type: passthrough
+        metric: GB
+        timeFrame: month
+        geo: per-region
+        unit: 1
+        price: 'see-azure-storage-pricing'
+deprecated:
+  - name: Microsoft QIO / 1QBit Optimization
+    note: Quantum-inspired optimization solutions retired from Azure Quantum on 2023-06-30.
+  - name: Microsoft Azure Quantum (legacy regions)
+    note: Some legacy Azure Quantum regions and providers have been retired; see provider-global-availability for current support.

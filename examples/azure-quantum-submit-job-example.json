@@ -1,0 +1,54 @@
+{
+  "description": "Submit a quantum job to IonQ Aria 1 in an Azure Quantum workspace via the Workspace data-plane Jobs API (preview 2026-01-15-preview).",
+  "request": {
+    "method": "PUT",
+    "url": "https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-rg/providers/Microsoft.Quantum/workspaces/my-workspace/jobs/9f24b6c0-aaaa-bbbb-cccc-111122223333?api-version=2026-01-15-preview",
+    "headers": {
+      "Authorization": "Bearer <Entra ID access token>",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "id": "9f24b6c0-aaaa-bbbb-cccc-111122223333",
+      "name": "grover-search-3-qubit",
+      "providerId": "ionq",
+      "target": "ionq.qpu.aria-1",
+      "inputDataFormat": "ionq.circuit.v1",
+      "outputDataFormat": "ionq.quantum-results.v1",
+      "containerUri": "https://mystg.blob.core.windows.net/quantum-job-9f24b6c0?sp=racw&st=...&sig=...",
+      "inputDataUri": "https://mystg.blob.core.windows.net/quantum-job-9f24b6c0/inputData.json",
+      "inputParams": {
+        "shots": 100,
+        "error_mitigation": { "debias": true }
+      },
+      "tags": ["demo", "grover"],
+      "metadata": { "user": "alice" }
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "id": "9f24b6c0-aaaa-bbbb-cccc-111122223333",
+      "name": "grover-search-3-qubit",
+      "providerId": "ionq",
+      "target": "ionq.qpu.aria-1",
+      "status": "Waiting",
+      "creationTime": "2026-05-25T17:42:11Z",
+      "containerUri": "https://mystg.blob.core.windows.net/quantum-job-9f24b6c0?sp=...",
+      "inputDataFormat": "ionq.circuit.v1",
+      "outputDataFormat": "ionq.quantum-results.v1",
+      "costEstimate": {
+        "estimatedTotal": 97.5,
+        "currencyCode": "USD",
+        "events": [
+          {
+            "dimensionId": "ionq.aria.min",
+            "dimensionName": "IonQ Aria 1 program minimum",
+            "measureUnit": "USD",
+            "amountBilled": 97.5,
+            "amountConsumed": 1
+          }
+        ]
+      }
+    }
+  }
+}

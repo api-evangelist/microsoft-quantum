@@ -1,0 +1,369 @@
+aid: microsoft-quantum
+url: https://raw.githubusercontent.com/api-evangelist/microsoft-quantum/refs/heads/main/apis.yml
+apis:
+- aid: microsoft-quantum:azure-quantum-workspace-data-plane
+  name: Azure Quantum Workspace Data-Plane API
+  tags:
+  - Quantum
+  - Quantum Computing
+  - Workspace
+  - Jobs
+  - Sessions
+  - Providers
+  - Quotas
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azurequantum/
+  properties:
+  - url: https://learn.microsoft.com/en-us/rest/api/azurequantum/
+    type: Documentation
+  - url: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/quantum/data-plane/Microsoft.Quantum/preview/2026-01-15-preview
+    type: Documentation
+  - url: openapi/azure-quantum-data-plane-openapi.json
+    type: OpenAPI
+  - url: json-schema/azure-quantum-job-schema.json
+    type: JSONSchema
+  - url: json-schema/azure-quantum-session-schema.json
+    type: JSONSchema
+  - url: json-schema/azure-quantum-provider-status-schema.json
+    type: JSONSchema
+  - url: json-ld/microsoft-quantum-context.jsonld
+    type: JSONLD
+  - url: capabilities/jobs-jobs.yaml
+    type: NaftikoCapability
+  - url: capabilities/sessions-sessions.yaml
+    type: NaftikoCapability
+  - url: capabilities/providers-providers.yaml
+    type: NaftikoCapability
+  - url: capabilities/quotas-quotas.yaml
+    type: NaftikoCapability
+  - url: capabilities/storage-storage.yaml
+    type: NaftikoCapability
+  - url: capabilities/items-items.yaml
+    type: NaftikoCapability
+  description: Azure Quantum Workspace Services data-plane REST API. Submit and manage quantum jobs, sessions
+    (hybrid quantum-classical workflows), provider status checks, quotas, top-level items, and storage SAS URIs
+    against an Azure Quantum workspace. Targets quantum hardware from IonQ, Quantinuum, Pasqal, and Rigetti plus
+    simulators and emulators. Current preview version 2026-01-15-preview.
+- aid: microsoft-quantum:azure-quantum-resource-manager
+  name: Azure Quantum Resource Manager API
+  tags:
+  - Quantum
+  - ARM
+  - Resource Manager
+  - Workspaces
+  - Provisioning
+  humanURL: https://learn.microsoft.com/en-us/azure/templates/microsoft.quantum/workspaces
+  properties:
+  - url: https://learn.microsoft.com/en-us/azure/templates/microsoft.quantum/workspaces
+    type: Documentation
+  - url: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/quantum/resource-manager/Microsoft.Quantum/preview/2025-12-15-preview
+    type: Documentation
+  - url: openapi/azure-quantum-resource-manager-openapi.json
+    type: OpenAPI
+  - url: capabilities/workspaces-workspaces.yaml
+    type: NaftikoCapability
+  - url: capabilities/offerings-offerings.yaml
+    type: NaftikoCapability
+  description: Microsoft.Quantum Azure Resource Manager (ARM) control-plane API. Create, read, update, delete, and
+    list Azure Quantum workspaces; list provider offerings per region; check workspace name availability; list
+    and regenerate workspace keys; manage suite offers. Current preview version 2025-12-15-preview.
+- aid: microsoft-quantum:qsharp-language
+  name: Q# Quantum Programming Language
+  tags:
+  - Quantum
+  - Programming Language
+  - Q#
+  - QDK
+  - Open Source
+  humanURL: https://learn.microsoft.com/en-us/azure/quantum/qsharp-overview
+  properties:
+  - url: https://learn.microsoft.com/en-us/azure/quantum/qsharp-overview
+    type: Documentation
+  - url: https://learn.microsoft.com/en-us/qsharp/api/
+    type: Documentation
+  - url: https://github.com/microsoft/qdk
+    type: GitHubRepository
+  - url: https://github.com/microsoft/qsharp-language
+    type: GitHubRepository
+  description: Q# is Microsoft's open-source, hardware-agnostic quantum programming language. The Modern QDK
+    compiler is written in Rust, ships as a VS Code extension and Python package, and powers
+    quantum.microsoft.com. Q# expresses programs as classical control-flow that operates on qubits without
+    modeling the quantum state directly, and targets every Azure Quantum provider plus the Resource Estimator.
+- aid: microsoft-quantum:resource-estimator
+  name: Microsoft Quantum Resource Estimator
+  tags:
+  - Quantum
+  - Resource Estimation
+  - Fault Tolerance
+  - QEC
+  humanURL: https://learn.microsoft.com/en-us/azure/quantum/intro-to-resource-estimation
+  properties:
+  - url: https://learn.microsoft.com/en-us/azure/quantum/intro-to-resource-estimation
+    type: Documentation
+  - url: https://learn.microsoft.com/en-us/azure/quantum/overview-resources-estimator
+    type: Documentation
+  - url: https://github.com/microsoft/qdk
+    type: GitHubRepository
+  description: Open-source post-layout physical resource estimator for fault-tolerant quantum algorithms. Compute
+    qubit counts, T-state counts, runtime, and code-distance requirements across configurable qubit physical
+    parameters, QEC schemes, and error budgets. Ships inside the QDK and runs locally or as an Azure Quantum
+    target.
+- aid: microsoft-quantum:azure-quantum-python-sdk
+  name: Azure Quantum Python SDK
+  tags:
+  - Quantum
+  - SDK
+  - Python
+  - Qiskit
+  - Cirq
+  humanURL: https://github.com/microsoft/azure-quantum-python
+  properties:
+  - url: https://github.com/microsoft/azure-quantum-python
+    type: GitHubRepository
+  - url: https://pypi.org/project/azure-quantum/
+    type: SDK
+  description: Python SDK for submitting jobs to Azure Quantum. Supports Q#, Qiskit, Cirq, and pass-through
+    provider input formats; manages workspaces, jobs, sessions, and target queries against the Workspace
+    data-plane API.
+name: Microsoft Azure Quantum
+tags:
+- Quantum
+- Quantum Computing
+- Azure
+- Microsoft
+- Q#
+- QDK
+- Resource Estimation
+- IonQ
+- Quantinuum
+- Pasqal
+- Rigetti
+- Hybrid Quantum
+- Fault Tolerance
+kind: contract
+image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+access: 3rd-Party
+common:
+- url: https://quantum.microsoft.com/
+  name: Microsoft Quantum
+  type: Portal
+- url: https://azure.microsoft.com/en-us/products/quantum
+  name: Azure Quantum Product Page
+  type: Portal
+- url: https://learn.microsoft.com/en-us/azure/quantum/
+  name: Azure Quantum Documentation
+  type: Documentation
+- url: https://learn.microsoft.com/en-us/azure/quantum/overview-azure-quantum
+  name: What is Azure Quantum?
+  type: GettingStarted
+- url: https://learn.microsoft.com/en-us/azure/quantum/install-overview-qdk
+  name: Set up the Microsoft Quantum Development Kit
+  type: GettingStarted
+- url: https://learn.microsoft.com/en-us/azure/quantum/qsharp-quickstart
+  name: Create Your First Q# Program
+  type: GettingStarted
+- url: https://learn.microsoft.com/en-us/rest/api/azurequantum/
+  name: Azure Quantum REST API Reference
+  type: Documentation
+- url: https://learn.microsoft.com/en-us/azure/quantum/qc-target-list
+  name: Quantum Computing Targets List
+  type: Documentation
+- url: https://learn.microsoft.com/en-us/azure/quantum/provider-global-availability
+  name: Provider Global Availability
+  type: Regions
+- url: https://learn.microsoft.com/en-us/azure/quantum/release-notes
+  name: QDK and Azure Quantum Release Notes
+  type: ChangeLog
+- url: https://learn.microsoft.com/en-us/azure/quantum/pricing
+  name: Azure Quantum Pricing
+  type: Pricing
+- url: https://learn.microsoft.com/en-us/azure/quantum/azure-quantum-job-cost-billing
+  name: Understanding Job Costs and Billing
+  type: Documentation
+- url: https://learn.microsoft.com/en-us/azure/quantum/how-to-create-workspace
+  name: Create an Azure Quantum Workspace
+  type: GettingStarted
+- url: https://ms.portal.azure.com/#create/Microsoft.AzureQuantum
+  name: Create Workspace in Azure Portal
+  type: SignUp
+- url: https://azure.microsoft.com/en-us/free/
+  name: Azure Free Account
+  type: SignUp
+- url: https://azure.microsoft.com/en-us/free/students/
+  name: Free Azure Account for Students
+  type: SignUp
+- url: https://learn.microsoft.com/en-us/azure/quantum/credits
+  name: Azure Quantum Credits
+  type: Documentation
+- url: https://status.azure.com/
+  name: Azure Status
+  type: StatusPage
+- url: https://www.microsoft.com/en-us/trust-center
+  name: Microsoft Trust Center
+  type: TrustCenter
+- url: https://learn.microsoft.com/en-us/legal/azure-quantum/
+  name: Azure Quantum Service Terms
+  type: TermsOfService
+- url: https://www.microsoft.com/en-us/legal/terms-of-use
+  name: Microsoft Terms of Use
+  type: TermsOfService
+- url: https://privacy.microsoft.com/en-us/privacystatement
+  name: Microsoft Privacy Statement
+  type: PrivacyPolicy
+- url: https://cloudblogs.microsoft.com/quantum/
+  name: Microsoft Azure Quantum Blog
+  type: Blog
+- url: https://www.microsoft.com/research/research-area/quantum-computing/
+  name: Microsoft Quantum Research
+  type: Documentation
+- url: https://github.com/microsoft
+  name: Microsoft GitHub Organization
+  type: GitHubOrganization
+- url: https://github.com/Azure
+  name: Azure GitHub Organization
+  type: GitHubOrganization
+- url: https://github.com/MicrosoftDocs/quantum-docs
+  name: Quantum Docs Source
+  type: Documentation
+- url: https://github.com/microsoft/qdk
+  name: Microsoft QDK (Q# Compiler, Resource Estimator, Quantum Katas)
+  type: GitHubRepository
+- url: https://github.com/microsoft/qsharp-language
+  name: Q# Language Design Repository
+  type: GitHubRepository
+- url: https://github.com/microsoft/qsharp-compiler
+  name: Q# Compiler (legacy)
+  type: GitHubRepository
+- url: https://github.com/microsoft/qsharp-runtime
+  name: Q# Runtime (legacy)
+  type: GitHubRepository
+- url: https://github.com/microsoft/QuantumLibraries
+  name: Q# Quantum Libraries
+  type: GitHubRepository
+- url: https://github.com/microsoft/azure-quantum-python
+  name: Azure Quantum Python SDK
+  type: SDK
+- url: https://pypi.org/project/azure-quantum/
+  name: azure-quantum on PyPI
+  type: SDK
+- url: https://pypi.org/project/qsharp/
+  name: qsharp on PyPI
+  type: SDK
+- url: https://github.com/microsoft/Quantum
+  name: Microsoft Quantum Development Kit Samples
+  type: CodeExamples
+- url: https://github.com/microsoft/QuantumKatas
+  name: Quantum Katas (Tutorials)
+  type: Courses
+- url: https://github.com/microsoft/quantum-curriculum-samples
+  name: Quantum Curriculum Samples
+  type: Courses
+- url: https://github.com/microsoft/iqsharp
+  name: IQ# Jupyter Kernel
+  type: Tool
+- url: https://github.com/microsoft/quantum-viz.js
+  name: quantum-viz.js Circuit Renderer
+  type: Tool
+- url: https://github.com/microsoft/qdk-chemistry
+  name: QDK Chemistry Toolkit
+  type: Tool
+- url: https://github.com/microsoft/Quantum-NC
+  name: Quantum Computing Libraries (Noncommercial)
+  type: Tool
+- url: https://github.com/microsoft/qmt
+  name: Qubit Modeling Tools
+  type: Tool
+- url: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/quantum
+  name: Azure Quantum REST API Specs (Source)
+  type: GitHubRepository
+- url: https://learn.microsoft.com/en-us/azure/quantum/install-command-line-qdk
+  name: Azure CLI Quantum Extension
+  type: Documentation
+- url: https://learn.microsoft.com/en-us/training/paths/quantum-computing-fundamentals/
+  name: Get Started with Azure Quantum (Learn Path)
+  type: Training
+- url: https://learn.microsoft.com/en-us/azure/quantum/hybrid-computing-overview
+  name: Hybrid Quantum Computing
+  type: Documentation
+- url: https://learn.microsoft.com/en-us/azure/quantum/intro-to-resource-estimation
+  name: Resource Estimator
+  type: Documentation
+- url: https://learn.microsoft.com/en-us/azure/quantum/quickstart-microsoft-resources-estimator
+  name: Run Your First Resource Estimate
+  type: GettingStarted
+- url: https://learn.microsoft.com/en-us/azure/quantum/qsharp-overview
+  name: Q# Language Overview
+  type: Documentation
+- url: https://learn.microsoft.com/en-us/qsharp/api/
+  name: Q# Standard Library Reference
+  type: Documentation
+- url: https://learn.microsoft.com/en-us/azure/quantum/provider-ionq
+  name: IonQ Provider
+  type: Documentation
+- url: https://learn.microsoft.com/en-us/azure/quantum/provider-quantinuum
+  name: Quantinuum Provider
+  type: Documentation
+- url: https://learn.microsoft.com/en-us/azure/quantum/provider-pasqal
+  name: Pasqal Provider
+  type: Documentation
+- url: https://learn.microsoft.com/en-us/azure/quantum/provider-rigetti
+  name: Rigetti Provider
+  type: Documentation
+- url: https://learn.microsoft.com/en-us/azure/quantum/get-started-azure-quantum
+  name: Copilot in Microsoft Quantum
+  type: Documentation
+- url: https://learn.microsoft.com/en-us/answers/tags/3/azure-quantum
+  name: Q&A Forum
+  type: Forum
+- url: plans/microsoft-quantum-plans-pricing.yml
+  type: Plans
+- url: rate-limits/microsoft-quantum-rate-limits.yml
+  type: RateLimits
+- url: finops/microsoft-quantum-finops.yml
+  type: FinOps
+- type: Features
+  data:
+  - Azure Quantum Workspace — managed cloud control plane for submitting and tracking quantum jobs across multiple
+    hardware providers
+  - Q# programming language — open-source, hardware-agnostic quantum DSL with a modern Rust-based compiler
+  - Microsoft Quantum Development Kit (QDK) — free, open-source SDK with VS Code extension, Python package,
+    Jupyter widgets, and language service
+  - Microsoft Quantum Resource Estimator — fault-tolerant resource estimation with configurable qubit parameters,
+    QEC codes, and error budgets
+  - Multi-provider hardware access — IonQ (trapped ion, 25–36 qubits), Quantinuum (trapped ion, H2 series 20–32
+    qubits), Pasqal (neutral atom, 100 qubits), Rigetti (superconducting, 108 qubits)
+  - Built-in support for Qiskit, Cirq, OpenQASM in addition to Q#
+  - Sessions API for low-latency hybrid quantum-classical workflows
+  - Azure Quantum Credits program — USD 500 in free provider credits for new workspaces
+  - Azure Quantum Elements — chemistry, materials, and HPC simulation stack (Generative Chemistry, Accelerated
+    DFT) integrated with the quantum platform
+  - Copilot in Microsoft Quantum — AI-assisted Q# code generation and chemistry workflows on quantum.microsoft.com
+  - Azure CLI `az quantum` extension for workspace and job management from the terminal
+  - ARM resource manager API for Infrastructure-as-Code provisioning
+  - Storage SAS URI delegation for direct blob upload of job inputs/outputs
+  - TypeSpec-defined OpenAPI specs published to Azure/azure-rest-api-specs
+  - Azure-native integrations (RBAC, Entra ID, Storage, Monitor) and per-region provider availability
+  sources:
+  - https://azure.microsoft.com/en-us/products/quantum
+  - https://learn.microsoft.com/en-us/azure/quantum/overview-azure-quantum
+  - https://learn.microsoft.com/en-us/azure/quantum/qc-target-list
+  - https://learn.microsoft.com/en-us/azure/quantum/pricing
+  - https://github.com/Azure/azure-rest-api-specs/tree/main/specification/quantum
+  - https://github.com/microsoft/qdk
+  updated: '2026-05-25'
+created: '2026-05-25T00:00:00.000Z'
+modified: '2026-05-25'
+position: Producing
+description: Microsoft Azure Quantum is Microsoft's cloud quantum computing service — an open, multi-vendor
+  platform that provides access to quantum hardware from IonQ, Quantinuum, Pasqal, and Rigetti alongside
+  Microsoft's own Q# programming language, Quantum Development Kit (QDK), and post-layout fault-tolerant Resource
+  Estimator. The Azure Quantum Workspace REST API exposes jobs, sessions, providers, quotas, items, and storage
+  surfaces; the Microsoft.Quantum ARM provider handles workspace provisioning. The QDK is free and open source,
+  ships as a VS Code extension and Python package, and supports Q#, Qiskit, Cirq, and OpenQASM. Azure Quantum
+  Elements layers in chemistry, materials, and HPC simulation for scientific discovery, with Copilot-assisted
+  workflows on quantum.microsoft.com.
+maintainers:
+- FN: Kin Lane
+  email: info@apievangelist.com
+  X: apievangelist
+  url: https://apievangelist.com
+specificationVersion: '0.16'

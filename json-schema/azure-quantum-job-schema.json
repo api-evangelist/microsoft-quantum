@@ -1,0 +1,102 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/microsoft-quantum/main/json-schema/azure-quantum-job-schema.json",
+  "title": "AzureQuantumJob",
+  "description": "Azure Quantum Workspace Job resource as exposed by the data-plane Jobs API (preview 2026-01-15-preview).",
+  "type": "object",
+  "required": ["id", "name", "providerId", "target", "inputDataFormat", "containerUri"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Job identifier (GUID assigned by the workspace)."
+    },
+    "name": {
+      "type": "string",
+      "description": "Friendly job name."
+    },
+    "providerId": {
+      "type": "string",
+      "description": "Provider id (e.g. 'ionq', 'quantinuum', 'pasqal', 'rigetti', 'microsoft')."
+    },
+    "target": {
+      "type": "string",
+      "description": "Provider target name (e.g. 'ionq.qpu.aria-1', 'quantinuum.qpu.h2-1', 'pasqal.qpu.fresnel', 'rigetti.qpu.cepheus-1-108q')."
+    },
+    "inputDataFormat": {
+      "type": "string",
+      "description": "MIME or named format of input payload (e.g. 'qir.v1', 'ionq.circuit.v1', 'quantinuum.openqasm.v1')."
+    },
+    "outputDataFormat": {
+      "type": "string"
+    },
+    "inputParams": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Provider-specific input parameters (shot count, error mitigation, target seed)."
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "sessionId": {
+      "type": "string",
+      "description": "Optional session id when the job runs inside a hybrid session."
+    },
+    "containerUri": {
+      "type": "string",
+      "format": "uri",
+      "description": "SAS URI to the workspace storage container holding job input."
+    },
+    "inputDataUri": {
+      "type": "string",
+      "format": "uri"
+    },
+    "outputDataUri": {
+      "type": "string",
+      "format": "uri"
+    },
+    "beginExecutionTime": { "type": "string", "format": "date-time" },
+    "creationTime": { "type": "string", "format": "date-time" },
+    "endExecutionTime": { "type": "string", "format": "date-time" },
+    "cancellationTime": { "type": "string", "format": "date-time" },
+    "errorData": {
+      "type": "object",
+      "properties": {
+        "code": { "type": "string" },
+        "message": { "type": "string" }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["Waiting", "Executing", "Succeeded", "Failed", "Cancelled"]
+    },
+    "jobType": {
+      "type": "string",
+      "enum": ["QuantumComputing", "Optimization", "HybridComputing", "Other"]
+    },
+    "costEstimate": {
+      "type": "object",
+      "properties": {
+        "estimatedTotal": { "type": "number" },
+        "currencyCode": { "type": "string" },
+        "events": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "dimensionId": { "type": "string" },
+              "dimensionName": { "type": "string" },
+              "measureUnit": { "type": "string" },
+              "amountBilled": { "type": "number" },
+              "amountConsumed": { "type": "number" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

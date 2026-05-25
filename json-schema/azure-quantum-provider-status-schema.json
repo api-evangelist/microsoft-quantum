@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/microsoft-quantum/main/json-schema/azure-quantum-provider-status-schema.json",
+  "title": "AzureQuantumProviderStatus",
+  "description": "Per-provider target availability and queue depth as reported by the Workspace data-plane providerStatus endpoint.",
+  "type": "object",
+  "required": ["id", "currentAvailability", "targets"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Provider id (e.g. 'ionq', 'quantinuum', 'pasqal', 'rigetti', 'microsoft')."
+    },
+    "currentAvailability": {
+      "type": "string",
+      "enum": ["Available", "Degraded", "Unavailable"]
+    },
+    "targets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "currentAvailability"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Target id (e.g. 'ionq.qpu.aria-1', 'quantinuum.qpu.h2-1', 'rigetti.qpu.cepheus-1-108q')."
+          },
+          "currentAvailability": {
+            "type": "string",
+            "enum": ["Available", "Degraded", "Unavailable"]
+          },
+          "averageQueueTime": {
+            "type": "integer",
+            "description": "Estimated queue time in seconds."
+          },
+          "statusPage": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      }
+    }
+  }
+}

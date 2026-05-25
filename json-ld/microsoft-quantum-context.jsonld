@@ -1,0 +1,97 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@vocab": "https://schema.org/",
+    "azq": "https://learn.microsoft.com/en-us/azure/quantum/",
+    "qsharp": "https://learn.microsoft.com/en-us/qsharp/api/",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+
+    "Workspace": {
+      "@id": "azq:Workspace",
+      "@context": {
+        "id": { "@id": "azq:Workspace/id", "@type": "xsd:string" },
+        "name": { "@id": "azq:Workspace/name", "@type": "xsd:string" },
+        "location": { "@id": "azq:Workspace/location", "@type": "xsd:string" },
+        "storageAccount": { "@id": "azq:Workspace/storageAccount", "@type": "xsd:string" },
+        "providers": { "@id": "azq:Workspace/providers", "@container": "@list" },
+        "endpointUri": { "@id": "azq:Workspace/endpointUri", "@type": "xsd:anyURI" },
+        "provisioningState": { "@id": "azq:Workspace/provisioningState", "@type": "xsd:string" }
+      }
+    },
+
+    "Job": {
+      "@id": "azq:Job",
+      "@context": {
+        "id": { "@id": "azq:Job/id", "@type": "xsd:string" },
+        "name": { "@id": "azq:Job/name", "@type": "xsd:string" },
+        "providerId": { "@id": "azq:Job/providerId", "@type": "xsd:string" },
+        "target": { "@id": "azq:Job/target", "@type": "xsd:string" },
+        "status": { "@id": "azq:Job/status", "@type": "xsd:string" },
+        "inputDataFormat": { "@id": "azq:Job/inputDataFormat", "@type": "xsd:string" },
+        "outputDataFormat": { "@id": "azq:Job/outputDataFormat", "@type": "xsd:string" },
+        "sessionId": { "@id": "azq:Job/sessionId", "@type": "xsd:string" },
+        "containerUri": { "@id": "azq:Job/containerUri", "@type": "xsd:anyURI" },
+        "creationTime": { "@id": "azq:Job/creationTime", "@type": "xsd:dateTime" },
+        "beginExecutionTime": { "@id": "azq:Job/beginExecutionTime", "@type": "xsd:dateTime" },
+        "endExecutionTime": { "@id": "azq:Job/endExecutionTime", "@type": "xsd:dateTime" },
+        "costEstimate": { "@id": "azq:Job/costEstimate" }
+      }
+    },
+
+    "Session": {
+      "@id": "azq:Session",
+      "@context": {
+        "id": { "@id": "azq:Session/id", "@type": "xsd:string" },
+        "name": { "@id": "azq:Session/name", "@type": "xsd:string" },
+        "providerId": { "@id": "azq:Session/providerId", "@type": "xsd:string" },
+        "target": { "@id": "azq:Session/target", "@type": "xsd:string" },
+        "status": { "@id": "azq:Session/status", "@type": "xsd:string" },
+        "jobFailurePolicy": { "@id": "azq:Session/jobFailurePolicy", "@type": "xsd:string" }
+      }
+    },
+
+    "Provider": {
+      "@id": "azq:Provider",
+      "@context": {
+        "id": { "@id": "azq:Provider/id", "@type": "xsd:string" },
+        "currentAvailability": { "@id": "azq:Provider/currentAvailability", "@type": "xsd:string" },
+        "targets": { "@id": "azq:Provider/targets", "@container": "@list" }
+      }
+    },
+
+    "Target": {
+      "@id": "azq:Target",
+      "@context": {
+        "id": { "@id": "azq:Target/id", "@type": "xsd:string" },
+        "currentAvailability": { "@id": "azq:Target/currentAvailability", "@type": "xsd:string" },
+        "averageQueueTime": { "@id": "azq:Target/averageQueueTime", "@type": "xsd:integer" },
+        "qubitCount": { "@id": "azq:Target/qubitCount", "@type": "xsd:integer" },
+        "technology": { "@id": "azq:Target/technology", "@type": "xsd:string" }
+      }
+    },
+
+    "Quota": {
+      "@id": "azq:Quota",
+      "@context": {
+        "dimension": { "@id": "azq:Quota/dimension", "@type": "xsd:string" },
+        "scope": { "@id": "azq:Quota/scope", "@type": "xsd:string" },
+        "providerId": { "@id": "azq:Quota/providerId", "@type": "xsd:string" },
+        "utilization": { "@id": "azq:Quota/utilization", "@type": "xsd:decimal" },
+        "holds": { "@id": "azq:Quota/holds", "@type": "xsd:decimal" },
+        "limit": { "@id": "azq:Quota/limit", "@type": "xsd:decimal" },
+        "period": { "@id": "azq:Quota/period", "@type": "xsd:string" }
+      }
+    },
+
+    "CostEstimate": {
+      "@id": "azq:CostEstimate",
+      "@context": {
+        "estimatedTotal": { "@id": "azq:CostEstimate/estimatedTotal", "@type": "xsd:decimal" },
+        "currencyCode": { "@id": "azq:CostEstimate/currencyCode", "@type": "xsd:string" },
+        "events": { "@id": "azq:CostEstimate/events", "@container": "@list" }
+      }
+    }
+  }
+}

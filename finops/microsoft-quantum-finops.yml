@@ -1,0 +1,172 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Microsoft Azure Quantum
+providerId: microsoft-quantum
+created: '2026-05-25'
+modified: '2026-05-25'
+reconciled: true
+tags:
+  - FinOps
+  - FOCUS
+  - Quantum
+  - Cost Management
+  - Azure
+  - Marketplace
+description: >-
+  FOCUS-aligned FinOps definition for Microsoft Azure Quantum. Quantum workloads
+  combine a small Azure first-party charge (workspace + Blob Storage) with
+  provider marketplace charges metered in vendor-specific units — AQT (IonQ),
+  HQC/eHQC (Quantinuum), QPU-hour (Pasqal), and 10ms execution increments
+  (Rigetti).
+sources:
+  - https://learn.microsoft.com/en-us/azure/quantum/pricing
+  - https://learn.microsoft.com/en-us/azure/quantum/azure-quantum-job-cost-billing
+  - https://learn.microsoft.com/en-us/azure/cost-management-billing/
+  - https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Microsoft
+serviceCategory: Quantum Computing
+billingModel:
+  pricingCategory: Usage-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+    - Usage
+    - Purchase
+    - Subscription
+    - Credit
+    - Tax
+    - Adjustment
+  primaryUnits:
+    - AQT
+    - HQC
+    - eHQC
+    - QPU-hour
+    - emulator-hour
+    - 10ms-execution
+    - workspace
+    - GB-month
+  secondaryUnits:
+    - shot
+    - gate-shot
+    - program
+focusColumns:
+  ServiceName: Azure Quantum
+  ServiceCategory: Quantum Computing
+  ProviderName: Microsoft
+  PublisherName: Microsoft (workspace) / IonQ, Quantinuum, Pasqal, Rigetti (provider charges)
+  InvoiceIssuerName: Microsoft Azure
+  PricingCategory: Usage-Based
+  PricingUnit: see-primaryUnits
+  BillingCurrency: USD
+meters:
+  - name: ionq_aqt
+    unit: AQT
+    aggregation: sum
+    dimensions:
+      - workspace
+      - subscription
+      - resource_group
+      - target
+      - error_mitigation
+    note: Azure Quantum Token consumption. AQT = m + 0.000220 * (N1q * C) + 0.000975 * (N2q * C); m is the per-program minimum based on error mitigation.
+  - name: quantinuum_hqc
+    unit: HQC
+    aggregation: sum
+    dimensions:
+      - workspace
+      - subscription
+      - resource_group
+      - target
+      - plan
+    note: Hardware Quantum Credits. HQC = 5 + C*(N1q + 10*N2q + 5*Nm)/5000.
+  - name: quantinuum_ehqc
+    unit: eHQC
+    aggregation: sum
+    dimensions:
+      - workspace
+      - subscription
+      - target
+      - plan
+    note: Emulator HQCs for Quantinuum System Model H2 emulators.
+  - name: pasqal_qpu_hour
+    unit: hour
+    aggregation: sum
+    dimensions:
+      - workspace
+      - subscription
+      - target
+    note: Pasqal QPU wall-clock execution time (FRESNEL, FRESNEL_CAN1).
+  - name: pasqal_emulator_hour
+    unit: hour
+    aggregation: sum
+    dimensions:
+      - workspace
+      - target
+  - name: rigetti_10ms
+    unit: 10ms
+    aggregation: sum
+    dimensions:
+      - workspace
+      - subscription
+      - target
+    note: 10-millisecond increments of Rigetti Cepheus-1-108Q execution time.
+  - name: azure_blob_storage
+    unit: GB-month
+    aggregation: max
+    dimensions:
+      - workspace
+      - storage_account
+      - region
+    note: Underlying Azure Blob Storage charges for job inputs/outputs.
+  - name: workspace_provisioning
+    unit: workspace
+    aggregation: count
+    dimensions:
+      - subscription
+      - resource_group
+      - region
+costAllocation:
+  primaryDimensions:
+    - subscription
+    - resource_group
+    - workspace
+    - region
+    - target
+    - provider_id
+  recommendedTags:
+    - environment
+    - team
+    - cost-center
+    - project
+    - principal-investigator
+costReporting:
+  costEndpoints:
+    - Azure Cost Management REST API
+    - Azure Consumption REST API
+    - Microsoft Cost Management exports (FOCUS-formatted exports supported)
+    - Workspace `quotas` endpoint (current-period utilization)
+  recommendations:
+    - Use FOCUS exports from Microsoft Cost Management for cross-cloud / cross-provider normalization.
+    - Apply Azure Budgets and Action Groups at the subscription or resource-group scope to alert on provider overage.
+    - Reconcile per-job costs via the workspace `quotas` and per-job billing telemetry exposed by each provider.
+credits:
+  - name: Azure Quantum Credits
+    amount: USD 500 per provider per workspace
+    appliedAs: Credit charge category
+    notes: Auto-granted on workspace creation; per-provider, not transferable.
+  - name: Azure Free Account for Students
+    amount: Azure subscription credit
+    notes: Available to verified students for Azure Quantum experimentation.
+sustainability:
+  notes:
+    - Microsoft commits to carbon-negative operations by 2030 across Azure including Azure Quantum data centers.
+    - Quantum hardware partners run in select Azure regions; see provider-global-availability for region selection by carbon impact.
+deprecated:
+  - Microsoft QIO and 1QBit optimization solvers were removed from Azure Quantum after 2023-06-30 and are no longer billed.

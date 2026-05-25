@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/microsoft-quantum/main/json-schema/azure-quantum-session-schema.json",
+  "title": "AzureQuantumSession",
+  "description": "Azure Quantum Workspace Session resource. Sessions group many jobs that share a single low-latency target reservation for hybrid quantum-classical workflows.",
+  "type": "object",
+  "required": ["id", "name", "providerId", "target"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Session identifier."
+    },
+    "name": {
+      "type": "string"
+    },
+    "providerId": {
+      "type": "string"
+    },
+    "target": {
+      "type": "string"
+    },
+    "jobFailurePolicy": {
+      "type": "string",
+      "enum": ["Abort", "Continue"],
+      "description": "Whether the session aborts on the first failed job or continues."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["Waiting", "Executing", "Succeeded", "Failed", "Failure(s)", "TimedOut"]
+    },
+    "creationTime": { "type": "string", "format": "date-time" },
+    "endExecutionTime": { "type": "string", "format": "date-time" },
+    "beginExecutionTime": { "type": "string", "format": "date-time" },
+    "costEstimate": {
+      "type": "object",
+      "properties": {
+        "estimatedTotal": { "type": "number" },
+        "currencyCode": { "type": "string" }
+      }
+    },
+    "errorData": {
+      "type": "object",
+      "properties": {
+        "code": { "type": "string" },
+        "message": { "type": "string" }
+      }
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "description": "GET providerStatus returns availability and queue depth for every target wired to an Azure Quantum workspace.",
+  "request": {
+    "method": "GET",
+    "url": "https://management.azure.com/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-rg/providers/Microsoft.Quantum/workspaces/my-workspace/providerStatus?api-version=2026-01-15-preview",
+    "headers": {
+      "Authorization": "Bearer <Entra ID access token>"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "value": [
+        {
+          "id": "ionq",
+          "currentAvailability": "Available",
+          "targets": [
+            { "id": "ionq.qpu.aria-1", "currentAvailability": "Available", "averageQueueTime": 1240 },
+            { "id": "ionq.qpu.forte-1", "currentAvailability": "Available", "averageQueueTime": 4100 },
+            { "id": "ionq.simulator", "currentAvailability": "Available", "averageQueueTime": 0 }
+          ]
+        },
+        {
+          "id": "quantinuum",
+          "currentAvailability": "Available",
+          "targets": [
+            { "id": "quantinuum.qpu.h2-1", "currentAvailability": "Available", "averageQueueTime": 8600 },
+            { "id": "quantinuum.qpu.h2-2", "currentAvailability": "Degraded", "averageQueueTime": 12000 },
+            { "id": "quantinuum.sim.h2-1e", "currentAvailability": "Available", "averageQueueTime": 0 }
+          ]
+        },
+        {
+          "id": "pasqal",
+          "currentAvailability": "Available",
+          "targets": [
+            { "id": "pasqal.qpu.fresnel", "currentAvailability": "Available", "averageQueueTime": 600 },
+            { "id": "pasqal.sim.emu-mps", "currentAvailability": "Available", "averageQueueTime": 0 }
+          ]
+        },
+        {
+          "id": "rigetti",
+          "currentAvailability": "Available",
+          "targets": [
+            { "id": "rigetti.qpu.cepheus-1-108q", "currentAvailability": "Available", "averageQueueTime": 240 },
+            { "id": "rigetti.sim.qvm", "currentAvailability": "Available", "averageQueueTime": 0 }
+          ]
+        }
+      ]
+    }
+  }
+}
