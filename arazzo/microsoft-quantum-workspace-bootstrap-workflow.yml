@@ -1,0 +1,180 @@
+arazzo: 1.0.1
+info:
+  title: Azure Quantum Workspace Bootstrap
+  summary: Read a workspace, branch on provisioning state, list its keys, and list provider offerings.
+  description: >-
+    Onboarding a client against an Azure Quantum workspace starts with confirming
+    the workspace is provisioned, retrieving its access keys, and discovering the
+    provider offerings available in its region. This workflow reads the workspace
+    with Workspaces_Get, branches on provisioningState, lists keys with
+    Workspaces_ListKeys when the workspace is Succeeded, and enumerates regional
+    offerings with Offerings_List. Each step spells out its request inline,
+    including the inline Authorization bearer token and the required api-version
+    query parameter.
+  version: 1.0.0
+sourceDescriptions:
+- name: resourceManagerApi
+  url: ../openapi/azure-quantum-resource-manager-openapi.json
+  type: openapi
+workflows:
+- workflowId: workspace-bootstrap
+  summary: Confirm a workspace is provisioned, fetch its keys, and list regional offerings.
+  description: >-
+    Reads the Quantum workspace and inspects its provisioning state. When the
+    workspace provisioning has Succeeded the workflow lists its access keys and
+    the provider offerings available in the workspace location; otherwise it
+    reports the non-terminal provisioning state.
+  inputs:
+    type: object
+    required:
+    - subscriptionId
+    - resourceGroupName
+    - workspaceName
+    - locationName
+    - apiVersion
+    - authToken
+    properties:
+      subscriptionId:
+        type: string
+        description: The Azure subscription identifier that owns the workspace.
+      resourceGroupName:
+        type: string
+        description: The resource group containing the Quantum workspace.
+      workspaceName:
+        type: string
+        description: The name of the Azure Quantum workspace.
+      locationName:
+        type: string
+        description: The Azure region used to list offerings, e.g. eastus.
+      apiVersion:
+        type: string
+        description: The resource-manager api-version, e.g. 2025-12-15-preview.
+      authToken:
+        type: string
+        description: The Azure AD bearer token (without the "Bearer " prefix).
+  steps:
+  - stepId: getWorkspace
+    description: >-
+      Read the Quantum workspace to confirm it exists and inspect its
+      provisioning state and endpoint.
+    operationId: Workspaces_Get
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.authToken"
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: subscriptionId
+      in: path
+      value: $inputs.subscriptionId
+    - name: resourceGroupName
+      in: path
+      value: $inputs.resourceGroupName
+    - name: workspaceName
+      in: path
+      value: $inputs.workspaceName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      provisioningState: $response.body#/properties/provisioningState
+      endpointUri: $response.body#/properties/endpointUri
+      apiKeyEnabled: $response.body#/properties/apiKeyEnabled
+    onSuccess:
+    - name: provisioned
+      type: goto
+      stepId: listKeys
+      criteria:
+      - context: $response.body
+        condition: $.properties.provisioningState == "Succeeded"
+        type: jsonpath
+    - name: notProvisioned
+      type: goto
+      stepId: reportNotReady
+      criteria:
+      - context: $response.body
+        condition: $.properties.provisioningState != "Succeeded"
+        type: jsonpath
+  - stepId: listKeys
+    description: >-
+      Retrieve the workspace access keys and connection strings for client
+      configuration.
+    operationId: Workspaces_ListKeys
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.authToken"
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: subscriptionId
+      in: path
+      value: $inputs.subscriptionId
+    - name: resourceGroupName
+      in: path
+      value: $inputs.resourceGroupName
+    - name: workspaceName
+      in: path
+      value: $inputs.workspaceName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      apiKeyEnabled: $response.body#/apiKeyEnabled
+      primaryConnectionString: $response.body#/primaryConnectionString
+  - stepId: listOfferings
+    description: >-
+      List the provider offerings available in the workspace region for
+      onboarding decisions.
+    operationId: Offerings_List
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.authToken"
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: subscriptionId
+      in: path
+      value: $inputs.subscriptionId
+    - name: locationName
+      in: path
+      value: $inputs.locationName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      offerings: $response.body#/value
+      firstOfferingId: $response.body#/value/0/id
+    onSuccess:
+    - name: done
+      type: end
+  - stepId: reportNotReady
+    description: >-
+      The workspace is not in a Succeeded provisioning state; re-read it to
+      surface the current provisioning state for the caller.
+    operationId: Workspaces_Get
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.authToken"
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: subscriptionId
+      in: path
+      value: $inputs.subscriptionId
+    - name: resourceGroupName
+      in: path
+      value: $inputs.resourceGroupName
+    - name: workspaceName
+      in: path
+      value: $inputs.workspaceName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      pendingProvisioningState: $response.body#/properties/provisioningState
+  outputs:
+    provisioningState: $steps.getWorkspace.outputs.provisioningState
+    endpointUri: $steps.getWorkspace.outputs.endpointUri
+    primaryConnectionString: $steps.listKeys.outputs.primaryConnectionString
+    offerings: $steps.listOfferings.outputs.offerings
+    pendingProvisioningState: $steps.reportNotReady.outputs.pendingProvisioningState

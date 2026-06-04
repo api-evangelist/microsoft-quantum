@@ -1,0 +1,155 @@
+arazzo: 1.0.1
+info:
+  title: Azure Quantum Discover an Available Target
+  summary: List provider statuses in a workspace and branch on availability before selecting a target.
+  description: >-
+    Before submitting work, a client needs to know which providers and targets
+    are currently available in a workspace. This workflow lists provider status
+    with Providers_List, branches on the first provider's current availability,
+    and on an available provider returns its id and the list of target statuses
+    so a caller can pick a target to run against. Each step spells out its
+    request inline, including the inline Authorization bearer token and the
+    required api-version query parameter.
+  version: 1.0.0
+sourceDescriptions:
+- name: dataPlaneApi
+  url: ../openapi/azure-quantum-data-plane-openapi.json
+  type: openapi
+workflows:
+- workflowId: discover-available-target
+  summary: List provider statuses and surface targets from an available provider.
+  description: >-
+    Calls Providers_List for the workspace and inspects the first returned
+    provider's currentAvailability. When the provider is Available the workflow
+    returns its id and targets array; otherwise it surfaces the unavailable
+    status so the caller can choose differently.
+  inputs:
+    type: object
+    required:
+    - subscriptionId
+    - resourceGroupName
+    - workspaceName
+    - apiVersion
+    - authToken
+    properties:
+      subscriptionId:
+        type: string
+        description: The Azure subscription identifier that owns the workspace.
+      resourceGroupName:
+        type: string
+        description: The resource group containing the Quantum workspace.
+      workspaceName:
+        type: string
+        description: The name of the Azure Quantum workspace.
+      apiVersion:
+        type: string
+        description: The data-plane api-version, e.g. 2026-01-15-preview.
+      authToken:
+        type: string
+        description: The Azure AD bearer token (without the "Bearer " prefix).
+  steps:
+  - stepId: listProviders
+    description: >-
+      List the status of all providers in the workspace, returning their current
+      availability and per-target statuses.
+    operationId: Providers_List
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.authToken"
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: subscriptionId
+      in: path
+      value: $inputs.subscriptionId
+    - name: resourceGroupName
+      in: path
+      value: $inputs.resourceGroupName
+    - name: workspaceName
+      in: path
+      value: $inputs.workspaceName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      providers: $response.body#/value
+      firstProviderId: $response.body#/value/0/id
+      firstProviderAvailability: $response.body#/value/0/currentAvailability
+      firstProviderTargets: $response.body#/value/0/targets
+    onSuccess:
+    - name: providerAvailable
+      type: goto
+      stepId: reportAvailable
+      criteria:
+      - context: $response.body
+        condition: $.value[0].currentAvailability == "Available"
+        type: jsonpath
+    - name: providerUnavailable
+      type: goto
+      stepId: reportUnavailable
+      criteria:
+      - context: $response.body
+        condition: $.value[0].currentAvailability != "Available"
+        type: jsonpath
+  - stepId: reportAvailable
+    description: >-
+      The first provider is available; re-read provider status to confirm and
+      surface its id and target list for target selection.
+    operationId: Providers_List
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.authToken"
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: subscriptionId
+      in: path
+      value: $inputs.subscriptionId
+    - name: resourceGroupName
+      in: path
+      value: $inputs.resourceGroupName
+    - name: workspaceName
+      in: path
+      value: $inputs.workspaceName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      selectedProviderId: $response.body#/value/0/id
+      selectedTargets: $response.body#/value/0/targets
+      firstTargetId: $response.body#/value/0/targets/0/id
+      firstTargetAvailability: $response.body#/value/0/targets/0/currentAvailability
+    onSuccess:
+    - name: done
+      type: end
+  - stepId: reportUnavailable
+    description: >-
+      The first provider is not available; surface its id and availability so the
+      caller can pick another provider or retry later.
+    operationId: Providers_List
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.authToken"
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: subscriptionId
+      in: path
+      value: $inputs.subscriptionId
+    - name: resourceGroupName
+      in: path
+      value: $inputs.resourceGroupName
+    - name: workspaceName
+      in: path
+      value: $inputs.workspaceName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      unavailableProviderId: $response.body#/value/0/id
+      unavailableAvailability: $response.body#/value/0/currentAvailability
+  outputs:
+    selectedProviderId: $steps.reportAvailable.outputs.selectedProviderId
+    selectedTargets: $steps.reportAvailable.outputs.selectedTargets
+    firstTargetId: $steps.reportAvailable.outputs.firstTargetId
+    unavailableProviderId: $steps.reportUnavailable.outputs.unavailableProviderId

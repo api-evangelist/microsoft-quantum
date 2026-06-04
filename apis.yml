@@ -143,6 +143,27 @@ kind: contract
 image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 common:
+- type: ArazzoWorkflows
+  url: arazzo/
+  workflows:
+  - url: arazzo/microsoft-quantum-cancel-running-job-workflow.yml
+    name: Azure Quantum Cancel a Running Job
+    summary: Look up a job, branch on whether it is still running, cancel it, and confirm cancellation.
+  - url: arazzo/microsoft-quantum-discover-available-target-workflow.yml
+    name: Azure Quantum Discover an Available Target
+    summary: List provider statuses in a workspace and branch on availability before selecting a target.
+  - url: arazzo/microsoft-quantum-quota-capacity-check-workflow.yml
+    name: Azure Quantum Quota Capacity Check
+    summary: List workspace quotas, branch on remaining headroom, and stage storage when capacity exists.
+  - url: arazzo/microsoft-quantum-session-lifecycle-workflow.yml
+    name: Azure Quantum Session Lifecycle
+    summary: Open a session, submit a job into it, list its jobs, then close the session.
+  - url: arazzo/microsoft-quantum-submit-job-poll-results-workflow.yml
+    name: Azure Quantum Submit Job and Retrieve Results
+    summary: Stage input, create a quantum job, poll it to a terminal state, and read the output URI.
+  - url: arazzo/microsoft-quantum-workspace-bootstrap-workflow.yml
+    name: Azure Quantum Workspace Bootstrap
+    summary: Read a workspace, branch on provisioning state, list its keys, and list provider offerings.
 - url: https://quantum.microsoft.com/
   name: Microsoft Quantum
   type: Portal

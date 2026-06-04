@@ -1,0 +1,226 @@
+arazzo: 1.0.1
+info:
+  title: Azure Quantum Submit Job and Retrieve Results
+  summary: Stage input, create a quantum job, poll it to a terminal state, and read the output URI.
+  description: >-
+    The canonical Azure Quantum execution loop. The workflow first requests a
+    storage SAS URI so input data can be staged into the workspace container,
+    then creates a job with that container, polls the job with Jobs_Get until it
+    reaches a terminal status, and on success surfaces the output data URI where
+    results are written. Each step spells out its request inline, including the
+    inline Authorization bearer token and the required api-version query
+    parameter, so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: dataPlaneApi
+  url: ../openapi/azure-quantum-data-plane-openapi.json
+  type: openapi
+workflows:
+- workflowId: submit-job-poll-results
+  summary: Stage storage, submit a quantum job, poll to completion, and return its output URI.
+  description: >-
+    Requests a container SAS URI from Storage_GetSasUri, creates the job with
+    Jobs_Create, then repeatedly calls Jobs_Get until the job status is one of
+    the terminal values (Succeeded, Failed, or Cancelled). On a successful job
+    the workflow returns the output data URI and final status.
+  inputs:
+    type: object
+    required:
+    - subscriptionId
+    - resourceGroupName
+    - workspaceName
+    - apiVersion
+    - authToken
+    - jobId
+    - containerName
+    - quantumItemCount
+    properties:
+      subscriptionId:
+        type: string
+        description: The Azure subscription identifier that owns the workspace.
+      resourceGroupName:
+        type: string
+        description: The resource group containing the Quantum workspace.
+      workspaceName:
+        type: string
+        description: The name of the Azure Quantum workspace.
+      apiVersion:
+        type: string
+        description: The data-plane api-version, e.g. 2026-01-15-preview.
+      authToken:
+        type: string
+        description: The Azure AD bearer token (without the "Bearer " prefix).
+      jobId:
+        type: string
+        description: A client-generated unique identifier (GUID) for the new job.
+      containerName:
+        type: string
+        description: The storage container name used to host job data.
+      blobName:
+        type: string
+        description: Optional blob name within the container to stage input data.
+      inputDataFormat:
+        type: string
+        description: The format of the input data, e.g. microsoft.qio.v2.
+      outputDataFormat:
+        type: string
+        description: The expected format of the output data.
+      quantumItemCount:
+        type: integer
+        description: The number of quantum computing items in the job.
+      inputParams:
+        type: object
+        description: Target-specific input parameters for the job.
+  steps:
+  - stepId: getSasUri
+    description: >-
+      Request a container SAS URI so input data can be staged into the workspace
+      storage that the job will reference.
+    operationId: Storage_GetSasUri
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.authToken"
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: subscriptionId
+      in: path
+      value: $inputs.subscriptionId
+    - name: resourceGroupName
+      in: path
+      value: $inputs.resourceGroupName
+    - name: workspaceName
+      in: path
+      value: $inputs.workspaceName
+    requestBody:
+      contentType: application/json
+      payload:
+        containerName: $inputs.containerName
+        blobName: $inputs.blobName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      sasUri: $response.body#/sasUri
+  - stepId: createJob
+    description: >-
+      Create the quantum job referencing the SAS container URI, the input/output
+      formats, and the quantum computing item count.
+    operationId: Jobs_Create
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.authToken"
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: subscriptionId
+      in: path
+      value: $inputs.subscriptionId
+    - name: resourceGroupName
+      in: path
+      value: $inputs.resourceGroupName
+    - name: workspaceName
+      in: path
+      value: $inputs.workspaceName
+    - name: jobId
+      in: path
+      value: $inputs.jobId
+    requestBody:
+      contentType: application/json
+      payload:
+        id: $inputs.jobId
+        jobType: QuantumComputing
+        containerUri: $steps.getSasUri.outputs.sasUri
+        inputDataFormat: $inputs.inputDataFormat
+        outputDataFormat: $inputs.outputDataFormat
+        quantumComputingData:
+          count: $inputs.quantumItemCount
+        inputParams: $inputs.inputParams
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      createdJobId: $response.body#/id
+      createdStatus: $response.body#/status
+  - stepId: pollJob
+    description: >-
+      Read the job status. Repeat this step while the job is still running and
+      branch to completion handling once it reaches a terminal status of
+      Succeeded, Failed, or Cancelled.
+    operationId: Jobs_Get
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.authToken"
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: subscriptionId
+      in: path
+      value: $inputs.subscriptionId
+    - name: resourceGroupName
+      in: path
+      value: $inputs.resourceGroupName
+    - name: workspaceName
+      in: path
+      value: $inputs.workspaceName
+    - name: jobId
+      in: path
+      value: $inputs.jobId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/status
+      outputDataUri: $response.body#/outputDataUri
+    onSuccess:
+    - name: jobSucceeded
+      type: goto
+      stepId: getResult
+      criteria:
+      - context: $response.body
+        condition: $.status == "Succeeded"
+        type: jsonpath
+    - name: jobStillRunning
+      type: goto
+      stepId: pollJob
+      criteria:
+      - context: $response.body
+        condition: $.status != "Succeeded" && $.status != "Failed" && $.status != "Cancelled"
+        type: jsonpath
+  - stepId: getResult
+    description: >-
+      Confirm the job succeeded and capture the output data URI and format where
+      the quantum results were written.
+    operationId: Jobs_Get
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.authToken"
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: subscriptionId
+      in: path
+      value: $inputs.subscriptionId
+    - name: resourceGroupName
+      in: path
+      value: $inputs.resourceGroupName
+    - name: workspaceName
+      in: path
+      value: $inputs.workspaceName
+    - name: jobId
+      in: path
+      value: $inputs.jobId
+    successCriteria:
+    - condition: $statusCode == 200
+    - condition: $response.body#/status == "Succeeded"
+    outputs:
+      finalStatus: $response.body#/status
+      outputDataUri: $response.body#/outputDataUri
+      outputDataFormat: $response.body#/outputDataFormat
+  outputs:
+    jobId: $steps.createJob.outputs.createdJobId
+    finalStatus: $steps.getResult.outputs.finalStatus
+    outputDataUri: $steps.getResult.outputs.outputDataUri
+    outputDataFormat: $steps.getResult.outputs.outputDataFormat

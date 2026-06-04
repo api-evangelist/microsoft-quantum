@@ -1,0 +1,159 @@
+arazzo: 1.0.1
+info:
+  title: Azure Quantum Quota Capacity Check
+  summary: List workspace quotas, branch on remaining headroom, and stage storage when capacity exists.
+  description: >-
+    Before submitting expensive quantum work, callers want to confirm there is
+    quota headroom. This workflow lists the workspace quotas with Quotas_List,
+    branches on whether the first quota's utilization plus holds is still below
+    its limit, and when capacity remains it requests a storage SAS URI so a job
+    can be staged. Each step spells out its request inline, including the inline
+    Authorization bearer token and the required api-version query parameter.
+  version: 1.0.0
+sourceDescriptions:
+- name: dataPlaneApi
+  url: ../openapi/azure-quantum-data-plane-openapi.json
+  type: openapi
+workflows:
+- workflowId: quota-capacity-check
+  summary: Check quota headroom and stage storage only when capacity remains.
+  description: >-
+    Reads the workspace quotas and compares the first quota's utilization and
+    holds against its limit. When headroom exists it requests a container SAS
+    URI and returns it; otherwise it reports the exhausted quota dimension.
+  inputs:
+    type: object
+    required:
+    - subscriptionId
+    - resourceGroupName
+    - workspaceName
+    - apiVersion
+    - authToken
+    - containerName
+    properties:
+      subscriptionId:
+        type: string
+        description: The Azure subscription identifier that owns the workspace.
+      resourceGroupName:
+        type: string
+        description: The resource group containing the Quantum workspace.
+      workspaceName:
+        type: string
+        description: The name of the Azure Quantum workspace.
+      apiVersion:
+        type: string
+        description: The data-plane api-version, e.g. 2026-01-15-preview.
+      authToken:
+        type: string
+        description: The Azure AD bearer token (without the "Bearer " prefix).
+      containerName:
+        type: string
+        description: The storage container name to stage job data into when capacity exists.
+  steps:
+  - stepId: listQuotas
+    description: >-
+      List the workspace quotas with their per-dimension utilization, holds, and
+      limit.
+    operationId: Quotas_List
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.authToken"
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: subscriptionId
+      in: path
+      value: $inputs.subscriptionId
+    - name: resourceGroupName
+      in: path
+      value: $inputs.resourceGroupName
+    - name: workspaceName
+      in: path
+      value: $inputs.workspaceName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      quotas: $response.body#/value
+      firstDimension: $response.body#/value/0/dimension
+      firstUtilization: $response.body#/value/0/utilization
+      firstHolds: $response.body#/value/0/holds
+      firstLimit: $response.body#/value/0/limit
+    onSuccess:
+    - name: hasHeadroom
+      type: goto
+      stepId: stageStorage
+      criteria:
+      - context: $response.body
+        condition: $.value[0].utilization + $.value[0].holds < $.value[0].limit
+        type: jsonpath
+    - name: quotaExhausted
+      type: goto
+      stepId: reportExhausted
+      criteria:
+      - context: $response.body
+        condition: $.value[0].utilization + $.value[0].holds >= $.value[0].limit
+        type: jsonpath
+  - stepId: stageStorage
+    description: >-
+      Capacity remains, so request a container SAS URI ready for a job
+      submission.
+    operationId: Storage_GetSasUri
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.authToken"
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: subscriptionId
+      in: path
+      value: $inputs.subscriptionId
+    - name: resourceGroupName
+      in: path
+      value: $inputs.resourceGroupName
+    - name: workspaceName
+      in: path
+      value: $inputs.workspaceName
+    requestBody:
+      contentType: application/json
+      payload:
+        containerName: $inputs.containerName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      sasUri: $response.body#/sasUri
+    onSuccess:
+    - name: done
+      type: end
+  - stepId: reportExhausted
+    description: >-
+      No headroom remains; re-read quotas to surface the exhausted dimension and
+      its provider for the caller.
+    operationId: Quotas_List
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.authToken"
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: subscriptionId
+      in: path
+      value: $inputs.subscriptionId
+    - name: resourceGroupName
+      in: path
+      value: $inputs.resourceGroupName
+    - name: workspaceName
+      in: path
+      value: $inputs.workspaceName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      exhaustedDimension: $response.body#/value/0/dimension
+      exhaustedProviderId: $response.body#/value/0/providerId
+      exhaustedLimit: $response.body#/value/0/limit
+  outputs:
+    quotas: $steps.listQuotas.outputs.quotas
+    sasUri: $steps.stageStorage.outputs.sasUri
+    exhaustedDimension: $steps.reportExhausted.outputs.exhaustedDimension

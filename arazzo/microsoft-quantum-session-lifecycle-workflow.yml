@@ -1,0 +1,227 @@
+arazzo: 1.0.1
+info:
+  title: Azure Quantum Session Lifecycle
+  summary: Open a session, submit a job into it, list its jobs, then close the session.
+  description: >-
+    Sessions group related jobs so they execute against the same target with a
+    shared failure policy. This workflow opens a session with Sessions_Open,
+    creates a job that references the session id, lists the session's jobs with
+    SessionsJobs_List, and finally closes the session with Sessions_Close. Each
+    step spells out its request inline, including the inline Authorization bearer
+    token and the required api-version query parameter.
+  version: 1.0.0
+sourceDescriptions:
+- name: dataPlaneApi
+  url: ../openapi/azure-quantum-data-plane-openapi.json
+  type: openapi
+workflows:
+- workflowId: session-lifecycle
+  summary: Open a session, submit a job into it, enumerate its jobs, and close it.
+  description: >-
+    Opens a session with a job failure policy, stages a container SAS URI,
+    creates a job bound to the session id, lists the jobs that belong to the
+    session, and closes the session returning its final status.
+  inputs:
+    type: object
+    required:
+    - subscriptionId
+    - resourceGroupName
+    - workspaceName
+    - apiVersion
+    - authToken
+    - sessionId
+    - jobFailurePolicy
+    - jobId
+    - containerName
+    - quantumItemCount
+    properties:
+      subscriptionId:
+        type: string
+        description: The Azure subscription identifier that owns the workspace.
+      resourceGroupName:
+        type: string
+        description: The resource group containing the Quantum workspace.
+      workspaceName:
+        type: string
+        description: The name of the Azure Quantum workspace.
+      apiVersion:
+        type: string
+        description: The data-plane api-version, e.g. 2026-01-15-preview.
+      authToken:
+        type: string
+        description: The Azure AD bearer token (without the "Bearer " prefix).
+      sessionId:
+        type: string
+        description: A client-generated unique identifier for the session.
+      jobFailurePolicy:
+        type: string
+        description: Policy controlling session behavior when a job fails (e.g. Abort or Continue).
+      jobId:
+        type: string
+        description: A client-generated unique identifier for the job created in the session.
+      containerName:
+        type: string
+        description: The storage container name used to host job data.
+      quantumItemCount:
+        type: integer
+        description: The number of quantum computing items in the job.
+  steps:
+  - stepId: openSession
+    description: >-
+      Open a new session with the supplied id and job failure policy.
+    operationId: Sessions_Open
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.authToken"
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: subscriptionId
+      in: path
+      value: $inputs.subscriptionId
+    - name: resourceGroupName
+      in: path
+      value: $inputs.resourceGroupName
+    - name: workspaceName
+      in: path
+      value: $inputs.workspaceName
+    - name: sessionId
+      in: path
+      value: $inputs.sessionId
+    requestBody:
+      contentType: application/json
+      payload:
+        id: $inputs.sessionId
+        jobFailurePolicy: $inputs.jobFailurePolicy
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      openedSessionId: $response.body#/id
+      sessionStatus: $response.body#/status
+  - stepId: getSasUri
+    description: >-
+      Request a container SAS URI to stage input data for the session's job.
+    operationId: Storage_GetSasUri
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.authToken"
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: subscriptionId
+      in: path
+      value: $inputs.subscriptionId
+    - name: resourceGroupName
+      in: path
+      value: $inputs.resourceGroupName
+    - name: workspaceName
+      in: path
+      value: $inputs.workspaceName
+    requestBody:
+      contentType: application/json
+      payload:
+        containerName: $inputs.containerName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      sasUri: $response.body#/sasUri
+  - stepId: createSessionJob
+    description: >-
+      Create a job that references the open session id so it runs as part of the
+      session.
+    operationId: Jobs_Create
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.authToken"
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: subscriptionId
+      in: path
+      value: $inputs.subscriptionId
+    - name: resourceGroupName
+      in: path
+      value: $inputs.resourceGroupName
+    - name: workspaceName
+      in: path
+      value: $inputs.workspaceName
+    - name: jobId
+      in: path
+      value: $inputs.jobId
+    requestBody:
+      contentType: application/json
+      payload:
+        id: $inputs.jobId
+        jobType: QuantumComputing
+        sessionId: $steps.openSession.outputs.openedSessionId
+        containerUri: $steps.getSasUri.outputs.sasUri
+        quantumComputingData:
+          count: $inputs.quantumItemCount
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      createdJobId: $response.body#/id
+      createdJobStatus: $response.body#/status
+  - stepId: listSessionJobs
+    description: >-
+      List the jobs that belong to the session to confirm the job was attached.
+    operationId: SessionsJobs_List
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.authToken"
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: subscriptionId
+      in: path
+      value: $inputs.subscriptionId
+    - name: resourceGroupName
+      in: path
+      value: $inputs.resourceGroupName
+    - name: workspaceName
+      in: path
+      value: $inputs.workspaceName
+    - name: sessionId
+      in: path
+      value: $inputs.sessionId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      sessionJobs: $response.body#/value
+      firstSessionJobId: $response.body#/value/0/id
+  - stepId: closeSession
+    description: >-
+      Close the session now that its job has been submitted and enumerated.
+    operationId: Sessions_Close
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.authToken"
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: subscriptionId
+      in: path
+      value: $inputs.subscriptionId
+    - name: resourceGroupName
+      in: path
+      value: $inputs.resourceGroupName
+    - name: workspaceName
+      in: path
+      value: $inputs.workspaceName
+    - name: sessionId
+      in: path
+      value: $inputs.sessionId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      closedStatus: $response.body#/status
+  outputs:
+    sessionId: $steps.openSession.outputs.openedSessionId
+    jobId: $steps.createSessionJob.outputs.createdJobId
+    sessionJobs: $steps.listSessionJobs.outputs.sessionJobs
+    finalSessionStatus: $steps.closeSession.outputs.closedStatus

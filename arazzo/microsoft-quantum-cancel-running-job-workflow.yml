@@ -1,0 +1,162 @@
+arazzo: 1.0.1
+info:
+  title: Azure Quantum Cancel a Running Job
+  summary: Look up a job, branch on whether it is still running, cancel it, and confirm cancellation.
+  description: >-
+    Stopping in-flight work cleanly is a common operational need. This workflow
+    reads a job with Jobs_Get, branches on its status, requests cancellation with
+    Jobs_Cancel only when the job is still in a cancellable state, and then polls
+    Jobs_Get until the job reaches the terminal Cancelled status. Each step
+    spells out its request inline, including the inline Authorization bearer
+    token and the required api-version query parameter.
+  version: 1.0.0
+sourceDescriptions:
+- name: dataPlaneApi
+  url: ../openapi/azure-quantum-data-plane-openapi.json
+  type: openapi
+workflows:
+- workflowId: cancel-running-job
+  summary: Cancel a quantum job that is still running and confirm it reaches Cancelled.
+  description: >-
+    Reads the current job status; if the job has already completed (Succeeded,
+    Failed, or Cancelled) the workflow ends without action, otherwise it calls
+    Jobs_Cancel and polls Jobs_Get until the status becomes Cancelled.
+  inputs:
+    type: object
+    required:
+    - subscriptionId
+    - resourceGroupName
+    - workspaceName
+    - apiVersion
+    - authToken
+    - jobId
+    properties:
+      subscriptionId:
+        type: string
+        description: The Azure subscription identifier that owns the workspace.
+      resourceGroupName:
+        type: string
+        description: The resource group containing the Quantum workspace.
+      workspaceName:
+        type: string
+        description: The name of the Azure Quantum workspace.
+      apiVersion:
+        type: string
+        description: The data-plane api-version, e.g. 2026-01-15-preview.
+      authToken:
+        type: string
+        description: The Azure AD bearer token (without the "Bearer " prefix).
+      jobId:
+        type: string
+        description: The identifier of the job to cancel.
+  steps:
+  - stepId: getJob
+    description: >-
+      Read the current job status to decide whether cancellation is needed.
+    operationId: Jobs_Get
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.authToken"
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: subscriptionId
+      in: path
+      value: $inputs.subscriptionId
+    - name: resourceGroupName
+      in: path
+      value: $inputs.resourceGroupName
+    - name: workspaceName
+      in: path
+      value: $inputs.workspaceName
+    - name: jobId
+      in: path
+      value: $inputs.jobId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/status
+    onSuccess:
+    - name: stillRunning
+      type: goto
+      stepId: cancelJob
+      criteria:
+      - context: $response.body
+        condition: $.status != "Succeeded" && $.status != "Failed" && $.status != "Cancelled"
+        type: jsonpath
+    - name: alreadyTerminal
+      type: goto
+      stepId: confirmCancelled
+      criteria:
+      - context: $response.body
+        condition: $.status == "Succeeded" || $.status == "Failed" || $.status == "Cancelled"
+        type: jsonpath
+  - stepId: cancelJob
+    description: >-
+      Request cancellation of the still-running job.
+    operationId: Jobs_Cancel
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.authToken"
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: subscriptionId
+      in: path
+      value: $inputs.subscriptionId
+    - name: resourceGroupName
+      in: path
+      value: $inputs.resourceGroupName
+    - name: workspaceName
+      in: path
+      value: $inputs.workspaceName
+    - name: jobId
+      in: path
+      value: $inputs.jobId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/status
+  - stepId: confirmCancelled
+    description: >-
+      Poll the job until it reaches the terminal Cancelled status; repeat while
+      cancellation is still being processed.
+    operationId: Jobs_Get
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.authToken"
+    - name: api-version
+      in: query
+      value: $inputs.apiVersion
+    - name: subscriptionId
+      in: path
+      value: $inputs.subscriptionId
+    - name: resourceGroupName
+      in: path
+      value: $inputs.resourceGroupName
+    - name: workspaceName
+      in: path
+      value: $inputs.workspaceName
+    - name: jobId
+      in: path
+      value: $inputs.jobId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      finalStatus: $response.body#/status
+      cancellationTime: $response.body#/cancellationTime
+    onSuccess:
+    - name: cancelPending
+      type: goto
+      stepId: confirmCancelled
+      criteria:
+      - context: $response.body
+        condition: $.status == "CancellationRequested" || $.status == "Cancelling"
+        type: jsonpath
+  outputs:
+    jobId: $inputs.jobId
+    finalStatus: $steps.confirmCancelled.outputs.finalStatus
+    cancellationTime: $steps.confirmCancelled.outputs.cancellationTime
