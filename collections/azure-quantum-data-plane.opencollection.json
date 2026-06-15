@@ -1,0 +1,715 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure Quantum Workspace Services",
+    "version": "2026-01-15-preview"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Jobs_Update",
+        "type": "http"
+      },
+      "http": {
+        "method": "PATCH",
+        "url": "{{baseUrl}}/subscriptions/:subscriptionId/resourceGroups/:resourceGroupName/providers/Microsoft.Quantum/workspaces/:workspaceName/jobUpdateOptions/:jobId",
+        "params": [
+          {
+            "name": "api-version",
+            "value": "",
+            "type": "query",
+            "description": "The API version to use for this operation."
+          },
+          {
+            "name": "subscriptionId",
+            "value": "",
+            "type": "path",
+            "description": "The Azure subscription ID."
+          },
+          {
+            "name": "resourceGroupName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure resource group."
+          },
+          {
+            "name": "workspaceName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure Quantum workspace."
+          },
+          {
+            "name": "jobId",
+            "value": "",
+            "type": "path",
+            "description": "Id of the job."
+          }
+        ]
+      },
+      "docs": "Update job properties."
+    },
+    {
+      "info": {
+        "name": "Jobs_List",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "{{baseUrl}}/subscriptions/:subscriptionId/resourceGroups/:resourceGroupName/providers/Microsoft.Quantum/workspaces/:workspaceName/jobs",
+        "params": [
+          {
+            "name": "api-version",
+            "value": "",
+            "type": "query",
+            "description": "The API version to use for this operation."
+          },
+          {
+            "name": "subscriptionId",
+            "value": "",
+            "type": "path",
+            "description": "The Azure subscription ID."
+          },
+          {
+            "name": "resourceGroupName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure resource group."
+          },
+          {
+            "name": "workspaceName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure Quantum workspace."
+          },
+          {
+            "name": "filter",
+            "value": "",
+            "type": "query",
+            "description": "Filter the result list using the given expression"
+          },
+          {
+            "name": "skip",
+            "value": "",
+            "type": "query",
+            "description": "The number of result items to skip."
+          },
+          {
+            "name": "top",
+            "value": "",
+            "type": "query",
+            "description": "The number of jobs taken."
+          },
+          {
+            "name": "orderby",
+            "value": "",
+            "type": "query",
+            "description": "The order of returned items."
+          }
+        ]
+      },
+      "docs": "List all jobs."
+    },
+    {
+      "info": {
+        "name": "Jobs_Get",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "{{baseUrl}}/subscriptions/:subscriptionId/resourceGroups/:resourceGroupName/providers/Microsoft.Quantum/workspaces/:workspaceName/jobs/:jobId",
+        "params": [
+          {
+            "name": "api-version",
+            "value": "",
+            "type": "query",
+            "description": "The API version to use for this operation."
+          },
+          {
+            "name": "subscriptionId",
+            "value": "",
+            "type": "path",
+            "description": "The Azure subscription ID."
+          },
+          {
+            "name": "resourceGroupName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure resource group."
+          },
+          {
+            "name": "workspaceName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure Quantum workspace."
+          },
+          {
+            "name": "jobId",
+            "value": "",
+            "type": "path",
+            "description": "Id of the job."
+          }
+        ]
+      },
+      "docs": "Get job by its id."
+    },
+    {
+      "info": {
+        "name": "Jobs_Create",
+        "type": "http"
+      },
+      "http": {
+        "method": "PUT",
+        "url": "{{baseUrl}}/subscriptions/:subscriptionId/resourceGroups/:resourceGroupName/providers/Microsoft.Quantum/workspaces/:workspaceName/jobs/:jobId",
+        "params": [
+          {
+            "name": "api-version",
+            "value": "",
+            "type": "query",
+            "description": "The API version to use for this operation."
+          },
+          {
+            "name": "subscriptionId",
+            "value": "",
+            "type": "path",
+            "description": "The Azure subscription ID."
+          },
+          {
+            "name": "resourceGroupName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure resource group."
+          },
+          {
+            "name": "workspaceName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure Quantum workspace."
+          },
+          {
+            "name": "jobId",
+            "value": "",
+            "type": "path",
+            "description": "Id of the job."
+          }
+        ]
+      },
+      "docs": "Create a new job."
+    },
+    {
+      "info": {
+        "name": "Jobs_Delete",
+        "type": "http"
+      },
+      "http": {
+        "method": "DELETE",
+        "url": "{{baseUrl}}/subscriptions/:subscriptionId/resourceGroups/:resourceGroupName/providers/Microsoft.Quantum/workspaces/:workspaceName/jobs/:jobId",
+        "params": [
+          {
+            "name": "api-version",
+            "value": "",
+            "type": "query",
+            "description": "The API version to use for this operation."
+          },
+          {
+            "name": "subscriptionId",
+            "value": "",
+            "type": "path",
+            "description": "The Azure subscription ID."
+          },
+          {
+            "name": "resourceGroupName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure resource group."
+          },
+          {
+            "name": "workspaceName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure Quantum workspace."
+          },
+          {
+            "name": "jobId",
+            "value": "",
+            "type": "path",
+            "description": "Id of the job."
+          }
+        ]
+      },
+      "docs": "Delete a job by its id. Use for cancellation in versions before 2025-12-01-preview."
+    },
+    {
+      "info": {
+        "name": "Jobs_Cancel",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "{{baseUrl}}/subscriptions/:subscriptionId/resourceGroups/:resourceGroupName/providers/Microsoft.Quantum/workspaces/:workspaceName/jobs/:jobId:cancel",
+        "params": [
+          {
+            "name": "api-version",
+            "value": "",
+            "type": "query",
+            "description": "The API version to use for this operation."
+          },
+          {
+            "name": "subscriptionId",
+            "value": "",
+            "type": "path",
+            "description": "The Azure subscription ID."
+          },
+          {
+            "name": "resourceGroupName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure resource group."
+          },
+          {
+            "name": "workspaceName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure Quantum workspace."
+          },
+          {
+            "name": "jobId",
+            "value": "",
+            "type": "path",
+            "description": "Id of the job."
+          }
+        ]
+      },
+      "docs": "Request the cancellation of an existing job."
+    },
+    {
+      "info": {
+        "name": "Providers_List",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "{{baseUrl}}/subscriptions/:subscriptionId/resourceGroups/:resourceGroupName/providers/Microsoft.Quantum/workspaces/:workspaceName/providerStatus",
+        "params": [
+          {
+            "name": "api-version",
+            "value": "",
+            "type": "query",
+            "description": "The API version to use for this operation."
+          },
+          {
+            "name": "subscriptionId",
+            "value": "",
+            "type": "path",
+            "description": "The Azure subscription ID."
+          },
+          {
+            "name": "resourceGroupName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure resource group."
+          },
+          {
+            "name": "workspaceName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure Quantum workspace."
+          }
+        ]
+      },
+      "docs": "List all providers in the workspace with their respective status."
+    },
+    {
+      "info": {
+        "name": "Quotas_List",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "{{baseUrl}}/subscriptions/:subscriptionId/resourceGroups/:resourceGroupName/providers/Microsoft.Quantum/workspaces/:workspaceName/quotas",
+        "params": [
+          {
+            "name": "api-version",
+            "value": "",
+            "type": "query",
+            "description": "The API version to use for this operation."
+          },
+          {
+            "name": "subscriptionId",
+            "value": "",
+            "type": "path",
+            "description": "The Azure subscription ID."
+          },
+          {
+            "name": "resourceGroupName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure resource group."
+          },
+          {
+            "name": "workspaceName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure Quantum workspace."
+          }
+        ]
+      },
+      "docs": "List quotas for the given workspace."
+    },
+    {
+      "info": {
+        "name": "Sessions_Listv2",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "{{baseUrl}}/subscriptions/:subscriptionId/resourceGroups/:resourceGroupName/providers/Microsoft.Quantum/workspaces/:workspaceName/sessions",
+        "params": [
+          {
+            "name": "api-version",
+            "value": "",
+            "type": "query",
+            "description": "The API version to use for this operation."
+          },
+          {
+            "name": "subscriptionId",
+            "value": "",
+            "type": "path",
+            "description": "The Azure subscription ID."
+          },
+          {
+            "name": "resourceGroupName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure resource group."
+          },
+          {
+            "name": "workspaceName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure Quantum workspace."
+          },
+          {
+            "name": "filter",
+            "value": "",
+            "type": "query",
+            "description": "Filter the result list using the given expression"
+          },
+          {
+            "name": "skip",
+            "value": "",
+            "type": "query",
+            "description": "The number of result items to skip."
+          },
+          {
+            "name": "top",
+            "value": "",
+            "type": "query",
+            "description": "The number of jobs taken."
+          },
+          {
+            "name": "orderby",
+            "value": "",
+            "type": "query",
+            "description": "The order of returned items."
+          }
+        ]
+      },
+      "docs": "List all Sessions."
+    },
+    {
+      "info": {
+        "name": "Sessions_Get",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "{{baseUrl}}/subscriptions/:subscriptionId/resourceGroups/:resourceGroupName/providers/Microsoft.Quantum/workspaces/:workspaceName/sessions/:sessionId",
+        "params": [
+          {
+            "name": "api-version",
+            "value": "",
+            "type": "query",
+            "description": "The API version to use for this operation."
+          },
+          {
+            "name": "subscriptionId",
+            "value": "",
+            "type": "path",
+            "description": "The Azure subscription ID."
+          },
+          {
+            "name": "resourceGroupName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure resource group."
+          },
+          {
+            "name": "workspaceName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure Quantum workspace."
+          },
+          {
+            "name": "sessionId",
+            "value": "",
+            "type": "path",
+            "description": "Id of the session."
+          }
+        ]
+      },
+      "docs": "Get Session by its id."
+    },
+    {
+      "info": {
+        "name": "Sessions_Open",
+        "type": "http"
+      },
+      "http": {
+        "method": "PUT",
+        "url": "{{baseUrl}}/subscriptions/:subscriptionId/resourceGroups/:resourceGroupName/providers/Microsoft.Quantum/workspaces/:workspaceName/sessions/:sessionId",
+        "params": [
+          {
+            "name": "api-version",
+            "value": "",
+            "type": "query",
+            "description": "The API version to use for this operation."
+          },
+          {
+            "name": "subscriptionId",
+            "value": "",
+            "type": "path",
+            "description": "The Azure subscription ID."
+          },
+          {
+            "name": "resourceGroupName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure resource group."
+          },
+          {
+            "name": "workspaceName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure Quantum workspace."
+          },
+          {
+            "name": "sessionId",
+            "value": "",
+            "type": "path",
+            "description": "Id of the session."
+          }
+        ]
+      },
+      "docs": "Open a new session."
+    },
+    {
+      "info": {
+        "name": "Sessions_Close",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "{{baseUrl}}/subscriptions/:subscriptionId/resourceGroups/:resourceGroupName/providers/Microsoft.Quantum/workspaces/:workspaceName/sessions/:sessionId:close",
+        "params": [
+          {
+            "name": "api-version",
+            "value": "",
+            "type": "query",
+            "description": "The API version to use for this operation."
+          },
+          {
+            "name": "subscriptionId",
+            "value": "",
+            "type": "path",
+            "description": "The Azure subscription ID."
+          },
+          {
+            "name": "resourceGroupName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure resource group."
+          },
+          {
+            "name": "workspaceName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure Quantum workspace."
+          },
+          {
+            "name": "sessionId",
+            "value": "",
+            "type": "path",
+            "description": "Id of the session."
+          }
+        ]
+      },
+      "docs": "Close an existing session."
+    },
+    {
+      "info": {
+        "name": "SessionsJobs_List",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "{{baseUrl}}/subscriptions/:subscriptionId/resourceGroups/:resourceGroupName/providers/Microsoft.Quantum/workspaces/:workspaceName/sessions/:sessionId/jobs",
+        "params": [
+          {
+            "name": "api-version",
+            "value": "",
+            "type": "query",
+            "description": "The API version to use for this operation."
+          },
+          {
+            "name": "subscriptionId",
+            "value": "",
+            "type": "path",
+            "description": "The Azure subscription ID."
+          },
+          {
+            "name": "resourceGroupName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure resource group."
+          },
+          {
+            "name": "workspaceName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure Quantum workspace."
+          },
+          {
+            "name": "sessionId",
+            "value": "",
+            "type": "path",
+            "description": "Id of the session to list jobs from."
+          },
+          {
+            "name": "filter",
+            "value": "",
+            "type": "query",
+            "description": "Filter the result list using the given expression"
+          },
+          {
+            "name": "skip",
+            "value": "",
+            "type": "query",
+            "description": "The number of result items to skip."
+          },
+          {
+            "name": "top",
+            "value": "",
+            "type": "query",
+            "description": "The number of jobs taken."
+          },
+          {
+            "name": "orderby",
+            "value": "",
+            "type": "query",
+            "description": "The order of returned items."
+          }
+        ]
+      },
+      "docs": "List jobs in a session."
+    },
+    {
+      "info": {
+        "name": "Storage_GetSasUri",
+        "type": "http"
+      },
+      "http": {
+        "method": "POST",
+        "url": "{{baseUrl}}/subscriptions/:subscriptionId/resourceGroups/:resourceGroupName/providers/Microsoft.Quantum/workspaces/:workspaceName/storage/sasUri",
+        "params": [
+          {
+            "name": "api-version",
+            "value": "",
+            "type": "query",
+            "description": "The API version to use for this operation."
+          },
+          {
+            "name": "subscriptionId",
+            "value": "",
+            "type": "path",
+            "description": "The Azure subscription ID."
+          },
+          {
+            "name": "resourceGroupName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure resource group."
+          },
+          {
+            "name": "workspaceName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure Quantum workspace."
+          }
+        ]
+      },
+      "docs": "Gets a URL with SAS token for a container/blob in the storage account associated with the workspace. Starting with version 2026-01-15-preview, when used for a container the container is also created if it does not already exist. The SAS URL can be used to upload job input and/or download job output."
+    },
+    {
+      "info": {
+        "name": "TopLevelItems_Listv2",
+        "type": "http"
+      },
+      "http": {
+        "method": "GET",
+        "url": "{{baseUrl}}/subscriptions/:subscriptionId/resourceGroups/:resourceGroupName/providers/Microsoft.Quantum/workspaces/:workspaceName/topLevelItems",
+        "params": [
+          {
+            "name": "api-version",
+            "value": "",
+            "type": "query",
+            "description": "The API version to use for this operation."
+          },
+          {
+            "name": "subscriptionId",
+            "value": "",
+            "type": "path",
+            "description": "The Azure subscription ID."
+          },
+          {
+            "name": "resourceGroupName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure resource group."
+          },
+          {
+            "name": "workspaceName",
+            "value": "",
+            "type": "path",
+            "description": "Name of the Azure Quantum workspace."
+          },
+          {
+            "name": "filter",
+            "value": "",
+            "type": "query",
+            "description": "Filter the result list using the given expression"
+          },
+          {
+            "name": "skip",
+            "value": "",
+            "type": "query",
+            "description": "The number of result items to skip."
+          },
+          {
+            "name": "top",
+            "value": "",
+            "type": "query",
+            "description": "The number of jobs taken."
+          },
+          {
+            "name": "orderby",
+            "value": "",
+            "type": "query",
+            "description": "The order of returned items."
+          }
+        ]
+      },
+      "docs": "List top-level items."
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,236 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure Quantum Management API",
+    "version": "2025-12-15-preview"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Operations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Operations_List",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/providers/Microsoft.Quantum/operations"
+          },
+          "docs": "List the operations for the provider"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Workspaces",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Workspaces_CheckNameAvailability",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/subscriptions/:subscriptionId/providers/Microsoft.Quantum/locations/:location/checkNameAvailability"
+          },
+          "docs": "Check the availability of the resource name for the given location."
+        },
+        {
+          "info": {
+            "name": "Workspaces_ListBySubscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subscriptions/:subscriptionId/providers/Microsoft.Quantum/workspaces"
+          },
+          "docs": "Gets the list of Workspaces within a Subscription."
+        },
+        {
+          "info": {
+            "name": "Workspaces_ListByResourceGroup",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subscriptions/:subscriptionId/resourceGroups/:resourceGroupName/providers/Microsoft.Quantum/workspaces"
+          },
+          "docs": "Gets the list of Workspaces within a resource group."
+        },
+        {
+          "info": {
+            "name": "Workspaces_Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subscriptions/:subscriptionId/resourceGroups/:resourceGroupName/providers/Microsoft.Quantum/workspaces/:workspaceName",
+            "params": [
+              {
+                "name": "workspaceName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the quantum workspace resource."
+              }
+            ]
+          },
+          "docs": "Returns the Workspace resource associated with the given name."
+        },
+        {
+          "info": {
+            "name": "Workspaces_CreateOrUpdate",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/subscriptions/:subscriptionId/resourceGroups/:resourceGroupName/providers/Microsoft.Quantum/workspaces/:workspaceName",
+            "params": [
+              {
+                "name": "workspaceName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the quantum workspace resource."
+              }
+            ]
+          },
+          "docs": "Creates or updates a Workspace resource."
+        },
+        {
+          "info": {
+            "name": "Workspaces_UpdateTags",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/subscriptions/:subscriptionId/resourceGroups/:resourceGroupName/providers/Microsoft.Quantum/workspaces/:workspaceName",
+            "params": [
+              {
+                "name": "workspaceName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the quantum workspace resource."
+              }
+            ]
+          },
+          "docs": "Updates an existing Workspace's tags."
+        },
+        {
+          "info": {
+            "name": "Workspaces_Delete",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/subscriptions/:subscriptionId/resourceGroups/:resourceGroupName/providers/Microsoft.Quantum/workspaces/:workspaceName",
+            "params": [
+              {
+                "name": "workspaceName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the quantum workspace resource."
+              }
+            ]
+          },
+          "docs": "Deletes a Workspace resource."
+        },
+        {
+          "info": {
+            "name": "Workspaces_ListKeys",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/subscriptions/:subscriptionId/resourceGroups/:resourceGroupName/providers/Microsoft.Quantum/workspaces/:workspaceName/listKeys",
+            "params": [
+              {
+                "name": "workspaceName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the quantum workspace resource."
+              }
+            ]
+          },
+          "docs": "Get the keys to use with the Quantum APIs. A key is used to authenticate and authorize access to the Quantum REST APIs. Only one key is needed at a time; two are given to provide seamless key regeneration."
+        },
+        {
+          "info": {
+            "name": "Workspaces_RegenerateKeys",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/subscriptions/:subscriptionId/resourceGroups/:resourceGroupName/providers/Microsoft.Quantum/workspaces/:workspaceName/regenerateKey",
+            "params": [
+              {
+                "name": "workspaceName",
+                "value": "",
+                "type": "path",
+                "description": "The name of the quantum workspace resource."
+              }
+            ]
+          },
+          "docs": "Regenerate either the primary or secondary key for use with the Quantum APIs. The old key will stop working immediately."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Offerings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Offerings_List",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subscriptions/:subscriptionId/providers/Microsoft.Quantum/locations/:locationName/offerings",
+            "params": [
+              {
+                "name": "locationName",
+                "value": "",
+                "type": "path",
+                "description": "Location."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "The filter to apply to the operation. Example: '$filter=kind eq 'v1'"
+              }
+            ]
+          },
+          "docs": "Returns the list of all provider offerings available for the given location."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "SuiteOffers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "SuiteOffers_ListBySubscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subscriptions/:subscriptionId/providers/Microsoft.Quantum/suiteOffers"
+          },
+          "docs": "Returns the SuiteOffer resource associated with the given name."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
