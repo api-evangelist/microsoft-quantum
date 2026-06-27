@@ -109,7 +109,7 @@ apis:
       - url: https://github.com/microsoft/azure-quantum-python
         type: GitHubRepository
       - url: https://pypi.org/project/azure-quantum/
-        type: SDK
+        type: SDKs
     description: >-
       Python SDK for submitting jobs to Azure Quantum. Supports Q#, Qiskit, Cirq, and pass-through provider input
       formats; manages workspaces, jobs, sessions, and target queries against the Workspace data-plane API.
@@ -134,27 +134,24 @@ access: 3rd-Party
 common:
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/microsoft-azure-quantum/overview
-  - type: ArazzoWorkflows
-    url: arazzo/
-    workflows:
-      - url: arazzo/microsoft-quantum-cancel-running-job-workflow.yml
-        name: Azure Quantum Cancel a Running Job
-        summary: Look up a job, branch on whether it is still running, cancel it, and confirm cancellation.
-      - url: arazzo/microsoft-quantum-discover-available-target-workflow.yml
-        name: Azure Quantum Discover an Available Target
-        summary: List provider statuses in a workspace and branch on availability before selecting a target.
-      - url: arazzo/microsoft-quantum-quota-capacity-check-workflow.yml
-        name: Azure Quantum Quota Capacity Check
-        summary: List workspace quotas, branch on remaining headroom, and stage storage when capacity exists.
-      - url: arazzo/microsoft-quantum-session-lifecycle-workflow.yml
-        name: Azure Quantum Session Lifecycle
-        summary: Open a session, submit a job into it, list its jobs, then close the session.
-      - url: arazzo/microsoft-quantum-submit-job-poll-results-workflow.yml
-        name: Azure Quantum Submit Job and Retrieve Results
-        summary: Stage input, create a quantum job, poll it to a terminal state, and read the output URI.
-      - url: arazzo/microsoft-quantum-workspace-bootstrap-workflow.yml
-        name: Azure Quantum Workspace Bootstrap
-        summary: Read a workspace, branch on provisioning state, list its keys, and list provider offerings.
+  - type: Arazzo
+    url: arazzo/microsoft-quantum-cancel-running-job-workflow.yml
+    name: Azure Quantum Cancel a Running Job
+  - type: Arazzo
+    url: arazzo/microsoft-quantum-discover-available-target-workflow.yml
+    name: Azure Quantum Discover an Available Target
+  - type: Arazzo
+    url: arazzo/microsoft-quantum-quota-capacity-check-workflow.yml
+    name: Azure Quantum Quota Capacity Check
+  - type: Arazzo
+    url: arazzo/microsoft-quantum-session-lifecycle-workflow.yml
+    name: Azure Quantum Session Lifecycle
+  - type: Arazzo
+    url: arazzo/microsoft-quantum-submit-job-poll-results-workflow.yml
+    name: Azure Quantum Submit Job and Retrieve Results
+  - type: Arazzo
+    url: arazzo/microsoft-quantum-workspace-bootstrap-workflow.yml
+    name: Azure Quantum Workspace Bootstrap
   - url: https://quantum.microsoft.com/
     name: Microsoft Quantum
     type: Portal
@@ -196,13 +193,13 @@ common:
     type: GettingStarted
   - url: https://ms.portal.azure.com/#create/Microsoft.AzureQuantum
     name: Create Workspace in Azure Portal
-    type: SignUp
+    type: Signup
   - url: https://azure.microsoft.com/en-us/free/
     name: Azure Free Account
-    type: SignUp
+    type: Signup
   - url: https://azure.microsoft.com/en-us/free/students/
     name: Free Azure Account for Students
-    type: SignUp
+    type: Signup
   - url: https://learn.microsoft.com/en-us/azure/quantum/credits
     name: Azure Quantum Credits
     type: Documentation
@@ -253,13 +250,13 @@ common:
     type: GitHubRepository
   - url: https://github.com/microsoft/azure-quantum-python
     name: Azure Quantum Python SDK
-    type: SDK
+    type: SDKs
   - url: https://pypi.org/project/azure-quantum/
     name: azure-quantum on PyPI
-    type: SDK
+    type: SDKs
   - url: https://pypi.org/project/qsharp/
     name: qsharp on PyPI
-    type: SDK
+    type: SDKs
   - url: https://github.com/microsoft/Quantum
     name: Microsoft Quantum Development Kit Samples
     type: CodeExamples
@@ -271,19 +268,19 @@ common:
     type: Courses
   - url: https://github.com/microsoft/iqsharp
     name: IQ# Jupyter Kernel
-    type: Tool
+    type: Tools
   - url: https://github.com/microsoft/quantum-viz.js
     name: quantum-viz.js Circuit Renderer
-    type: Tool
+    type: Tools
   - url: https://github.com/microsoft/qdk-chemistry
     name: QDK Chemistry Toolkit
-    type: Tool
+    type: Tools
   - url: https://github.com/microsoft/Quantum-NC
     name: Quantum Computing Libraries (Noncommercial)
-    type: Tool
+    type: Tools
   - url: https://github.com/microsoft/qmt
     name: Qubit Modeling Tools
-    type: Tool
+    type: Tools
   - url: https://github.com/Azure/azure-rest-api-specs/tree/main/specification/quantum
     name: Azure Quantum REST API Specs (Source)
     type: GitHubRepository
@@ -325,7 +322,7 @@ common:
     type: Documentation
   - url: https://learn.microsoft.com/en-us/answers/tags/3/azure-quantum
     name: Q&A Forum
-    type: Forum
+    type: Forums
   - url: plans/microsoft-quantum-plans-pricing.yml
     type: Plans
   - url: rate-limits/microsoft-quantum-rate-limits.yml
