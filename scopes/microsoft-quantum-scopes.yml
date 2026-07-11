@@ -1,0 +1,28 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/azure-quantum-data-plane-openapi.json, openapi/azure-quantum-resource-manager-openapi.json
+schemes:
+- name: AzureEntraAuth
+  source: openapi/azure-quantum-data-plane-openapi.json
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://login.microsoftonline.com/common/oauth2/v2.0/token
+  description: Azure Entra OAuth2 Authentication
+- name: azure_auth
+  source: openapi/azure-quantum-resource-manager-openapi.json
+  flows:
+  - flow: implicit
+    authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
+  description: Azure Active Directory OAuth2 Flow.
+scopes:
+- scope: https://quantum.microsoft.com/.default
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/azure-quantum-data-plane-openapi.json
+- scope: user_impersonation
+  description: impersonate your user account
+  flows:
+  - implicit
+  sources:
+  - openapi/azure-quantum-resource-manager-openapi.json
