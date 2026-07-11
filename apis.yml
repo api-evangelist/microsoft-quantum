@@ -132,6 +132,12 @@ kind: contract
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 common:
+  - type: VulnerabilityDisclosure
+    url: security/microsoft-quantum-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/microsoft-quantum-domain-security.yml
+  - type: Authentication
+    url: authentication/microsoft-quantum-authentication.yml
   - type: OAuthScopes
     url: scopes/microsoft-quantum-scopes.yml
   - type: PostmanWorkspace
