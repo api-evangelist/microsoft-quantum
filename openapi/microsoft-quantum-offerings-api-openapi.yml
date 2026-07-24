@@ -1,0 +1,307 @@
+swagger: '2.0'
+info:
+  title: Azure Quantum Workspace Services Offerings API
+  version: 2026-01-15-preview
+  description: Azure Quantum Workspace Services
+  contact:
+    email: azqengg@microsoft.com
+  x-typespec-generated:
+  - emitter: '@azure-tools/typespec-autorest'
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+security:
+- AzureEntraAuth:
+  - https://quantum.microsoft.com/.default
+- AzureApiKeyAuth: []
+tags:
+- name: Offerings
+paths:
+  /subscriptions/{subscriptionId}/providers/Microsoft.Quantum/locations/{locationName}/offerings:
+    get:
+      operationId: Offerings_List
+      tags:
+      - Offerings
+      description: Returns the list of all provider offerings available for the given location.
+      parameters:
+      - $ref: ../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter
+      - $ref: ../../../../../common-types/resource-management/v5/types.json#/parameters/SubscriptionIdParameter
+      - name: locationName
+        in: path
+        description: Location.
+        required: true
+        type: string
+        minLength: 1
+        maxLength: 90
+        pattern: '[a-z][a-z0-9]+'
+      - name: filter
+        in: query
+        description: 'The filter to apply to the operation. Example: ''$filter=kind eq ''v1'''
+        required: false
+        type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          schema:
+            $ref: '#/definitions/OfferingsListResult'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: ../../../../../common-types/resource-management/v5/types.json#/definitions/ErrorResponse
+      x-ms-examples:
+        Offerings_List:
+          $ref: ./examples/Offerings_List.json
+      x-ms-pageable:
+        nextLinkName: nextLink
+definitions:
+  TargetDescription:
+    type: object
+    description: Information about a Target. A target is the component that can process a specific type of Job.
+    properties:
+      id:
+        type: string
+        description: Unique target id.
+      name:
+        type: string
+        description: Display name of this target.
+      description:
+        type: string
+        description: A description about this target.
+      acceptedDataFormats:
+        type: array
+        description: List of data formats accepted by this target.
+        items:
+          type: string
+      acceptedContentEncodings:
+        type: array
+        description: List of content encodings accepted by this target.
+        items:
+          type: string
+      numQubits:
+        type: integer
+        format: int32
+        description: The qubit number
+        minimum: 1
+        maximum: 100000
+        readOnly: true
+      targetProfile:
+        type: string
+        description: Target QIR profile
+        readOnly: true
+      metadata:
+        type: object
+        description: The metadata of this target.
+        additionalProperties: {}
+        readOnly: true
+  ProviderPropertiesManagedApplication:
+    type: object
+    description: Provider's Managed-Application info
+    properties:
+      publisherId:
+        type: string
+        description: Provider's publisher id.
+        readOnly: true
+      offerId:
+        type: string
+        description: Provider's offer id.
+        readOnly: true
+  ProviderProperties:
+    type: object
+    description: Provider properties.
+    properties:
+      description:
+        type: string
+        description: A description about this provider.
+        readOnly: true
+      providerType:
+        type: string
+        description: Provider type.
+        readOnly: true
+      company:
+        type: string
+        description: Company name.
+        readOnly: true
+      defaultEndpoint:
+        type: string
+        description: Provider's default endpoint.
+        readOnly: true
+      aad:
+        $ref: '#/definitions/ProviderPropertiesAad'
+        description: Azure Active Directory info.
+      managedApplication:
+        $ref: '#/definitions/ProviderPropertiesManagedApplication'
+        description: Provider's Managed-Application info
+      targets:
+        type: array
+        description: The list of targets available from this provider.
+        items:
+          $ref: '#/definitions/TargetDescription'
+      skus:
+        type: array
+        description: The list of skus available from this provider.
+        items:
+          $ref: '#/definitions/SkuDescription'
+      quotaDimensions:
+        type: array
+        description: The list of quota dimensions from the provider.
+        items:
+          $ref: '#/definitions/QuotaDimension'
+      pricingDimensions:
+        type: array
+        description: The list of pricing dimensions from the provider.
+        items:
+          $ref: '#/definitions/PricingDimension'
+  PricingDetail:
+    type: object
+    description: Detailed pricing information for an sku.
+    properties:
+      id:
+        type: string
+        description: Unique id for this pricing information.
+      value:
+        type: string
+        description: The unit cost of this sku.
+  OfferingsListResult:
+    type: object
+    description: The response of a list Providers operation.
+    properties:
+      value:
+        type: array
+        description: The ProviderDescription items on this page
+        items:
+          $ref: '#/definitions/ProviderDescription'
+      nextLink:
+        type: string
+        format: uri
+        description: The link to the next page of items
+    required:
+    - value
+  QuotaDimension:
+    type: object
+    description: Information about a specific quota dimension.
+    properties:
+      id:
+        type: string
+        description: Unique id of this dimension.
+      scope:
+        type: string
+        description: The scope of this quota dimension.
+      period:
+        type: string
+        description: The reset period of this quota dimension.
+      quota:
+        type: number
+        format: float
+        description: The max limit of this dimension.
+      name:
+        type: string
+        description: The display name of this quota dimension.
+      description:
+        type: string
+        description: A description about this quota dimension.
+      unit:
+        type: string
+        description: The standard unit of measurement used for this quota dimension.
+      unitPlural:
+        type: string
+        description: The standard unit of measurement used for this quota dimension in plural form.
+  PricingDimension:
+    type: object
+    description: Information about pricing dimension.
+    properties:
+      id:
+        type: string
+        description: Unique id of this pricing dimension.
+      name:
+        type: string
+        description: The display name of this pricing dimension.
+  SkuDescription:
+    type: object
+    description: Information about a specific sku.
+    properties:
+      id:
+        type: string
+        description: Unique sku id.
+      name:
+        type: string
+        description: Display name of this sku.
+      version:
+        type: string
+        description: Display name of this sku.
+      description:
+        type: string
+        description: Description about this sku.
+      restrictedAccessUri:
+        type: string
+        description: Uri to subscribe to the restricted access sku.
+      autoAdd:
+        type: boolean
+        description: Flag to indicate whether the sku should be automatically added during workspace creation.
+      targets:
+        type: array
+        description: The list of targets available for this sku.
+        items:
+          type: string
+      quotaDimensions:
+        type: array
+        description: The list of quota dimensions for this sku.
+        items:
+          $ref: '#/definitions/QuotaDimension'
+      pricingDetails:
+        type: array
+        description: The list of pricing details for the sku.
+        items:
+          $ref: '#/definitions/PricingDetail'
+  ProviderPropertiesAad:
+    type: object
+    description: Azure Active Directory info.
+    properties:
+      applicationId:
+        type: string
+        description: Provider's application id.
+        readOnly: true
+      tenantId:
+        type: string
+        description: Provider's tenant id.
+        readOnly: true
+  ProviderDescription:
+    type: object
+    description: Information about an offering. A provider offering is an entity that offers Targets to run Azure Quantum Jobs.
+    properties:
+      id:
+        type: string
+        description: Unique provider's id.
+      name:
+        type: string
+        description: Provider's display name.
+        readOnly: true
+      properties:
+        $ref: '#/definitions/ProviderProperties'
+        description: Provider properties.
+securityDefinitions:
+  AzureApiKeyAuth:
+    type: apiKey
+    description: Azure Api-Key Authentication
+    name: x-ms-quantum-api-key
+    in: header
+  AzureEntraAuth:
+    type: oauth2
+    description: Azure Entra OAuth2 Authentication
+    flow: application
+    scopes:
+      https://quantum.microsoft.com/.default: ''
+    tokenUrl: https://login.microsoftonline.com/common/oauth2/v2.0/token
+x-ms-parameterized-host:
+  hostTemplate: '{endpoint}'
+  useSchemePrefix: false
+  parameters:
+  - name: endpoint
+    in: path
+    description: The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com
+    required: true
+    type: string
+    format: uri
+    x-ms-skip-url-encoding: true

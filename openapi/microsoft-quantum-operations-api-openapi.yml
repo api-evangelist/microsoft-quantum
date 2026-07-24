@@ -1,0 +1,68 @@
+swagger: '2.0'
+info:
+  title: Azure Quantum Workspace Services Offerings Operations API
+  version: 2026-01-15-preview
+  description: Azure Quantum Workspace Services
+  contact:
+    email: azqengg@microsoft.com
+  x-typespec-generated:
+  - emitter: '@azure-tools/typespec-autorest'
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+security:
+- AzureEntraAuth:
+  - https://quantum.microsoft.com/.default
+- AzureApiKeyAuth: []
+tags:
+- name: Operations
+paths:
+  /providers/Microsoft.Quantum/operations:
+    get:
+      operationId: Operations_List
+      tags:
+      - Operations
+      description: List the operations for the provider
+      parameters:
+      - $ref: ../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter
+      responses:
+        '200':
+          description: Azure operation completed successfully.
+          schema:
+            $ref: ../../../../../common-types/resource-management/v5/types.json#/definitions/OperationListResult
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: ../../../../../common-types/resource-management/v5/types.json#/definitions/ErrorResponse
+      x-ms-examples:
+        Operations_List:
+          $ref: ./examples/Operations_List.json
+      x-ms-pageable:
+        nextLinkName: nextLink
+securityDefinitions:
+  AzureApiKeyAuth:
+    type: apiKey
+    description: Azure Api-Key Authentication
+    name: x-ms-quantum-api-key
+    in: header
+  AzureEntraAuth:
+    type: oauth2
+    description: Azure Entra OAuth2 Authentication
+    flow: application
+    scopes:
+      https://quantum.microsoft.com/.default: ''
+    tokenUrl: https://login.microsoftonline.com/common/oauth2/v2.0/token
+x-ms-parameterized-host:
+  hostTemplate: '{endpoint}'
+  useSchemePrefix: false
+  parameters:
+  - name: endpoint
+    in: path
+    description: The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com
+    required: true
+    type: string
+    format: uri
+    x-ms-skip-url-encoding: true
