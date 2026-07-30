@@ -1,118 +1,202 @@
 aid: microsoft-quantum
 url: https://raw.githubusercontent.com/api-evangelist/microsoft-quantum/refs/heads/main/apis.yml
 apis:
-  - aid: microsoft-quantum:azure-quantum-workspace-data-plane
-    name: Azure Quantum Workspace Data-Plane API
-    tags:
-      - Quantum
-      - Quantum Computing
-      - Workspace
-      - Jobs
-      - Sessions
-      - Providers
-      - Quotas
-    humanURL: https://learn.microsoft.com/en-us/rest/api/azurequantum/
-    properties:
-      - url: https://learn.microsoft.com/en-us/rest/api/azurequantum/
-        type: Documentation
-      - url: >-
-          https://github.com/Azure/azure-rest-api-specs/tree/main/specification/quantum/data-plane/Microsoft.Quantum/preview/2026-01-15-preview
-        type: Documentation
-      - url: openapi/azure-quantum-data-plane-openapi.json
-        type: OpenAPI
-      - url: json-schema/azure-quantum-job-schema.json
-        type: JSONSchema
-      - url: json-schema/azure-quantum-session-schema.json
-        type: JSONSchema
-      - url: json-schema/azure-quantum-provider-status-schema.json
-        type: JSONSchema
-      - url: json-ld/microsoft-quantum-context.jsonld
-        type: JSONLD
-    description: >-
-      Azure Quantum Workspace Services data-plane REST API. Submit and manage quantum jobs, sessions (hybrid
-      quantum-classical workflows), provider status checks, quotas, top-level items, and storage SAS URIs against an
-      Azure Quantum workspace. Targets quantum hardware from IonQ, Quantinuum, Pasqal, and Rigetti plus simulators and
-      emulators. Current preview version 2026-01-15-preview.
-  - aid: microsoft-quantum:azure-quantum-resource-manager
-    name: Azure Quantum Resource Manager API
-    tags:
-      - Quantum
-      - ARM
-      - Resource Manager
-      - Workspaces
-      - Provisioning
-    humanURL: https://learn.microsoft.com/en-us/azure/templates/microsoft.quantum/workspaces
-    properties:
-      - url: https://learn.microsoft.com/en-us/azure/templates/microsoft.quantum/workspaces
-        type: Documentation
-      - url: >-
-          https://github.com/Azure/azure-rest-api-specs/tree/main/specification/quantum/resource-manager/Microsoft.Quantum/preview/2025-12-15-preview
-        type: Documentation
-      - url: openapi/azure-quantum-resource-manager-openapi.json
-        type: OpenAPI
-    description: >-
-      Microsoft.Quantum Azure Resource Manager (ARM) control-plane API. Create, read, update, delete, and list Azure
-      Quantum workspaces; list provider offerings per region; check workspace name availability; list and regenerate
-      workspace keys; manage suite offers. Current preview version 2025-12-15-preview.
-  - aid: microsoft-quantum:qsharp-language
-    name: Q# Quantum Programming Language
-    tags:
-      - Quantum
-      - Programming Language
-      - Q#
-      - QDK
-      - Open Source
-    humanURL: https://learn.microsoft.com/en-us/azure/quantum/qsharp-overview
-    properties:
-      - url: https://learn.microsoft.com/en-us/azure/quantum/qsharp-overview
-        type: Documentation
-      - url: https://learn.microsoft.com/en-us/qsharp/api/
-        type: Documentation
-      - url: https://github.com/microsoft/qdk
-        type: GitHubRepository
-      - url: https://github.com/microsoft/qsharp-language
-        type: GitHubRepository
-    description: >-
-      Q# is Microsoft's open-source, hardware-agnostic quantum programming language. The Modern QDK compiler is written
-      in Rust, ships as a VS Code extension and Python package, and powers quantum.microsoft.com. Q# expresses programs
-      as classical control-flow that operates on qubits without modeling the quantum state directly, and targets every
-      Azure Quantum provider plus the Resource Estimator.
-  - aid: microsoft-quantum:resource-estimator
-    name: Microsoft Quantum Resource Estimator
-    tags:
-      - Quantum
-      - Resource Estimation
-      - Fault Tolerance
-      - QEC
-    humanURL: https://learn.microsoft.com/en-us/azure/quantum/intro-to-resource-estimation
-    properties:
-      - url: https://learn.microsoft.com/en-us/azure/quantum/intro-to-resource-estimation
-        type: Documentation
-      - url: https://learn.microsoft.com/en-us/azure/quantum/overview-resources-estimator
-        type: Documentation
-      - url: https://github.com/microsoft/qdk
-        type: GitHubRepository
-    description: >-
-      Open-source post-layout physical resource estimator for fault-tolerant quantum algorithms. Compute qubit counts,
-      T-state counts, runtime, and code-distance requirements across configurable qubit physical parameters, QEC
-      schemes, and error budgets. Ships inside the QDK and runs locally or as an Azure Quantum target.
-  - aid: microsoft-quantum:azure-quantum-python-sdk
-    name: Azure Quantum Python SDK
-    tags:
-      - Quantum
-      - SDK
-      - Python
-      - Qiskit
-      - Cirq
-    humanURL: https://github.com/microsoft/azure-quantum-python
-    properties:
-      - url: https://github.com/microsoft/azure-quantum-python
-        type: GitHubRepository
-      - url: https://pypi.org/project/azure-quantum/
-        type: SDKs
-    description: >-
-      Python SDK for submitting jobs to Azure Quantum. Supports Q#, Qiskit, Cirq, and pass-through provider input
-      formats; manages workspaces, jobs, sessions, and target queries against the Workspace data-plane API.
+- aid: microsoft-quantum:qsharp-language
+  name: Q# Quantum Programming Language
+  tags:
+  - Quantum
+  - Programming Language
+  - Q#
+  - QDK
+  - Open Source
+  humanURL: https://learn.microsoft.com/en-us/azure/quantum/qsharp-overview
+  properties:
+  - url: https://learn.microsoft.com/en-us/azure/quantum/qsharp-overview
+    type: Documentation
+  - url: https://learn.microsoft.com/en-us/qsharp/api/
+    type: Documentation
+  - url: https://github.com/microsoft/qdk
+    type: GitHubRepository
+  - url: https://github.com/microsoft/qsharp-language
+    type: GitHubRepository
+  description: >-
+    Q# is Microsoft's open-source, hardware-agnostic quantum programming language. The Modern QDK compiler
+    is written in Rust, ships as a VS Code extension and Python package, and powers quantum.microsoft.com.
+    Q# expresses programs as classical control-flow that operates on qubits without modeling the quantum
+    state directly, and targets every Azure Quantum provider plus the Resource Estimator.
+- aid: microsoft-quantum:resource-estimator
+  name: Microsoft Quantum Resource Estimator
+  tags:
+  - Quantum
+  - Resource Estimation
+  - Fault Tolerance
+  - QEC
+  humanURL: https://learn.microsoft.com/en-us/azure/quantum/intro-to-resource-estimation
+  properties:
+  - url: https://learn.microsoft.com/en-us/azure/quantum/intro-to-resource-estimation
+    type: Documentation
+  - url: https://learn.microsoft.com/en-us/azure/quantum/overview-resources-estimator
+    type: Documentation
+  - url: https://github.com/microsoft/qdk
+    type: GitHubRepository
+  description: >-
+    Open-source post-layout physical resource estimator for fault-tolerant quantum algorithms. Compute
+    qubit counts, T-state counts, runtime, and code-distance requirements across configurable qubit physical
+    parameters, QEC schemes, and error budgets. Ships inside the QDK and runs locally or as an Azure Quantum
+    target.
+- aid: microsoft-quantum:azure-quantum-python-sdk
+  name: Azure Quantum Python SDK
+  tags:
+  - Quantum
+  - SDK
+  - Python
+  - Qiskit
+  - Cirq
+  humanURL: https://github.com/microsoft/azure-quantum-python
+  properties:
+  - url: https://github.com/microsoft/azure-quantum-python
+    type: GitHubRepository
+  - url: https://pypi.org/project/azure-quantum/
+    type: SDKs
+  description: >-
+    Python SDK for submitting jobs to Azure Quantum. Supports Q#, Qiskit, Cirq, and pass-through provider
+    input formats; manages workspaces, jobs, sessions, and target queries against the Workspace data-plane
+    API.
+- aid: microsoft-quantum:microsoft-quantum-offerings-api
+  name: Microsoft Azure Quantum Offerings API
+  description: The Offerings API from Microsoft Azure Quantum — 1 operation(s) for offerings.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azurequantum/
+  tags:
+  - Offerings
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-quantum-offerings-api-openapi.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azurequantum/
+  - type: Documentation
+    url: >-
+      https://github.com/Azure/azure-rest-api-specs/tree/main/specification/quantum/data-plane/Microsoft.Quantum/preview/2026-01-15-preview
+  - type: JSONSchema
+    url: json-schema/azure-quantum-job-schema.json
+  - type: JSONSchema
+    url: json-schema/azure-quantum-session-schema.json
+  - type: JSONSchema
+    url: json-schema/azure-quantum-provider-status-schema.json
+  - type: JSONLD
+    url: json-ld/microsoft-quantum-context.jsonld
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/templates/microsoft.quantum/workspaces
+  - type: Documentation
+    url: >-
+      https://github.com/Azure/azure-rest-api-specs/tree/main/specification/quantum/resource-manager/Microsoft.Quantum/preview/2025-12-15-preview
+- aid: microsoft-quantum:microsoft-quantum-operations-api
+  name: Microsoft Azure Quantum Operations API
+  description: The Operations API from Microsoft Azure Quantum — 1 operation(s) for operations.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azurequantum/
+  tags:
+  - Operations
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-quantum-operations-api-openapi.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azurequantum/
+  - type: Documentation
+    url: >-
+      https://github.com/Azure/azure-rest-api-specs/tree/main/specification/quantum/data-plane/Microsoft.Quantum/preview/2026-01-15-preview
+  - type: JSONSchema
+    url: json-schema/azure-quantum-job-schema.json
+  - type: JSONSchema
+    url: json-schema/azure-quantum-session-schema.json
+  - type: JSONSchema
+    url: json-schema/azure-quantum-provider-status-schema.json
+  - type: JSONLD
+    url: json-ld/microsoft-quantum-context.jsonld
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/templates/microsoft.quantum/workspaces
+  - type: Documentation
+    url: >-
+      https://github.com/Azure/azure-rest-api-specs/tree/main/specification/quantum/resource-manager/Microsoft.Quantum/preview/2025-12-15-preview
+- aid: microsoft-quantum:microsoft-quantum-subscriptions-api
+  name: Microsoft Azure Quantum Subscriptions API
+  description: The Subscriptions API from Microsoft Azure Quantum — 12 operation(s) for subscriptions.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azurequantum/
+  tags:
+  - Subscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-quantum-subscriptions-api-openapi.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azurequantum/
+  - type: Documentation
+    url: >-
+      https://github.com/Azure/azure-rest-api-specs/tree/main/specification/quantum/data-plane/Microsoft.Quantum/preview/2026-01-15-preview
+  - type: JSONSchema
+    url: json-schema/azure-quantum-job-schema.json
+  - type: JSONSchema
+    url: json-schema/azure-quantum-session-schema.json
+  - type: JSONSchema
+    url: json-schema/azure-quantum-provider-status-schema.json
+  - type: JSONLD
+    url: json-ld/microsoft-quantum-context.jsonld
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/templates/microsoft.quantum/workspaces
+  - type: Documentation
+    url: >-
+      https://github.com/Azure/azure-rest-api-specs/tree/main/specification/quantum/resource-manager/Microsoft.Quantum/preview/2025-12-15-preview
+- aid: microsoft-quantum:microsoft-quantum-suiteoffers-api
+  name: Microsoft Azure Quantum SuiteOffers API
+  description: The SuiteOffers API from Microsoft Azure Quantum — 1 operation(s) for suiteoffers.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azurequantum/
+  tags:
+  - SuiteOffers
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-quantum-suiteoffers-api-openapi.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azurequantum/
+  - type: Documentation
+    url: >-
+      https://github.com/Azure/azure-rest-api-specs/tree/main/specification/quantum/data-plane/Microsoft.Quantum/preview/2026-01-15-preview
+  - type: JSONSchema
+    url: json-schema/azure-quantum-job-schema.json
+  - type: JSONSchema
+    url: json-schema/azure-quantum-session-schema.json
+  - type: JSONSchema
+    url: json-schema/azure-quantum-provider-status-schema.json
+  - type: JSONLD
+    url: json-ld/microsoft-quantum-context.jsonld
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/templates/microsoft.quantum/workspaces
+  - type: Documentation
+    url: >-
+      https://github.com/Azure/azure-rest-api-specs/tree/main/specification/quantum/resource-manager/Microsoft.Quantum/preview/2025-12-15-preview
+- aid: microsoft-quantum:microsoft-quantum-workspaces-api
+  name: Microsoft Azure Quantum Workspaces API
+  description: The Workspaces API from Microsoft Azure Quantum — 6 operation(s) for workspaces.
+  humanURL: https://learn.microsoft.com/en-us/rest/api/azurequantum/
+  tags:
+  - Workspaces
+  properties:
+  - type: OpenAPI
+    url: openapi/microsoft-quantum-workspaces-api-openapi.yml
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/rest/api/azurequantum/
+  - type: Documentation
+    url: >-
+      https://github.com/Azure/azure-rest-api-specs/tree/main/specification/quantum/data-plane/Microsoft.Quantum/preview/2026-01-15-preview
+  - type: JSONSchema
+    url: json-schema/azure-quantum-job-schema.json
+  - type: JSONSchema
+    url: json-schema/azure-quantum-session-schema.json
+  - type: JSONSchema
+    url: json-schema/azure-quantum-provider-status-schema.json
+  - type: JSONLD
+    url: json-ld/microsoft-quantum-context.jsonld
+  - type: Documentation
+    url: https://learn.microsoft.com/en-us/azure/templates/microsoft.quantum/workspaces
+  - type: Documentation
+    url: >-
+      https://github.com/Azure/azure-rest-api-specs/tree/main/specification/quantum/resource-manager/Microsoft.Quantum/preview/2025-12-15-preview
 name: Microsoft Azure Quantum
 tags:
   - Quantum
@@ -129,7 +213,20 @@ tags:
   - Hybrid Quantum
   - Fault Tolerance
 kind: contract
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: paid
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Paid · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-quantum.png
 access: 3rd-Party
 common:
   - type: AgenticAccess
