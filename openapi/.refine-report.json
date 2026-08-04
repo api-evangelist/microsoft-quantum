@@ -1,0 +1,22 @@
+{
+  "provider": "microsoft-quantum",
+  "sources": [
+    "microsoft-quantum-offerings-api-openapi.yml",
+    "microsoft-quantum-operations-api-openapi.yml",
+    "microsoft-quantum-subscriptions-api-openapi.yml",
+    "microsoft-quantum-suiteoffers-api-openapi.yml",
+    "microsoft-quantum-workspaces-api-openapi.yml"
+  ],
+  "outputs": [
+    "microsoft-quantum-offerings-api-openapi.yml",
+    "microsoft-quantum-operations-api-openapi.yml",
+    "microsoft-quantum-subscriptions-api-openapi.yml",
+    "microsoft-quantum-suiteoffers-api-openapi.yml",
+    "microsoft-quantum-workspaces-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
