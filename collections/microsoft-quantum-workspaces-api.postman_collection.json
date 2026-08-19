@@ -1,0 +1,1906 @@
+{
+  "item": [
+    {
+      "id": "df5c1ec2-a0e8-40b3-ba00-5179b2a1a2f6",
+      "name": "Workspaces",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "87c606ed-0f7a-48c6-b866-9490c1556af7",
+          "name": "Workspaces Check Name Availability",
+          "request": {
+            "name": "Workspaces Check Name Availability",
+            "description": {
+              "content": "Check the availability of the resource name for the given location.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "subscriptions",
+                ":subscriptionId",
+                "providers",
+                "Microsoft.Quantum",
+                "locations",
+                ":location",
+                "checkNameAvailability"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                  "type": "any",
+                  "value": "{{endpoint}}",
+                  "key": "endpoint"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b31b445c-612e-417c-9271-3be733fca00e",
+              "name": "The request has succeeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subscriptions",
+                    ":subscriptionId",
+                    "providers",
+                    "Microsoft.Quantum",
+                    "locations",
+                    ":location",
+                    "checkNameAvailability"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                      "type": "any",
+                      "value": "{{endpoint}}",
+                      "key": "endpoint"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "077ce84b-38d0-4411-9c97-583caeeedc5a",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subscriptions",
+                    ":subscriptionId",
+                    "providers",
+                    "Microsoft.Quantum",
+                    "locations",
+                    ":location",
+                    "checkNameAvailability"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                      "type": "any",
+                      "value": "{{endpoint}}",
+                      "key": "endpoint"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9e480b3d-c2ce-4bc6-81df-8c21f2b7e8fa",
+          "name": "Workspaces List By Subscription",
+          "request": {
+            "name": "Workspaces List By Subscription",
+            "description": {
+              "content": "Gets the list of Workspaces within a Subscription.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "subscriptions",
+                ":subscriptionId",
+                "providers",
+                "Microsoft.Quantum",
+                "workspaces"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                  "type": "any",
+                  "value": "{{endpoint}}",
+                  "key": "endpoint"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0003c47d-7597-4037-ba9d-c475d4297540",
+              "name": "Azure operation completed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subscriptions",
+                    ":subscriptionId",
+                    "providers",
+                    "Microsoft.Quantum",
+                    "workspaces"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                      "type": "any",
+                      "value": "{{endpoint}}",
+                      "key": "endpoint"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"value\": [\n    {\n      \"properties\": {\n        \"providers\": [\n          {\n            \"providerId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"providerSku\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"instanceUri\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"applicationName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"provisioningState\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"resourceUsageId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"quotas\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"providerId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"providerSku\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"instanceUri\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"applicationName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"provisioningState\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"resourceUsageId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"quotas\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"usable\": \"No\",\n        \"provisioningState\": \"ProviderLaunching\",\n        \"storageAccount\": \"string\",\n        \"workspaceKind\": \"V2\",\n        \"endpointUri\": \"string\",\n        \"apiKeyEnabled\": true,\n        \"managedOnBehalfOfConfiguration\": {\n          \"value\": \"reference ../../../../../common-types/resource-management/v5/mobo.json#/definitions/ManagedOnBehalfOfConfiguration not found in the OpenAPI spec\"\n        },\n        \"managedStorageAccount\": \"string\"\n      },\n      \"identity\": {\n        \"value\": \"reference ../../../../../common-types/resource-management/v5/managedidentity.json#/definitions/ManagedServiceIdentity not found in the OpenAPI spec\"\n      }\n    },\n    {\n      \"properties\": {\n        \"providers\": [\n          {\n            \"providerId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"providerSku\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"instanceUri\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"applicationName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"provisioningState\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"resourceUsageId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"quotas\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"providerId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"providerSku\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"instanceUri\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"applicationName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"provisioningState\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"resourceUsageId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"quotas\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"usable\": \"No\",\n        \"provisioningState\": \"Succeeded\",\n        \"storageAccount\": \"string\",\n        \"workspaceKind\": \"V2\",\n        \"endpointUri\": \"string\",\n        \"apiKeyEnabled\": false,\n        \"managedOnBehalfOfConfiguration\": {\n          \"value\": \"reference ../../../../../common-types/resource-management/v5/mobo.json#/definitions/ManagedOnBehalfOfConfiguration not found in the OpenAPI spec\"\n        },\n        \"managedStorageAccount\": \"string\"\n      },\n      \"identity\": {\n        \"value\": \"reference ../../../../../common-types/resource-management/v5/managedidentity.json#/definitions/ManagedServiceIdentity not found in the OpenAPI spec\"\n      }\n    }\n  ],\n  \"nextLink\": \"https://jKUCI.trxgZfdP-kV9V5cKcufBmiV-xOvFIDMbeQ.svVwjRTnu1eUEsq\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b510b30-8591-4e1d-a7f9-e4c823d90d30",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subscriptions",
+                    ":subscriptionId",
+                    "providers",
+                    "Microsoft.Quantum",
+                    "workspaces"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                      "type": "any",
+                      "value": "{{endpoint}}",
+                      "key": "endpoint"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "459aa581-3d16-41aa-aef1-f45c5763be55",
+          "name": "Workspaces List By Resource Group",
+          "request": {
+            "name": "Workspaces List By Resource Group",
+            "description": {
+              "content": "Gets the list of Workspaces within a resource group.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "subscriptions",
+                ":subscriptionId",
+                "resourceGroups",
+                ":resourceGroupName",
+                "providers",
+                "Microsoft.Quantum",
+                "workspaces"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                  "type": "any",
+                  "value": "{{endpoint}}",
+                  "key": "endpoint"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7621011e-3fd7-403f-b3fd-caaed18bd93c",
+              "name": "Azure operation completed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subscriptions",
+                    ":subscriptionId",
+                    "resourceGroups",
+                    ":resourceGroupName",
+                    "providers",
+                    "Microsoft.Quantum",
+                    "workspaces"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                      "type": "any",
+                      "value": "{{endpoint}}",
+                      "key": "endpoint"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"value\": [\n    {\n      \"properties\": {\n        \"providers\": [\n          {\n            \"providerId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"providerSku\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"instanceUri\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"applicationName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"provisioningState\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"resourceUsageId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"quotas\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"providerId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"providerSku\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"instanceUri\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"applicationName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"provisioningState\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"resourceUsageId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"quotas\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"usable\": \"No\",\n        \"provisioningState\": \"Failed\",\n        \"storageAccount\": \"string\",\n        \"workspaceKind\": \"V1\",\n        \"endpointUri\": \"string\",\n        \"apiKeyEnabled\": false,\n        \"managedOnBehalfOfConfiguration\": {\n          \"value\": \"reference ../../../../../common-types/resource-management/v5/mobo.json#/definitions/ManagedOnBehalfOfConfiguration not found in the OpenAPI spec\"\n        },\n        \"managedStorageAccount\": \"string\"\n      },\n      \"identity\": {\n        \"value\": \"reference ../../../../../common-types/resource-management/v5/managedidentity.json#/definitions/ManagedServiceIdentity not found in the OpenAPI spec\"\n      }\n    },\n    {\n      \"properties\": {\n        \"providers\": [\n          {\n            \"providerId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"providerSku\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"instanceUri\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"applicationName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"provisioningState\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"resourceUsageId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"quotas\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"providerId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"providerSku\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"instanceUri\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"applicationName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"provisioningState\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"resourceUsageId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"quotas\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"usable\": \"No\",\n        \"provisioningState\": \"ProviderDeleting\",\n        \"storageAccount\": \"string\",\n        \"workspaceKind\": \"V2\",\n        \"endpointUri\": \"string\",\n        \"apiKeyEnabled\": true,\n        \"managedOnBehalfOfConfiguration\": {\n          \"value\": \"reference ../../../../../common-types/resource-management/v5/mobo.json#/definitions/ManagedOnBehalfOfConfiguration not found in the OpenAPI spec\"\n        },\n        \"managedStorageAccount\": \"string\"\n      },\n      \"identity\": {\n        \"value\": \"reference ../../../../../common-types/resource-management/v5/managedidentity.json#/definitions/ManagedServiceIdentity not found in the OpenAPI spec\"\n      }\n    }\n  ],\n  \"nextLink\": \"https://vtERDKcxti.myTi9OQuyVPp7ntj5W4I.DSNiWn6BWgwMjZ\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13bc7300-1e68-49be-be6a-50c69720faa5",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subscriptions",
+                    ":subscriptionId",
+                    "resourceGroups",
+                    ":resourceGroupName",
+                    "providers",
+                    "Microsoft.Quantum",
+                    "workspaces"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                      "type": "any",
+                      "value": "{{endpoint}}",
+                      "key": "endpoint"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e9ede29b-3766-4fc0-947a-24a3a4e7965e",
+          "name": "Workspaces Get",
+          "request": {
+            "name": "Workspaces Get",
+            "description": {
+              "content": "Returns the Workspace resource associated with the given name.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "subscriptions",
+                ":subscriptionId",
+                "resourceGroups",
+                ":resourceGroupName",
+                "providers",
+                "Microsoft.Quantum",
+                "workspaces",
+                ":workspaceName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "workspaceName",
+                  "description": "(Required) The name of the quantum workspace resource."
+                },
+                {
+                  "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                  "type": "any",
+                  "value": "{{endpoint}}",
+                  "key": "endpoint"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "93bd5fa3-4719-46bb-b8cd-9ff2292a60e6",
+              "name": "Azure operation completed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subscriptions",
+                    ":subscriptionId",
+                    "resourceGroups",
+                    ":resourceGroupName",
+                    "providers",
+                    "Microsoft.Quantum",
+                    "workspaces",
+                    ":workspaceName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceName",
+                      "description": "(Required) The name of the quantum workspace resource."
+                    },
+                    {
+                      "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                      "type": "any",
+                      "value": "{{endpoint}}",
+                      "key": "endpoint"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"properties\": {\n    \"providers\": [\n      {\n        \"providerId\": \"string\",\n        \"providerSku\": \"string\",\n        \"instanceUri\": \"string\",\n        \"applicationName\": \"string\",\n        \"provisioningState\": \"Failed\",\n        \"resourceUsageId\": \"string\",\n        \"quotas\": {\n          \"standardMinutesLifetime\": 2321,\n          \"highMinutesLifetime\": 7787\n        }\n      },\n      {\n        \"providerId\": \"string\",\n        \"providerSku\": \"string\",\n        \"instanceUri\": \"string\",\n        \"applicationName\": \"string\",\n        \"provisioningState\": \"Succeeded\",\n        \"resourceUsageId\": \"string\",\n        \"quotas\": {\n          \"standardMinutesLifetime\": 9813,\n          \"highMinutesLifetime\": 5482\n        }\n      }\n    ],\n    \"usable\": \"Partial\",\n    \"provisioningState\": \"ProviderLaunching\",\n    \"storageAccount\": \"string\",\n    \"workspaceKind\": \"V1\",\n    \"endpointUri\": \"string\",\n    \"apiKeyEnabled\": false,\n    \"managedOnBehalfOfConfiguration\": {\n      \"value\": \"reference ../../../../../common-types/resource-management/v5/mobo.json#/definitions/ManagedOnBehalfOfConfiguration not found in the OpenAPI spec\"\n    },\n    \"managedStorageAccount\": \"string\"\n  },\n  \"identity\": {\n    \"value\": \"reference ../../../../../common-types/resource-management/v5/managedidentity.json#/definitions/ManagedServiceIdentity not found in the OpenAPI spec\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4b4bd352-ba17-40ab-a8e4-cca1314e32c7",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subscriptions",
+                    ":subscriptionId",
+                    "resourceGroups",
+                    ":resourceGroupName",
+                    "providers",
+                    "Microsoft.Quantum",
+                    "workspaces",
+                    ":workspaceName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceName",
+                      "description": "(Required) The name of the quantum workspace resource."
+                    },
+                    {
+                      "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                      "type": "any",
+                      "value": "{{endpoint}}",
+                      "key": "endpoint"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "da30adaa-c273-4184-a1e3-382c6bc73d5f",
+          "name": "Workspaces Create Or Update",
+          "request": {
+            "name": "Workspaces Create Or Update",
+            "description": {
+              "content": "Creates or updates a Workspace resource.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "subscriptions",
+                ":subscriptionId",
+                "resourceGroups",
+                ":resourceGroupName",
+                "providers",
+                "Microsoft.Quantum",
+                "workspaces",
+                ":workspaceName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "workspaceName",
+                  "description": "(Required) The name of the quantum workspace resource."
+                },
+                {
+                  "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                  "type": "any",
+                  "value": "{{endpoint}}",
+                  "key": "endpoint"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"properties\": {\n    \"providers\": [\n      {\n        \"providerId\": \"<string>\",\n        \"providerSku\": \"<string>\",\n        \"instanceUri\": \"<string>\",\n        \"applicationName\": \"<string>\",\n        \"provisioningState\": \"<string>\",\n        \"resourceUsageId\": \"<string>\",\n        \"quotas\": {\n          \"standardMinutesLifetime\": \"<integer>\",\n          \"highMinutesLifetime\": \"<integer>\"\n        }\n      },\n      {\n        \"providerId\": \"<string>\",\n        \"providerSku\": \"<string>\",\n        \"instanceUri\": \"<string>\",\n        \"applicationName\": \"<string>\",\n        \"provisioningState\": \"<string>\",\n        \"resourceUsageId\": \"<string>\",\n        \"quotas\": {\n          \"standardMinutesLifetime\": \"<integer>\",\n          \"highMinutesLifetime\": \"<integer>\"\n        }\n      }\n    ],\n    \"usable\": \"<string>\",\n    \"provisioningState\": \"<string>\",\n    \"storageAccount\": \"<arm-id>\",\n    \"workspaceKind\": \"<string>\",\n    \"apiKeyEnabled\": \"<boolean>\",\n    \"managedOnBehalfOfConfiguration\": {\n      \"value\": \"reference ../../../../../common-types/resource-management/v5/mobo.json#/definitions/ManagedOnBehalfOfConfiguration not found in the OpenAPI spec\"\n    },\n    \"managedStorageAccount\": \"<arm-id>\"\n  },\n  \"identity\": {\n    \"value\": \"reference ../../../../../common-types/resource-management/v5/managedidentity.json#/definitions/ManagedServiceIdentity not found in the OpenAPI spec\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fcc38ad8-2b95-4482-b2ad-d6caafbe2c19",
+              "name": "Resource 'QuantumWorkspace' update operation succeeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subscriptions",
+                    ":subscriptionId",
+                    "resourceGroups",
+                    ":resourceGroupName",
+                    "providers",
+                    "Microsoft.Quantum",
+                    "workspaces",
+                    ":workspaceName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceName",
+                      "description": "(Required) The name of the quantum workspace resource."
+                    },
+                    {
+                      "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                      "type": "any",
+                      "value": "{{endpoint}}",
+                      "key": "endpoint"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"properties\": {\n    \"providers\": [\n      {\n        \"providerId\": \"<string>\",\n        \"providerSku\": \"<string>\",\n        \"instanceUri\": \"<string>\",\n        \"applicationName\": \"<string>\",\n        \"provisioningState\": \"<string>\",\n        \"resourceUsageId\": \"<string>\",\n        \"quotas\": {\n          \"standardMinutesLifetime\": \"<integer>\",\n          \"highMinutesLifetime\": \"<integer>\"\n        }\n      },\n      {\n        \"providerId\": \"<string>\",\n        \"providerSku\": \"<string>\",\n        \"instanceUri\": \"<string>\",\n        \"applicationName\": \"<string>\",\n        \"provisioningState\": \"<string>\",\n        \"resourceUsageId\": \"<string>\",\n        \"quotas\": {\n          \"standardMinutesLifetime\": \"<integer>\",\n          \"highMinutesLifetime\": \"<integer>\"\n        }\n      }\n    ],\n    \"usable\": \"<string>\",\n    \"provisioningState\": \"<string>\",\n    \"storageAccount\": \"<arm-id>\",\n    \"workspaceKind\": \"<string>\",\n    \"apiKeyEnabled\": \"<boolean>\",\n    \"managedOnBehalfOfConfiguration\": {\n      \"value\": \"reference ../../../../../common-types/resource-management/v5/mobo.json#/definitions/ManagedOnBehalfOfConfiguration not found in the OpenAPI spec\"\n    },\n    \"managedStorageAccount\": \"<arm-id>\"\n  },\n  \"identity\": {\n    \"value\": \"reference ../../../../../common-types/resource-management/v5/managedidentity.json#/definitions/ManagedServiceIdentity not found in the OpenAPI spec\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"properties\": {\n    \"providers\": [\n      {\n        \"providerId\": \"<string>\",\n        \"providerSku\": \"<string>\",\n        \"instanceUri\": \"<string>\",\n        \"applicationName\": \"<string>\",\n        \"provisioningState\": \"<string>\",\n        \"resourceUsageId\": \"<string>\",\n        \"quotas\": {\n          \"standardMinutesLifetime\": \"<integer>\",\n          \"highMinutesLifetime\": \"<integer>\"\n        }\n      },\n      {\n        \"providerId\": \"<string>\",\n        \"providerSku\": \"<string>\",\n        \"instanceUri\": \"<string>\",\n        \"applicationName\": \"<string>\",\n        \"provisioningState\": \"<string>\",\n        \"resourceUsageId\": \"<string>\",\n        \"quotas\": {\n          \"standardMinutesLifetime\": \"<integer>\",\n          \"highMinutesLifetime\": \"<integer>\"\n        }\n      }\n    ],\n    \"usable\": \"<string>\",\n    \"provisioningState\": \"<string>\",\n    \"storageAccount\": \"<arm-id>\",\n    \"workspaceKind\": \"<string>\",\n    \"endpointUri\": \"string\",\n    \"apiKeyEnabled\": \"<boolean>\",\n    \"managedOnBehalfOfConfiguration\": {\n      \"value\": \"reference ../../../../../common-types/resource-management/v5/mobo.json#/definitions/ManagedOnBehalfOfConfiguration not found in the OpenAPI spec\"\n    },\n    \"managedStorageAccount\": \"<arm-id>\"\n  },\n  \"identity\": {\n    \"value\": \"reference ../../../../../common-types/resource-management/v5/managedidentity.json#/definitions/ManagedServiceIdentity not found in the OpenAPI spec\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2e7c7002-4e99-435e-b920-079aeeae8258",
+              "name": "Resource 'QuantumWorkspace' create operation succeeded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subscriptions",
+                    ":subscriptionId",
+                    "resourceGroups",
+                    ":resourceGroupName",
+                    "providers",
+                    "Microsoft.Quantum",
+                    "workspaces",
+                    ":workspaceName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceName",
+                      "description": "(Required) The name of the quantum workspace resource."
+                    },
+                    {
+                      "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                      "type": "any",
+                      "value": "{{endpoint}}",
+                      "key": "endpoint"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"properties\": {\n    \"providers\": [\n      {\n        \"providerId\": \"<string>\",\n        \"providerSku\": \"<string>\",\n        \"instanceUri\": \"<string>\",\n        \"applicationName\": \"<string>\",\n        \"provisioningState\": \"<string>\",\n        \"resourceUsageId\": \"<string>\",\n        \"quotas\": {\n          \"standardMinutesLifetime\": \"<integer>\",\n          \"highMinutesLifetime\": \"<integer>\"\n        }\n      },\n      {\n        \"providerId\": \"<string>\",\n        \"providerSku\": \"<string>\",\n        \"instanceUri\": \"<string>\",\n        \"applicationName\": \"<string>\",\n        \"provisioningState\": \"<string>\",\n        \"resourceUsageId\": \"<string>\",\n        \"quotas\": {\n          \"standardMinutesLifetime\": \"<integer>\",\n          \"highMinutesLifetime\": \"<integer>\"\n        }\n      }\n    ],\n    \"usable\": \"<string>\",\n    \"provisioningState\": \"<string>\",\n    \"storageAccount\": \"<arm-id>\",\n    \"workspaceKind\": \"<string>\",\n    \"apiKeyEnabled\": \"<boolean>\",\n    \"managedOnBehalfOfConfiguration\": {\n      \"value\": \"reference ../../../../../common-types/resource-management/v5/mobo.json#/definitions/ManagedOnBehalfOfConfiguration not found in the OpenAPI spec\"\n    },\n    \"managedStorageAccount\": \"<arm-id>\"\n  },\n  \"identity\": {\n    \"value\": \"reference ../../../../../common-types/resource-management/v5/managedidentity.json#/definitions/ManagedServiceIdentity not found in the OpenAPI spec\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "A link to the status monitor",
+                  "key": "Azure-AsyncOperation",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
+                  "key": "Retry-After",
+                  "value": "9842"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"properties\": {\n    \"providers\": [\n      {\n        \"providerId\": \"<string>\",\n        \"providerSku\": \"<string>\",\n        \"instanceUri\": \"<string>\",\n        \"applicationName\": \"<string>\",\n        \"provisioningState\": \"<string>\",\n        \"resourceUsageId\": \"<string>\",\n        \"quotas\": {\n          \"standardMinutesLifetime\": \"<integer>\",\n          \"highMinutesLifetime\": \"<integer>\"\n        }\n      },\n      {\n        \"providerId\": \"<string>\",\n        \"providerSku\": \"<string>\",\n        \"instanceUri\": \"<string>\",\n        \"applicationName\": \"<string>\",\n        \"provisioningState\": \"<string>\",\n        \"resourceUsageId\": \"<string>\",\n        \"quotas\": {\n          \"standardMinutesLifetime\": \"<integer>\",\n          \"highMinutesLifetime\": \"<integer>\"\n        }\n      }\n    ],\n    \"usable\": \"<string>\",\n    \"provisioningState\": \"<string>\",\n    \"storageAccount\": \"<arm-id>\",\n    \"workspaceKind\": \"<string>\",\n    \"endpointUri\": \"string\",\n    \"apiKeyEnabled\": \"<boolean>\",\n    \"managedOnBehalfOfConfiguration\": {\n      \"value\": \"reference ../../../../../common-types/resource-management/v5/mobo.json#/definitions/ManagedOnBehalfOfConfiguration not found in the OpenAPI spec\"\n    },\n    \"managedStorageAccount\": \"<arm-id>\"\n  },\n  \"identity\": {\n    \"value\": \"reference ../../../../../common-types/resource-management/v5/managedidentity.json#/definitions/ManagedServiceIdentity not found in the OpenAPI spec\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "57851de4-09ca-466a-a87c-dc08b5abbc47",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subscriptions",
+                    ":subscriptionId",
+                    "resourceGroups",
+                    ":resourceGroupName",
+                    "providers",
+                    "Microsoft.Quantum",
+                    "workspaces",
+                    ":workspaceName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceName",
+                      "description": "(Required) The name of the quantum workspace resource."
+                    },
+                    {
+                      "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                      "type": "any",
+                      "value": "{{endpoint}}",
+                      "key": "endpoint"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"properties\": {\n    \"providers\": [\n      {\n        \"providerId\": \"<string>\",\n        \"providerSku\": \"<string>\",\n        \"instanceUri\": \"<string>\",\n        \"applicationName\": \"<string>\",\n        \"provisioningState\": \"<string>\",\n        \"resourceUsageId\": \"<string>\",\n        \"quotas\": {\n          \"standardMinutesLifetime\": \"<integer>\",\n          \"highMinutesLifetime\": \"<integer>\"\n        }\n      },\n      {\n        \"providerId\": \"<string>\",\n        \"providerSku\": \"<string>\",\n        \"instanceUri\": \"<string>\",\n        \"applicationName\": \"<string>\",\n        \"provisioningState\": \"<string>\",\n        \"resourceUsageId\": \"<string>\",\n        \"quotas\": {\n          \"standardMinutesLifetime\": \"<integer>\",\n          \"highMinutesLifetime\": \"<integer>\"\n        }\n      }\n    ],\n    \"usable\": \"<string>\",\n    \"provisioningState\": \"<string>\",\n    \"storageAccount\": \"<arm-id>\",\n    \"workspaceKind\": \"<string>\",\n    \"apiKeyEnabled\": \"<boolean>\",\n    \"managedOnBehalfOfConfiguration\": {\n      \"value\": \"reference ../../../../../common-types/resource-management/v5/mobo.json#/definitions/ManagedOnBehalfOfConfiguration not found in the OpenAPI spec\"\n    },\n    \"managedStorageAccount\": \"<arm-id>\"\n  },\n  \"identity\": {\n    \"value\": \"reference ../../../../../common-types/resource-management/v5/managedidentity.json#/definitions/ManagedServiceIdentity not found in the OpenAPI spec\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e900f579-9377-48ae-8a2a-41dff6261e06",
+          "name": "Workspaces Update Tags",
+          "request": {
+            "name": "Workspaces Update Tags",
+            "description": {
+              "content": "Updates an existing Workspace's tags.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "subscriptions",
+                ":subscriptionId",
+                "resourceGroups",
+                ":resourceGroupName",
+                "providers",
+                "Microsoft.Quantum",
+                "workspaces",
+                ":workspaceName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "workspaceName",
+                  "description": "(Required) The name of the quantum workspace resource."
+                },
+                {
+                  "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                  "type": "any",
+                  "value": "{{endpoint}}",
+                  "key": "endpoint"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tags\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9553f8e7-3d50-4c8b-b6f6-4fecab92efa6",
+              "name": "Azure operation completed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subscriptions",
+                    ":subscriptionId",
+                    "resourceGroups",
+                    ":resourceGroupName",
+                    "providers",
+                    "Microsoft.Quantum",
+                    "workspaces",
+                    ":workspaceName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceName",
+                      "description": "(Required) The name of the quantum workspace resource."
+                    },
+                    {
+                      "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                      "type": "any",
+                      "value": "{{endpoint}}",
+                      "key": "endpoint"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"properties\": {\n    \"providers\": [\n      {\n        \"providerId\": \"<string>\",\n        \"providerSku\": \"<string>\",\n        \"instanceUri\": \"<string>\",\n        \"applicationName\": \"<string>\",\n        \"provisioningState\": \"<string>\",\n        \"resourceUsageId\": \"<string>\",\n        \"quotas\": {\n          \"standardMinutesLifetime\": \"<integer>\",\n          \"highMinutesLifetime\": \"<integer>\"\n        }\n      },\n      {\n        \"providerId\": \"<string>\",\n        \"providerSku\": \"<string>\",\n        \"instanceUri\": \"<string>\",\n        \"applicationName\": \"<string>\",\n        \"provisioningState\": \"<string>\",\n        \"resourceUsageId\": \"<string>\",\n        \"quotas\": {\n          \"standardMinutesLifetime\": \"<integer>\",\n          \"highMinutesLifetime\": \"<integer>\"\n        }\n      }\n    ],\n    \"usable\": \"<string>\",\n    \"provisioningState\": \"<string>\",\n    \"storageAccount\": \"<arm-id>\",\n    \"workspaceKind\": \"<string>\",\n    \"endpointUri\": \"string\",\n    \"apiKeyEnabled\": \"<boolean>\",\n    \"managedOnBehalfOfConfiguration\": {\n      \"value\": \"reference ../../../../../common-types/resource-management/v5/mobo.json#/definitions/ManagedOnBehalfOfConfiguration not found in the OpenAPI spec\"\n    },\n    \"managedStorageAccount\": \"<arm-id>\"\n  },\n  \"identity\": {\n    \"value\": \"reference ../../../../../common-types/resource-management/v5/managedidentity.json#/definitions/ManagedServiceIdentity not found in the OpenAPI spec\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a31a635-66d3-4603-8039-62370239a1f2",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subscriptions",
+                    ":subscriptionId",
+                    "resourceGroups",
+                    ":resourceGroupName",
+                    "providers",
+                    "Microsoft.Quantum",
+                    "workspaces",
+                    ":workspaceName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceName",
+                      "description": "(Required) The name of the quantum workspace resource."
+                    },
+                    {
+                      "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                      "type": "any",
+                      "value": "{{endpoint}}",
+                      "key": "endpoint"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tags\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bf76bd56-07ad-4afb-b265-86f41116a076",
+          "name": "Workspaces Delete",
+          "request": {
+            "name": "Workspaces Delete",
+            "description": {
+              "content": "Deletes a Workspace resource.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "subscriptions",
+                ":subscriptionId",
+                "resourceGroups",
+                ":resourceGroupName",
+                "providers",
+                "Microsoft.Quantum",
+                "workspaces",
+                ":workspaceName"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "workspaceName",
+                  "description": "(Required) The name of the quantum workspace resource."
+                },
+                {
+                  "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                  "type": "any",
+                  "value": "{{endpoint}}",
+                  "key": "endpoint"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a809614a-bb52-4341-8aeb-2696fd767661",
+              "name": "Resource deletion accepted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subscriptions",
+                    ":subscriptionId",
+                    "resourceGroups",
+                    ":resourceGroupName",
+                    "providers",
+                    "Microsoft.Quantum",
+                    "workspaces",
+                    ":workspaceName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceName",
+                      "description": "(Required) The name of the quantum workspace resource."
+                    },
+                    {
+                      "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                      "type": "any",
+                      "value": "{{endpoint}}",
+                      "key": "endpoint"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The Location header contains the URL where the status of the long running operation can be checked.",
+                  "key": "Location",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
+                  "key": "Retry-After",
+                  "value": "9842"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "22377e3a-0e34-4bfa-a1fa-f78f52d4d1c4",
+              "name": "Resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subscriptions",
+                    ":subscriptionId",
+                    "resourceGroups",
+                    ":resourceGroupName",
+                    "providers",
+                    "Microsoft.Quantum",
+                    "workspaces",
+                    ":workspaceName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceName",
+                      "description": "(Required) The name of the quantum workspace resource."
+                    },
+                    {
+                      "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                      "type": "any",
+                      "value": "{{endpoint}}",
+                      "key": "endpoint"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fa275f82-e5ac-4ab5-822c-3aefc9deb13c",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subscriptions",
+                    ":subscriptionId",
+                    "resourceGroups",
+                    ":resourceGroupName",
+                    "providers",
+                    "Microsoft.Quantum",
+                    "workspaces",
+                    ":workspaceName"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceName",
+                      "description": "(Required) The name of the quantum workspace resource."
+                    },
+                    {
+                      "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                      "type": "any",
+                      "value": "{{endpoint}}",
+                      "key": "endpoint"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9c990fcc-4318-4520-b6e5-4f5c9c7828a9",
+          "name": "Workspaces List Keys",
+          "request": {
+            "name": "Workspaces List Keys",
+            "description": {
+              "content": "Get the keys to use with the Quantum APIs. A key is used to authenticate and authorize access to the Quantum REST APIs. Only one key is needed at a time; two are given to provide seamless key regeneration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "subscriptions",
+                ":subscriptionId",
+                "resourceGroups",
+                ":resourceGroupName",
+                "providers",
+                "Microsoft.Quantum",
+                "workspaces",
+                ":workspaceName",
+                "listKeys"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "workspaceName",
+                  "description": "(Required) The name of the quantum workspace resource."
+                },
+                {
+                  "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                  "type": "any",
+                  "value": "{{endpoint}}",
+                  "key": "endpoint"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8ec1baa2-4e3d-427c-8450-818e78e62cb1",
+              "name": "Azure operation completed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subscriptions",
+                    ":subscriptionId",
+                    "resourceGroups",
+                    ":resourceGroupName",
+                    "providers",
+                    "Microsoft.Quantum",
+                    "workspaces",
+                    ":workspaceName",
+                    "listKeys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceName",
+                      "description": "(Required) The name of the quantum workspace resource."
+                    },
+                    {
+                      "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                      "type": "any",
+                      "value": "{{endpoint}}",
+                      "key": "endpoint"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiKeyEnabled\": false,\n  \"primaryKey\": {\n    \"createdAt\": \"1963-02-03T20:59:32.275Z\",\n    \"key\": \"string\"\n  },\n  \"secondaryKey\": {\n    \"createdAt\": \"1999-04-18T01:24:43.531Z\",\n    \"key\": \"string\"\n  },\n  \"primaryConnectionString\": \"string\",\n  \"secondaryConnectionString\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a43c46fc-4585-45f9-a669-a91f18253bef",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subscriptions",
+                    ":subscriptionId",
+                    "resourceGroups",
+                    ":resourceGroupName",
+                    "providers",
+                    "Microsoft.Quantum",
+                    "workspaces",
+                    ":workspaceName",
+                    "listKeys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceName",
+                      "description": "(Required) The name of the quantum workspace resource."
+                    },
+                    {
+                      "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                      "type": "any",
+                      "value": "{{endpoint}}",
+                      "key": "endpoint"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a37d90c3-4714-4727-891b-97bd5419c15a",
+          "name": "Workspaces Regenerate Keys",
+          "request": {
+            "name": "Workspaces Regenerate Keys",
+            "description": {
+              "content": "Regenerate either the primary or secondary key for use with the Quantum APIs. The old key will stop working immediately.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "subscriptions",
+                ":subscriptionId",
+                "resourceGroups",
+                ":resourceGroupName",
+                "providers",
+                "Microsoft.Quantum",
+                "workspaces",
+                ":workspaceName",
+                "regenerateKey"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "workspaceName",
+                  "description": "(Required) The name of the quantum workspace resource."
+                },
+                {
+                  "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                  "type": "any",
+                  "value": "{{endpoint}}",
+                  "key": "endpoint"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"keys\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "391410ab-b35d-46df-ba94-81cab5440d4d",
+              "name": "There is no content to send for this request, but the headers may be useful.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subscriptions",
+                    ":subscriptionId",
+                    "resourceGroups",
+                    ":resourceGroupName",
+                    "providers",
+                    "Microsoft.Quantum",
+                    "workspaces",
+                    ":workspaceName",
+                    "regenerateKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceName",
+                      "description": "(Required) The name of the quantum workspace resource."
+                    },
+                    {
+                      "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                      "type": "any",
+                      "value": "{{endpoint}}",
+                      "key": "endpoint"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"keys\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "64fbc3cc-a559-456b-9a82-7b1815704698",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "subscriptions",
+                    ":subscriptionId",
+                    "resourceGroups",
+                    ":resourceGroupName",
+                    "providers",
+                    "Microsoft.Quantum",
+                    "workspaces",
+                    ":workspaceName",
+                    "regenerateKey"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceName",
+                      "description": "(Required) The name of the quantum workspace resource."
+                    },
+                    {
+                      "description": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+                      "type": "any",
+                      "value": "{{endpoint}}",
+                      "key": "endpoint"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"keys\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "description": {
+        "content": "The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "none",
+      "key": "endpoint"
+    },
+    {
+      "type": "string",
+      "value": "{{endpoint}}",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "https://quantum.microsoft.com/.default"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://login.microsoftonline.com/common/oauth2/v2.0/token"
+      },
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "231aa723-5930-4bb6-bcbd-20e5904f511a",
+    "name": "Azure Quantum Workspace Services Offerings Workspaces API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Azure Quantum Workspace Services\n\nContact Support:\n Email: azqengg@microsoft.com",
+      "type": "text/plain"
+    }
+  }
+}

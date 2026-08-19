@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure Quantum Workspace Services Offerings API",
+    "version": "2026-01-15-preview"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Offerings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Offerings_List",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subscriptions/:subscriptionId/providers/Microsoft.Quantum/locations/:locationName/offerings",
+            "params": [
+              {
+                "name": "locationName",
+                "value": "",
+                "type": "path",
+                "description": "Location."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "The filter to apply to the operation. Example: '$filter=kind eq 'v1'"
+              }
+            ]
+          },
+          "docs": "Returns the list of all provider offerings available for the given location."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

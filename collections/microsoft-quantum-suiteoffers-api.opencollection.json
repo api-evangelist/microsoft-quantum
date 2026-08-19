@@ -1,0 +1,29 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Azure Quantum Workspace Services Offerings SuiteOffers API",
+    "version": "2026-01-15-preview"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SuiteOffers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "SuiteOffers_ListBySubscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/subscriptions/:subscriptionId/providers/Microsoft.Quantum/suiteOffers"
+          },
+          "docs": "Returns the SuiteOffer resource associated with the given name."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
