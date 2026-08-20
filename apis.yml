@@ -8,6 +8,12 @@ apis:
   - Programming Language
   - Q#
   - QDK
+  - Open-Source
+  tags_raw:
+  - Quantum
+  - Programming Language
+  - Q#
+  - QDK
   - Open Source
   humanURL: https://learn.microsoft.com/en-us/azure/quantum/qsharp-overview
   properties:
@@ -93,7 +99,8 @@ apis:
   name: Microsoft Azure Quantum Operations API
   description: The Operations API from Microsoft Azure Quantum — 1 operation(s) for operations.
   humanURL: https://learn.microsoft.com/en-us/rest/api/azurequantum/
-  tags:
+  tags: []
+  tags_raw:
   - Operations
   properties:
   - type: OpenAPI
@@ -121,6 +128,8 @@ apis:
   description: The Subscriptions API from Microsoft Azure Quantum — 12 operation(s) for subscriptions.
   humanURL: https://learn.microsoft.com/en-us/rest/api/azurequantum/
   tags:
+  - Subscription
+  tags_raw:
   - Subscriptions
   properties:
   - type: OpenAPI
