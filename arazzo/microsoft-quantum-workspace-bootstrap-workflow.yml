@@ -13,8 +13,11 @@ info:
     query parameter.
   version: 1.0.0
 sourceDescriptions:
-- name: resourceManagerApi
-  url: ../openapi/azure-quantum-resource-manager-openapi.json
+- name: offeringsApi
+  url: ../openapi/microsoft-quantum-offerings-api-openapi.yml
+  type: openapi
+- name: workspacesApi
+  url: ../openapi/microsoft-quantum-workspaces-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: workspace-bootstrap

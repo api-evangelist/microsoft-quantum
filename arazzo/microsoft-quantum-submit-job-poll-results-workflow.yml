@@ -13,8 +13,8 @@ info:
     underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: dataPlaneApi
-  url: ../openapi/azure-quantum-data-plane-openapi.json
+- name: subscriptionsApi
+  url: ../openapi/microsoft-quantum-subscriptions-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: submit-job-poll-results
