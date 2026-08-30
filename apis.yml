@@ -251,6 +251,9 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-quantum.png
 access: 3rd-Party
 common:
+  - type: CapabilityMap
+    url: capabilities/microsoft-quantum-capability-edges.yml
+    name: Microsoft Azure Quantum Business Capability Map
   - type: AgenticAccess
     url: agentic-access/microsoft-quantum-agentic-access.yml
   - type: VulnerabilityDisclosure
