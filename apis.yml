@@ -1,5 +1,5 @@
 aid: microsoft-quantum
-url: https://raw.githubusercontent.com/api-evangelist/microsoft-quantum/refs/heads/main/apis.yml
+url: https://azure.microsoft.com/en-us/products/quantum
 apis:
 - aid: microsoft-quantum:qsharp-language
   name: Q# Quantum Programming Language
