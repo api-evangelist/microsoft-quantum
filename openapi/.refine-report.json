@@ -17,6 +17,13 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "microsoft-quantum-offerings-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "microsoft-quantum-operations-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "microsoft-quantum-subscriptions-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "microsoft-quantum-suiteoffers-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "microsoft-quantum-workspaces-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }

@@ -1,4 +1,4 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
   title: Azure Quantum Workspace Services Offerings Operations API
   version: 2026-01-15-preview
@@ -7,12 +7,6 @@ info:
     email: azqengg@microsoft.com
   x-typespec-generated:
   - emitter: '@azure-tools/typespec-autorest'
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
 security:
 - AzureEntraAuth:
   - https://quantum.microsoft.com/.default
@@ -31,30 +25,36 @@ paths:
       responses:
         '200':
           description: Azure operation completed successfully.
-          schema:
-            $ref: ../../../../../common-types/resource-management/v5/types.json#/definitions/OperationListResult
+          content:
+            application/json:
+              schema:
+                $ref: ../../../../../common-types/resource-management/v5/types.json#/definitions/OperationListResult
         default:
           description: An unexpected error response.
-          schema:
-            $ref: ../../../../../common-types/resource-management/v5/types.json#/definitions/ErrorResponse
+          content:
+            application/json:
+              schema:
+                $ref: ../../../../../common-types/resource-management/v5/types.json#/definitions/ErrorResponse
       x-ms-examples:
         Operations_List:
           $ref: ./examples/Operations_List.json
       x-ms-pageable:
         nextLinkName: nextLink
-securityDefinitions:
-  AzureApiKeyAuth:
-    type: apiKey
-    description: Azure Api-Key Authentication
-    name: x-ms-quantum-api-key
-    in: header
-  AzureEntraAuth:
-    type: oauth2
-    description: Azure Entra OAuth2 Authentication
-    flow: application
-    scopes:
-      https://quantum.microsoft.com/.default: ''
-    tokenUrl: https://login.microsoftonline.com/common/oauth2/v2.0/token
+components:
+  securitySchemes:
+    AzureApiKeyAuth:
+      type: apiKey
+      description: Azure Api-Key Authentication
+      name: x-ms-quantum-api-key
+      in: header
+    AzureEntraAuth:
+      type: oauth2
+      flows:
+        clientCredentials:
+          scopes:
+            https://quantum.microsoft.com/.default: ''
+          tokenUrl: https://login.microsoftonline.com/common/oauth2/v2.0/token
+      description: Azure Entra OAuth2 Authentication
 x-ms-parameterized-host:
   hostTemplate: '{endpoint}'
   useSchemePrefix: false

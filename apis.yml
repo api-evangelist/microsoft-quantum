@@ -251,6 +251,8 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/microsoft-quantum.png
 access: 3rd-Party
 common:
+  - type: Website
+    url: https://www.microsoft.com/
   - type: CapabilityMap
     url: capabilities/microsoft-quantum-capability-edges.yml
     name: Microsoft Azure Quantum Business Capability Map
@@ -513,3 +515,5 @@ maintainers:
     X: apievangelist
     url: https://apievangelist.com
 specificationVersion: '0.23'
+x-parent: microsoft
+x-relationship: product
