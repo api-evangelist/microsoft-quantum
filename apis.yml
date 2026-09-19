@@ -184,6 +184,8 @@ apis:
   description: The Workspaces API from Microsoft Azure Quantum — 6 operation(s) for workspaces.
   humanURL: https://learn.microsoft.com/en-us/rest/api/azurequantum/
   tags:
+  - Workspace
+  tags_raw:
   - Workspaces
   properties:
   - type: OpenAPI
