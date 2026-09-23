@@ -1,16 +1,15 @@
 openapi: 3.2.0
 info:
-  title: Azure Quantum Workspace Services Offerings Suite Offers API
-  version: 2026-01-15-preview
-  description: Azure Quantum Workspace Services
-  contact:
-    email: azqengg@microsoft.com
+  title: Azure Quantum Management Suite Offers API
+  version: 2025-12-15-preview
+  description: Microsoft.Quantum Resource Provider Management API
   x-typespec-generated:
   - emitter: '@azure-tools/typespec-autorest'
+servers:
+- url: https://management.azure.com
 security:
-- AzureEntraAuth:
-  - https://quantum.microsoft.com/.default
-- AzureApiKeyAuth: []
+- azure_auth:
+  - user_impersonation
 tags:
 - name: SuiteOffers
 paths:
@@ -41,23 +40,26 @@ paths:
           $ref: ./examples/SuiteOffers_ListBySubscription.json
       x-ms-pageable:
         nextLinkName: nextLink
+      summary: Suite offers list by subscription
+      x-summary-source: derived
 components:
   schemas:
-    QuantumSuiteOfferListResult:
+    QuotaAllocations:
       type: object
-      description: The response of a QuantumSuiteOffer list operation.
+      description: Quota allocations with each field representing different quota type.
       properties:
-        value:
-          type: array
-          description: The QuantumSuiteOffer items on this page
-          items:
-            $ref: '#/components/schemas/QuantumSuiteOffer'
-        nextLink:
-          type: string
-          format: uri
-          description: The link to the next page of items
+        standardMinutesLifetime:
+          type: integer
+          format: int32
+          description: Lifetime limit for standard priority jobs execution in minutes.
+          minimum: 0
+        highMinutesLifetime:
+          type: integer
+          format: int32
+          description: Lifetime limit for high priority jobs execution in minutes.
+          minimum: 0
       required:
-      - value
+      - standardMinutesLifetime
     QuantumSuiteOfferProperties:
       type: object
       description: Properties of a Quantum Suite Offer
@@ -86,22 +88,21 @@ components:
       - companyName
       - location
       - description
-    QuotaAllocations:
+    QuantumSuiteOfferListResult:
       type: object
-      description: Quota allocations with each field representing different quota type.
+      description: The response of a QuantumSuiteOffer list operation.
       properties:
-        standardMinutesLifetime:
-          type: integer
-          format: int32
-          description: Lifetime limit for standard priority jobs execution in minutes.
-          minimum: 0
-        highMinutesLifetime:
-          type: integer
-          format: int32
-          description: Lifetime limit for high priority jobs execution in minutes.
-          minimum: 0
+        value:
+          type: array
+          description: The QuantumSuiteOffer items on this page
+          items:
+            $ref: '#/components/schemas/QuantumSuiteOffer'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
       required:
-      - standardMinutesLifetime
+      - value
     QuantumSuiteOffer:
       type: object
       description: A Quantum Suite Offer that is available to a subscription.
@@ -112,27 +113,11 @@ components:
       allOf:
       - $ref: ../../../../../common-types/resource-management/v5/types.json#/definitions/ProxyResource
   securitySchemes:
-    AzureApiKeyAuth:
-      type: apiKey
-      description: Azure Api-Key Authentication
-      name: x-ms-quantum-api-key
-      in: header
-    AzureEntraAuth:
+    azure_auth:
       type: oauth2
       flows:
-        clientCredentials:
+        implicit:
           scopes:
-            https://quantum.microsoft.com/.default: ''
-          tokenUrl: https://login.microsoftonline.com/common/oauth2/v2.0/token
-      description: Azure Entra OAuth2 Authentication
-x-ms-parameterized-host:
-  hostTemplate: '{endpoint}'
-  useSchemePrefix: false
-  parameters:
-  - name: endpoint
-    in: path
-    description: The endpoint of the Azure Quantum service. For example, https://{region}.quantum.azure.com
-    required: true
-    type: string
-    format: uri
-    x-ms-skip-url-encoding: true
+            user_impersonation: impersonate your user account
+          authorizationUrl: https://login.microsoftonline.com/common/oauth2/authorize
+      description: Azure Active Directory OAuth2 Flow.

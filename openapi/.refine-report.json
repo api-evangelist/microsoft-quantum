@@ -1,16 +1,13 @@
 {
   "provider": "microsoft-quantum",
   "sources": [
-    "microsoft-quantum-offerings-api-openapi.yml",
-    "microsoft-quantum-operations-api-openapi.yml",
-    "microsoft-quantum-subscriptions-api-openapi.yml",
-    "microsoft-quantum-suiteoffers-api-openapi.yml",
-    "microsoft-quantum-workspaces-api-openapi.yml"
+    "_original/azure-quantum-data-plane-openapi.json",
+    "_original/azure-quantum-resource-manager-openapi.json"
   ],
   "outputs": [
+    "microsoft-quantum-subscriptions-api-openapi.yml",
     "microsoft-quantum-offerings-api-openapi.yml",
     "microsoft-quantum-operations-api-openapi.yml",
-    "microsoft-quantum-subscriptions-api-openapi.yml",
     "microsoft-quantum-suiteoffers-api-openapi.yml",
     "microsoft-quantum-workspaces-api-openapi.yml"
   ],
@@ -18,12 +15,32 @@
   "errors": [],
   "warnings": [],
   "notes": [
-    "microsoft-quantum-offerings-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
-    "microsoft-quantum-operations-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
-    "microsoft-quantum-subscriptions-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
-    "microsoft-quantum-suiteoffers-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
-    "microsoft-quantum-workspaces-api-openapi.yml: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "azure-quantum-data-plane-openapi.json: upgraded swagger 2.0 -> OpenAPI 3.2.0",
+    "azure-quantum-data-plane-openapi.json: tagged paths PATCH /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/jobUpdateOptions/{jobId} -> Subscriptions",
+    "azure-quantum-data-plane-openapi.json: tagged paths GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/jobs -> Subscriptions",
+    "azure-quantum-data-plane-openapi.json: tagged paths GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/jobs/{jobId} -> Subscriptions",
+    "azure-quantum-data-plane-openapi.json: tagged paths PUT /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/jobs/{jobId} -> Subscriptions",
+    "azure-quantum-data-plane-openapi.json: tagged paths DELETE /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/jobs/{jobId} -> Subscriptions",
+    "azure-quantum-data-plane-openapi.json: tagged paths POST /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/jobs/{jobId}:cancel -> Subscriptions",
+    "azure-quantum-data-plane-openapi.json: tagged paths GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/providerStatus -> Subscriptions",
+    "azure-quantum-data-plane-openapi.json: tagged paths GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/quotas -> Subscriptions",
+    "azure-quantum-data-plane-openapi.json: tagged paths GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/sessions -> Subscriptions",
+    "azure-quantum-data-plane-openapi.json: tagged paths GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/sessions/{sessionId} -> Subscriptions",
+    "azure-quantum-data-plane-openapi.json: tagged paths PUT /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/sessions/{sessionId} -> Subscriptions",
+    "azure-quantum-data-plane-openapi.json: tagged paths POST /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/sessions/{sessionId}:close -> Subscriptions",
+    "azure-quantum-data-plane-openapi.json: tagged paths GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/sessions/{sessionId}/jobs -> Subscriptions",
+    "azure-quantum-data-plane-openapi.json: tagged paths POST /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/storage/sasUri -> Subscriptions",
+    "azure-quantum-data-plane-openapi.json: tagged paths GET /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/topLevelItems -> Subscriptions",
+    "azure-quantum-data-plane-openapi.json: declared missing tag: Subscriptions",
+    "azure-quantum-resource-manager-openapi.json: upgraded swagger 2.0 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "microsoft-quantum-offerings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-quantum-operations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-quantum-subscriptions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-quantum-suiteoffers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "microsoft-quantum-workspaces-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
