@@ -59,108 +59,16 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    QuotaDimension:
+    PricingDimension:
       type: object
-      description: Information about a specific quota dimension.
+      description: Information about pricing dimension.
       properties:
         id:
           type: string
-          description: Unique id of this dimension.
-        scope:
-          type: string
-          description: The scope of this quota dimension.
-        period:
-          type: string
-          description: The reset period of this quota dimension.
-        quota:
-          type: number
-          format: float
-          description: The max limit of this dimension.
+          description: Unique id of this pricing dimension.
         name:
           type: string
-          description: The display name of this quota dimension.
-        description:
-          type: string
-          description: A description about this quota dimension.
-        unit:
-          type: string
-          description: The standard unit of measurement used for this quota dimension.
-        unitPlural:
-          type: string
-          description: The standard unit of measurement used for this quota dimension in plural form.
-    ProviderPropertiesAad:
-      type: object
-      description: Azure Active Directory info.
-      properties:
-        applicationId:
-          type: string
-          description: Provider's application id.
-          readOnly: true
-        tenantId:
-          type: string
-          description: Provider's tenant id.
-          readOnly: true
-    ProviderPropertiesManagedApplication:
-      type: object
-      description: Provider's Managed-Application info
-      properties:
-        publisherId:
-          type: string
-          description: Provider's publisher id.
-          readOnly: true
-        offerId:
-          type: string
-          description: Provider's offer id.
-          readOnly: true
-    PricingDetail:
-      type: object
-      description: Detailed pricing information for an sku.
-      properties:
-        id:
-          type: string
-          description: Unique id for this pricing information.
-        value:
-          type: string
-          description: The unit cost of this sku.
-    TargetDescription:
-      type: object
-      description: Information about a Target. A target is the component that can process a specific type of Job.
-      properties:
-        id:
-          type: string
-          description: Unique target id.
-        name:
-          type: string
-          description: Display name of this target.
-        description:
-          type: string
-          description: A description about this target.
-        acceptedDataFormats:
-          type: array
-          description: List of data formats accepted by this target.
-          items:
-            type: string
-        acceptedContentEncodings:
-          type: array
-          description: List of content encodings accepted by this target.
-          items:
-            type: string
-        numQubits:
-          type: integer
-          format: int32
-          description: The qubit number
-          minimum: 1
-          maximum: 100000
-          readOnly: true
-        targetProfile:
-          type: string
-          description: Target QIR profile
-          readOnly: true
-        metadata:
-          type: object
-          description: The metadata of this target.
-          additionalProperties: {}
-          readOnly: true
+          description: The display name of this pricing dimension.
     ProviderProperties:
       type: object
       description: Provider properties.
@@ -207,45 +115,86 @@ components:
           description: The list of pricing dimensions from the provider.
           items:
             $ref: '#/components/schemas/PricingDimension'
-    ProviderDescription:
+    QuotaDimension:
       type: object
-      description: Information about an offering. A provider offering is an entity that offers Targets to run Azure Quantum Jobs.
+      description: Information about a specific quota dimension.
       properties:
         id:
           type: string
-          description: Unique provider's id.
+          description: Unique id of this dimension.
+        scope:
+          type: string
+          description: The scope of this quota dimension.
+        period:
+          type: string
+          description: The reset period of this quota dimension.
+        quota:
+          type: number
+          format: float
+          description: The max limit of this dimension.
         name:
           type: string
-          description: Provider's display name.
-          readOnly: true
-        properties:
-          $ref: '#/components/schemas/ProviderProperties'
-          description: Provider properties.
-    PricingDimension:
+          description: The display name of this quota dimension.
+        description:
+          type: string
+          description: A description about this quota dimension.
+        unit:
+          type: string
+          description: The standard unit of measurement used for this quota dimension.
+        unitPlural:
+          type: string
+          description: The standard unit of measurement used for this quota dimension in plural form.
+    TargetDescription:
       type: object
-      description: Information about pricing dimension.
+      description: Information about a Target. A target is the component that can process a specific type of Job.
       properties:
         id:
           type: string
-          description: Unique id of this pricing dimension.
+          description: Unique target id.
         name:
           type: string
-          description: The display name of this pricing dimension.
-    OfferingsListResult:
-      type: object
-      description: The response of a list Providers operation.
-      properties:
-        value:
+          description: Display name of this target.
+        description:
+          type: string
+          description: A description about this target.
+        acceptedDataFormats:
           type: array
-          description: The ProviderDescription items on this page
+          description: List of data formats accepted by this target.
           items:
-            $ref: '#/components/schemas/ProviderDescription'
-        nextLink:
+            type: string
+        acceptedContentEncodings:
+          type: array
+          description: List of content encodings accepted by this target.
+          items:
+            type: string
+        numQubits:
+          type: integer
+          format: int32
+          description: The qubit number
+          minimum: 1
+          maximum: 100000
+          readOnly: true
+        targetProfile:
           type: string
-          format: uri
-          description: The link to the next page of items
-      required:
-      - value
+          description: Target QIR profile
+          readOnly: true
+        metadata:
+          type: object
+          description: The metadata of this target.
+          additionalProperties: {}
+          readOnly: true
+    ProviderPropertiesAad:
+      type: object
+      description: Azure Active Directory info.
+      properties:
+        applicationId:
+          type: string
+          description: Provider's application id.
+          readOnly: true
+        tenantId:
+          type: string
+          description: Provider's tenant id.
+          readOnly: true
     SkuDescription:
       type: object
       description: Information about a specific sku.
@@ -283,6 +232,57 @@ components:
           description: The list of pricing details for the sku.
           items:
             $ref: '#/components/schemas/PricingDetail'
+    ProviderPropertiesManagedApplication:
+      type: object
+      description: Provider's Managed-Application info
+      properties:
+        publisherId:
+          type: string
+          description: Provider's publisher id.
+          readOnly: true
+        offerId:
+          type: string
+          description: Provider's offer id.
+          readOnly: true
+    OfferingsListResult:
+      type: object
+      description: The response of a list Providers operation.
+      properties:
+        value:
+          type: array
+          description: The ProviderDescription items on this page
+          items:
+            $ref: '#/components/schemas/ProviderDescription'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
+    PricingDetail:
+      type: object
+      description: Detailed pricing information for an sku.
+      properties:
+        id:
+          type: string
+          description: Unique id for this pricing information.
+        value:
+          type: string
+          description: The unit cost of this sku.
+    ProviderDescription:
+      type: object
+      description: Information about an offering. A provider offering is an entity that offers Targets to run Azure Quantum Jobs.
+      properties:
+        id:
+          type: string
+          description: Unique provider's id.
+        name:
+          type: string
+          description: Provider's display name.
+          readOnly: true
+        properties:
+          $ref: '#/components/schemas/ProviderProperties'
+          description: Provider properties.
   securitySchemes:
     azure_auth:
       type: oauth2
