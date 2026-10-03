@@ -1037,25 +1037,31 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    CostEstimate:
+    Azure.Core.Foundations.InnerError:
       type: object
-      description: The job cost billed by the provider. The final cost on your bill might be slightly different due to added taxes and currency conversion rates.
+      description: An object containing more specific information about the error. As per Azure REST API guidelines - https://aka.ms/AzureRestApiGuidelines#handling-errors.
       properties:
-        currencyCode:
+        code:
           type: string
-          description: The currency code.
-        events:
+          description: One of a server-defined set of error codes.
+        innererror:
+          $ref: '#/components/schemas/Azure.Core.Foundations.InnerError'
+          description: Inner error.
+    PagedItemDetails:
+      type: object
+      description: Paged collection of ItemDetails items
+      properties:
+        value:
           type: array
-          description: List of usage events.
+          description: The ItemDetails items on this page
           items:
-            $ref: '#/components/schemas/UsageEvent'
-        estimatedTotal:
-          type: number
-          format: float
-          description: The estimated total.
+            $ref: '#/components/schemas/ItemDetails'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
       required:
-      - currencyCode
-      - estimatedTotal
+      - value
     Priority:
       type: string
       description: Job priority levels.
@@ -1072,51 +1078,157 @@ components:
         - name: High
           value: High
           description: The job's priority is elevated.
-    Azure.Core.Foundations.Error:
+    TargetStatus:
       type: object
-      description: The error object.
+      description: Target status.
       properties:
-        code:
+        id:
           type: string
-          description: One of a server-defined set of error codes.
-        message:
+          description: Target id.
+          readOnly: true
+        currentAvailability:
+          $ref: '#/components/schemas/TargetAvailability'
+          description: Current target availability.
+          readOnly: true
+        averageQueueTime:
+          type: integer
+          format: int64
+          description: Average queue time in seconds.
+          readOnly: true
+        statusPage:
           type: string
-          description: A human-readable representation of the error.
-        target:
+          description: A page with detailed status of the provider.
+          readOnly: true
+        numQubits:
+          type: integer
+          format: int32
+          description: The qubit number.
+          minimum: 1
+          maximum: 100000
+          readOnly: true
+        targetProfile:
           type: string
-          description: The target of the error.
-        details:
-          type: array
-          description: An array of details about specific errors that led to this reported error.
-          items:
-            $ref: '#/components/schemas/Azure.Core.Foundations.Error'
-        innererror:
-          $ref: '#/components/schemas/Azure.Core.Foundations.InnerError'
-          description: An object containing more specific information than the current object about the error.
+          description: Target QIR profile.
+          readOnly: true
+        metadata:
+          type: object
+          description: The metadata of this target.
+          readOnly: true
       required:
-      - code
-      - message
-    PagedSessionDetails:
+      - id
+      - currentAvailability
+      - averageQueueTime
+    JobType:
+      type: string
+      description: The type of the job.
+      enum:
+      - Unknown
+      - QuantumComputing
+      - Optimization
+      x-ms-enum:
+        name: JobType
+        modelAsString: true
+        values:
+        - name: Unknown
+          value: Unknown
+          description: Unknown job type.
+        - name: QuantumComputing
+          value: QuantumComputing
+          description: Quantum Computing job type.
+        - name: Optimization
+          value: Optimization
+          description: Optimization job type.
+    DimensionScope:
+      type: string
+      description: The scope at which the quota is applied to.
+      enum:
+      - Workspace
+      - Subscription
+      x-ms-enum:
+        name: DimensionScope
+        modelAsString: true
+        values:
+        - name: Workspace
+          value: Workspace
+          description: The quota is applied to the Quantum Workspace.
+        - name: Subscription
+          value: Subscription
+          description: The quota is applied to the Azure Subscription.
+    Quota:
       type: object
-      description: Paged collection of SessionDetails items
+      description: Quota information.
       properties:
-        value:
-          type: array
-          description: The SessionDetails items on this page
-          items:
-            $ref: '#/components/schemas/SessionDetails'
-        nextLink:
+        dimension:
           type: string
-          format: uri
-          description: The link to the next page of items
+          description: The name of the dimension associated with the quota.
+          readOnly: true
+        scope:
+          $ref: '#/components/schemas/DimensionScope'
+          description: The scope at which the quota is applied.
+          readOnly: true
+        providerId:
+          type: string
+          description: The unique identifier for the provider.
+          readOnly: true
+        utilization:
+          type: number
+          format: float
+          description: The amount of the usage that has been applied for the current period.
+          readOnly: true
+        holds:
+          type: number
+          format: float
+          description: The amount of the usage that has been reserved but not applied for the current period.
+          readOnly: true
+        limit:
+          type: number
+          format: float
+          description: The maximum amount of usage allowed for the current period.
+          readOnly: true
+        period:
+          $ref: '#/components/schemas/MeterPeriod'
+          description: The time period in which the quota's underlying meter is accumulated. Based on calendar year. 'None' is used for concurrent quotas.
+          readOnly: true
       required:
-      - value
-    Usage:
-      type: object
-      description: Resource usage metrics represented as key-value pairs. Keys are provider-defined metric names (e.g. "standardMinutes", "shots") and values are the corresponding consumption amounts. The specific metrics available depend on the quantum provider and target used.
-      additionalProperties:
-        format: double
-        type: number
+      - dimension
+      - scope
+      - providerId
+      - utilization
+      - holds
+      - limit
+      - period
+    SessionStatus:
+      type: string
+      description: The status of the session.
+      enum:
+      - Waiting
+      - Executing
+      - Succeeded
+      - Failed
+      - Failure(s)
+      - TimedOut
+      x-ms-enum:
+        name: SessionStatus
+        modelAsString: true
+        values:
+        - name: Waiting
+          value: Waiting
+          description: The session is waiting in the queue to be executed.
+        - name: Executing
+          value: Executing
+          description: The session is being executed.
+        - name: Succeeded
+          value: Succeeded
+          description: The session completed with success.
+        - name: Failed
+          value: Failed
+          description: The session completed with failure.
+        - name: Failure(s)
+          value: Failure(s)
+          description: The session completed with some failures.
+        - name: TimedOut
+          value: TimedOut
+          description: The session timed out.
     ItemDetails:
       type: object
       description: A workspace item.
@@ -1227,133 +1339,93 @@ components:
       - providerId
       - target
       - itemType
-    DimensionScope:
+    ItemType:
       type: string
-      description: The scope at which the quota is applied to.
+      description: The type of the workspace item.
       enum:
-      - Workspace
-      - Subscription
+      - Job
+      - Session
       x-ms-enum:
-        name: DimensionScope
+        name: ItemType
         modelAsString: true
         values:
-        - name: Workspace
-          value: Workspace
-          description: The quota is applied to the Quantum Workspace.
-        - name: Subscription
-          value: Subscription
-          description: The quota is applied to the Azure Subscription.
-    PagedQuota:
+        - name: Job
+          value: Job
+          description: A program, problem, or application submitted for processing.
+        - name: Session
+          value: Session
+          description: A logical grouping of jobs.
+    ProviderStatus:
       type: object
-      description: Paged collection of Quota items
+      description: Provider status.
+      properties:
+        id:
+          type: string
+          description: Provider id.
+          readOnly: true
+        currentAvailability:
+          $ref: '#/components/schemas/ProviderAvailability'
+          description: Current provider availability.
+          readOnly: true
+        targets:
+          type: array
+          description: Current target statuses.
+          items:
+            $ref: '#/components/schemas/TargetStatus'
+          readOnly: true
+      required:
+      - id
+      - currentAvailability
+      - targets
+    CostEstimate:
+      type: object
+      description: The job cost billed by the provider. The final cost on your bill might be slightly different due to added taxes and currency conversion rates.
+      properties:
+        currencyCode:
+          type: string
+          description: The currency code.
+        events:
+          type: array
+          description: List of usage events.
+          items:
+            $ref: '#/components/schemas/UsageEvent'
+        estimatedTotal:
+          type: number
+          format: float
+          description: The estimated total.
+      required:
+      - currencyCode
+      - estimatedTotal
+    PagedSessionDetails:
+      type: object
+      description: Paged collection of SessionDetails items
       properties:
         value:
           type: array
-          description: The Quota items on this page
+          description: The SessionDetails items on this page
           items:
-            $ref: '#/components/schemas/Quota'
+            $ref: '#/components/schemas/SessionDetails'
         nextLink:
           type: string
           format: uri
           description: The link to the next page of items
       required:
       - value
-    UsageEvent:
+    PagedProviderStatus:
       type: object
-      description: Usage event details.
-      properties:
-        dimensionId:
-          type: string
-          description: The dimension id.
-        dimensionName:
-          type: string
-          description: The dimension name.
-        measureUnit:
-          type: string
-          description: The unit of measure.
-        amountBilled:
-          type: number
-          format: float
-          description: The amount billed.
-        amountConsumed:
-          type: number
-          format: float
-          description: The amount consumed.
-        unitPrice:
-          type: number
-          format: float
-          description: The unit price.
-      required:
-      - dimensionId
-      - dimensionName
-      - measureUnit
-      - amountBilled
-      - amountConsumed
-      - unitPrice
-    PagedItemDetails:
-      type: object
-      description: Paged collection of ItemDetails items
+      description: Paged collection of ProviderStatus items
       properties:
         value:
           type: array
-          description: The ItemDetails items on this page
+          description: The ProviderStatus items on this page
           items:
-            $ref: '#/components/schemas/ItemDetails'
+            $ref: '#/components/schemas/ProviderStatus'
         nextLink:
           type: string
           format: uri
           description: The link to the next page of items
       required:
       - value
-    JobUpdateOptionsUpdate:
-      type: object
-      description: Options for updating a job.
-      properties:
-        priority:
-          $ref: '#/components/schemas/Priority'
-          description: Priority of job.
-          x-ms-mutability:
-          - update
-        name:
-          type: string
-          description: The name of the job.
-          x-ms-mutability:
-          - read
-          - update
-        tags:
-          type: array
-          description: List of user-supplied tags associated with the job.
-          items:
-            type: string
-          x-ms-mutability:
-          - read
-          - update
-          - create
-    WorkspaceItemId:
-      type: string
-      description: Id of the workspace item.
-      maxLength: 36
-      pattern: ^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$
-    JobType:
-      type: string
-      description: The type of the job.
-      enum:
-      - Unknown
-      - QuantumComputing
-      - Optimization
-      x-ms-enum:
-        name: JobType
-        modelAsString: true
-        values:
-        - name: Unknown
-          value: Unknown
-          description: Unknown job type.
-        - name: QuantumComputing
-          value: QuantumComputing
-          description: Quantum Computing job type.
-        - name: Optimization
-          value: Optimization
-          description: Optimization job type.
     JobDetails:
       type: object
       description: A job to be run in the workspace.
@@ -1436,6 +1508,281 @@ components:
       allOf:
       - $ref: '#/components/schemas/ItemDetails'
       x-ms-discriminator-value: Job
+    Errors.WorkspaceItemError:
+      type: object
+      description: The error object.
+      properties:
+        code:
+          type: string
+          description: One of a server-defined set of error codes.
+        message:
+          type: string
+          description: A human-readable representation of the error.
+        target:
+          type: string
+          description: The target of the error.
+        details:
+          type: array
+          description: An array of details about specific errors that led to this reported error.
+          items:
+            $ref: '#/components/schemas/Azure.Core.Foundations.Error'
+        innererror:
+          $ref: '#/components/schemas/Azure.Core.Foundations.InnerError'
+          description: An object containing more specific information than the current object about the error.
+      required:
+      - code
+      - message
+    Azure.Core.Foundations.Error:
+      type: object
+      description: The error object.
+      properties:
+        code:
+          type: string
+          description: One of a server-defined set of error codes.
+        message:
+          type: string
+          description: A human-readable representation of the error.
+        target:
+          type: string
+          description: The target of the error.
+        details:
+          type: array
+          description: An array of details about specific errors that led to this reported error.
+          items:
+            $ref: '#/components/schemas/Azure.Core.Foundations.Error'
+        innererror:
+          $ref: '#/components/schemas/Azure.Core.Foundations.InnerError'
+          description: An object containing more specific information than the current object about the error.
+      required:
+      - code
+      - message
+    MeterPeriod:
+      type: string
+      description: The time period in which the quota's underlying meter is accumulated. Based on calendar year. 'None' is used for concurrent quotas.
+      enum:
+      - None
+      - Monthly
+      x-ms-enum:
+        name: MeterPeriod
+        modelAsString: true
+        values:
+        - name: None
+          value: None
+          description: The meter period is instantaneous. Used for concurrent quotas.
+        - name: Monthly
+          value: Monthly
+          description: The meter period is per month.
+    QuantumComputingData:
+      type: object
+      description: Quantum computing data.
+      properties:
+        count:
+          type: integer
+          format: int64
+          description: The number of quantum computing items in the job.
+          readOnly: true
+      required:
+      - count
+    SessionDetails:
+      type: object
+      description: Session, a logical grouping of jobs.
+      properties:
+        id:
+          $ref: '#/components/schemas/WorkspaceItemId'
+          description: Id of the session.
+          readOnly: true
+        jobFailurePolicy:
+          $ref: '#/components/schemas/SessionJobFailurePolicy'
+          description: Policy controlling the behavior of the Session when a job in the session fails.
+          x-ms-mutability:
+          - read
+          - create
+        status:
+          $ref: '#/components/schemas/SessionStatus'
+          description: The status of the session.
+          readOnly: true
+      required:
+      - id
+      - jobFailurePolicy
+      allOf:
+      - $ref: '#/components/schemas/ItemDetails'
+      x-ms-discriminator-value: Session
+    PagedQuota:
+      type: object
+      description: Paged collection of Quota items
+      properties:
+        value:
+          type: array
+          description: The Quota items on this page
+          items:
+            $ref: '#/components/schemas/Quota'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
+    JobUpdateOptionsUpdate:
+      type: object
+      description: Options for updating a job.
+      properties:
+        priority:
+          $ref: '#/components/schemas/Priority'
+          description: Priority of job.
+          x-ms-mutability:
+          - update
+        name:
+          type: string
+          description: The name of the job.
+          x-ms-mutability:
+          - read
+          - update
+        tags:
+          type: array
+          description: List of user-supplied tags associated with the job.
+          items:
+            type: string
+          x-ms-mutability:
+          - read
+          - update
+          - create
+    WorkspaceItemId:
+      type: string
+      description: Id of the workspace item.
+      maxLength: 36
+      pattern: ^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$
+    PagedJobDetails:
+      type: object
+      description: Paged collection of JobDetails items
+      properties:
+        value:
+          type: array
+          description: The JobDetails items on this page
+          items:
+            $ref: '#/components/schemas/JobDetails'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
+    JobUpdateOptions:
+      type: object
+      description: Options for updating a job.
+      properties:
+        id:
+          $ref: '#/components/schemas/WorkspaceItemId'
+          description: Id of the job.
+          readOnly: true
+        priority:
+          $ref: '#/components/schemas/Priority'
+          description: Priority of job.
+          x-ms-mutability:
+          - update
+        name:
+          type: string
+          description: The name of the job.
+          x-ms-mutability:
+          - read
+          - update
+        tags:
+          type: array
+          description: List of user-supplied tags associated with the job.
+          items:
+            type: string
+          x-ms-mutability:
+          - read
+          - update
+          - create
+      required:
+      - id
+    CreatedByType:
+      type: string
+      description: The type of identity that created the item.
+      enum:
+      - User
+      - Application
+      - ManagedIdentity
+      - Key
+      x-ms-enum:
+        name: CreatedByType
+        modelAsString: true
+        values:
+        - name: User
+          value: User
+          description: The item is created by user
+        - name: Application
+          value: Application
+          description: The item is created by application
+        - name: ManagedIdentity
+          value: ManagedIdentity
+          description: The item is created using managed identity
+        - name: Key
+          value: Key
+          description: The item is created using key
+    ProviderAvailability:
+      type: string
+      description: Provider availability.
+      enum:
+      - Available
+      - Degraded
+      - Unavailable
+      x-ms-enum:
+        name: ProviderAvailability
+        modelAsString: true
+        values:
+        - name: Available
+          value: Available
+          description: Provider is available.
+        - name: Degraded
+          value: Degraded
+          description: Provider is available with degraded experience.
+        - name: Unavailable
+          value: Unavailable
+          description: Provider is unavailable.
+    BlobDetails:
+      type: object
+      description: The details (name and container) of the blob to store or download data.
+      properties:
+        containerName:
+          type: string
+          description: The container name.
+          x-ms-mutability:
+          - read
+          - create
+        blobName:
+          type: string
+          description: The blob name.
+          x-ms-mutability:
+          - read
+          - create
+      required:
+      - containerName
+    Usage:
+      type: object
+      description: Resource usage metrics represented as key-value pairs. Keys are provider-defined metric names (e.g. "standardMinutes", "shots") and values are the corresponding consumption amounts. The specific metrics available depend on the quantum provider and target used.
+      additionalProperties:
+        format: double
+        type: number
+    Azure.Core.Foundations.ErrorResponse:
+      type: object
+      description: A response containing error details.
+      properties:
+        error:
+          $ref: '#/components/schemas/Azure.Core.Foundations.Error'
+          description: The error object.
+      required:
+      - error
+    SasUriResponse:
+      type: object
+      description: SAS URI operation response.
+      properties:
+        sasUri:
+          type: string
+          description: A URL with a SAS token to upload a blob for execution in the given workspace.
+          readOnly: true
+      required:
+      - sasUri
     JobStatus:
       type: string
       description: The status of the job.
@@ -1484,391 +1831,38 @@ components:
         - name: Cancelled
           value: Cancelled
           description: The job was cancelled.
-    ProviderAvailability:
-      type: string
-      description: Provider availability.
-      enum:
-      - Available
-      - Degraded
-      - Unavailable
-      x-ms-enum:
-        name: ProviderAvailability
-        modelAsString: true
-        values:
-        - name: Available
-          value: Available
-          description: Provider is available.
-        - name: Degraded
-          value: Degraded
-          description: Provider is available with degraded experience.
-        - name: Unavailable
-          value: Unavailable
-          description: Provider is unavailable.
-    Azure.Core.Foundations.ErrorResponse:
+    UsageEvent:
       type: object
-      description: A response containing error details.
+      description: Usage event details.
       properties:
-        error:
-          $ref: '#/components/schemas/Azure.Core.Foundations.Error'
-          description: The error object.
-      required:
-      - error
-    CreatedByType:
-      type: string
-      description: The type of identity that created the item.
-      enum:
-      - User
-      - Application
-      - ManagedIdentity
-      - Key
-      x-ms-enum:
-        name: CreatedByType
-        modelAsString: true
-        values:
-        - name: User
-          value: User
-          description: The item is created by user
-        - name: Application
-          value: Application
-          description: The item is created by application
-        - name: ManagedIdentity
-          value: ManagedIdentity
-          description: The item is created using managed identity
-        - name: Key
-          value: Key
-          description: The item is created using key
-    SessionDetails:
-      type: object
-      description: Session, a logical grouping of jobs.
-      properties:
-        id:
-          $ref: '#/components/schemas/WorkspaceItemId'
-          description: Id of the session.
-          readOnly: true
-        jobFailurePolicy:
-          $ref: '#/components/schemas/SessionJobFailurePolicy'
-          description: Policy controlling the behavior of the Session when a job in the session fails.
-          x-ms-mutability:
-          - read
-          - create
-        status:
-          $ref: '#/components/schemas/SessionStatus'
-          description: The status of the session.
-          readOnly: true
-      required:
-      - id
-      - jobFailurePolicy
-      allOf:
-      - $ref: '#/components/schemas/ItemDetails'
-      x-ms-discriminator-value: Session
-    Errors.WorkspaceItemError:
-      type: object
-      description: The error object.
-      properties:
-        code:
+        dimensionId:
           type: string
-          description: One of a server-defined set of error codes.
-        message:
+          description: The dimension id.
+        dimensionName:
           type: string
-          description: A human-readable representation of the error.
-        target:
+          description: The dimension name.
+        measureUnit:
           type: string
-          description: The target of the error.
-        details:
-          type: array
-          description: An array of details about specific errors that led to this reported error.
-          items:
-            $ref: '#/components/schemas/Azure.Core.Foundations.Error'
-        innererror:
-          $ref: '#/components/schemas/Azure.Core.Foundations.InnerError'
-          description: An object containing more specific information than the current object about the error.
-      required:
-      - code
-      - message
-    SessionJobFailurePolicy:
-      type: string
-      description: Policy controlling the behavior of the Session when a job in the session fails.
-      enum:
-      - Abort
-      - Continue
-      x-ms-enum:
-        name: SessionJobFailurePolicy
-        modelAsString: true
-        values:
-        - name: Abort
-          value: Abort
-          description: New jobs submitted after a job fails will be rejected.
-        - name: Continue
-          value: Continue
-          description: New jobs submitted after a job fails will be accepted.
-    MeterPeriod:
-      type: string
-      description: The time period in which the quota's underlying meter is accumulated. Based on calendar year. 'None' is used for concurrent quotas.
-      enum:
-      - None
-      - Monthly
-      x-ms-enum:
-        name: MeterPeriod
-        modelAsString: true
-        values:
-        - name: None
-          value: None
-          description: The meter period is instantaneous. Used for concurrent quotas.
-        - name: Monthly
-          value: Monthly
-          description: The meter period is per month.
-    PagedJobDetails:
-      type: object
-      description: Paged collection of JobDetails items
-      properties:
-        value:
-          type: array
-          description: The JobDetails items on this page
-          items:
-            $ref: '#/components/schemas/JobDetails'
-        nextLink:
-          type: string
-          format: uri
-          description: The link to the next page of items
-      required:
-      - value
-    SessionStatus:
-      type: string
-      description: The status of the session.
-      enum:
-      - Waiting
-      - Executing
-      - Succeeded
-      - Failed
-      - Failure(s)
-      - TimedOut
-      x-ms-enum:
-        name: SessionStatus
-        modelAsString: true
-        values:
-        - name: Waiting
-          value: Waiting
-          description: The session is waiting in the queue to be executed.
-        - name: Executing
-          value: Executing
-          description: The session is being executed.
-        - name: Succeeded
-          value: Succeeded
-          description: The session completed with success.
-        - name: Failed
-          value: Failed
-          description: The session completed with failure.
-        - name: Failure(s)
-          value: Failure(s)
-          description: The session completed with some failures.
-        - name: TimedOut
-          value: TimedOut
-          description: The session timed out.
-    SasUriResponse:
-      type: object
-      description: SAS URI operation response.
-      properties:
-        sasUri:
-          type: string
-          description: A URL with a SAS token to upload a blob for execution in the given workspace.
-          readOnly: true
-      required:
-      - sasUri
-    JobUpdateOptions:
-      type: object
-      description: Options for updating a job.
-      properties:
-        id:
-          $ref: '#/components/schemas/WorkspaceItemId'
-          description: Id of the job.
-          readOnly: true
-        priority:
-          $ref: '#/components/schemas/Priority'
-          description: Priority of job.
-          x-ms-mutability:
-          - update
-        name:
-          type: string
-          description: The name of the job.
-          x-ms-mutability:
-          - read
-          - update
-        tags:
-          type: array
-          description: List of user-supplied tags associated with the job.
-          items:
-            type: string
-          x-ms-mutability:
-          - read
-          - update
-          - create
-      required:
-      - id
-    BlobDetails:
-      type: object
-      description: The details (name and container) of the blob to store or download data.
-      properties:
-        containerName:
-          type: string
-          description: The container name.
-          x-ms-mutability:
-          - read
-          - create
-        blobName:
-          type: string
-          description: The blob name.
-          x-ms-mutability:
-          - read
-          - create
-      required:
-      - containerName
-    PagedProviderStatus:
-      type: object
-      description: Paged collection of ProviderStatus items
-      properties:
-        value:
-          type: array
-          description: The ProviderStatus items on this page
-          items:
-            $ref: '#/components/schemas/ProviderStatus'
-        nextLink:
-          type: string
-          format: uri
-          description: The link to the next page of items
-      required:
-      - value
-    ItemType:
-      type: string
-      description: The type of the workspace item.
-      enum:
-      - Job
-      - Session
-      x-ms-enum:
-        name: ItemType
-        modelAsString: true
-        values:
-        - name: Job
-          value: Job
-          description: A program, problem, or application submitted for processing.
-        - name: Session
-          value: Session
-          description: A logical grouping of jobs.
-    Quota:
-      type: object
-      description: Quota information.
-      properties:
-        dimension:
-          type: string
-          description: The name of the dimension associated with the quota.
-          readOnly: true
-        scope:
-          $ref: '#/components/schemas/DimensionScope'
-          description: The scope at which the quota is applied.
-          readOnly: true
-        providerId:
-          type: string
-          description: The unique identifier for the provider.
-          readOnly: true
-        utilization:
+          description: The unit of measure.
+        amountBilled:
           type: number
           format: float
-          description: The amount of the usage that has been applied for the current period.
-          readOnly: true
-        holds:
+          description: The amount billed.
+        amountConsumed:
           type: number
           format: float
-          description: The amount of the usage that has been reserved but not applied for the current period.
-          readOnly: true
-        limit:
+          description: The amount consumed.
+        unitPrice:
           type: number
           format: float
-          description: The maximum amount of usage allowed for the current period.
-          readOnly: true
-        period:
-          $ref: '#/components/schemas/MeterPeriod'
-          description: The time period in which the quota's underlying meter is accumulated. Based on calendar year. 'None' is used for concurrent quotas.
-          readOnly: true
+          description: The unit price.
       required:
-      - dimension
-      - scope
-      - providerId
-      - utilization
-      - holds
-      - limit
-      - period
-    QuantumComputingData:
-      type: object
-      description: Quantum computing data.
-      properties:
-        count:
-          type: integer
-          format: int64
-          description: The number of quantum computing items in the job.
-          readOnly: true
-      required:
-      - count
-    TargetStatus:
-      type: object
-      description: Target status.
-      properties:
-        id:
-          type: string
-          description: Target id.
-          readOnly: true
-        currentAvailability:
-          $ref: '#/components/schemas/TargetAvailability'
-          description: Current target availability.
-          readOnly: true
-        averageQueueTime:
-          type: integer
-          format: int64
-          description: Average queue time in seconds.
-          readOnly: true
-        statusPage:
-          type: string
-          description: A page with detailed status of the provider.
-          readOnly: true
-        numQubits:
-          type: integer
-          format: int32
-          description: The qubit number.
-          minimum: 1
-          maximum: 100000
-          readOnly: true
-        targetProfile:
-          type: string
-          description: Target QIR profile.
-          readOnly: true
-        metadata:
-          type: object
-          description: The metadata of this target.
-          readOnly: true
-      required:
-      - id
-      - currentAvailability
-      - averageQueueTime
-    ProviderStatus:
-      type: object
-      description: Provider status.
-      properties:
-        id:
-          type: string
-          description: Provider id.
-          readOnly: true
-        currentAvailability:
-          $ref: '#/components/schemas/ProviderAvailability'
-          description: Current provider availability.
-          readOnly: true
-        targets:
-          type: array
-          description: Current target statuses.
-          items:
-            $ref: '#/components/schemas/TargetStatus'
-          readOnly: true
-      required:
-      - id
-      - currentAvailability
-      - targets
+      - dimensionId
+      - dimensionName
+      - measureUnit
+      - amountBilled
+      - amountConsumed
+      - unitPrice
     TargetAvailability:
       type: string
       description: Target availability.
@@ -1889,47 +1883,23 @@ components:
         - name: Unavailable
           value: Unavailable
           description: Target is unavailable.
-    Azure.Core.Foundations.InnerError:
-      type: object
-      description: An object containing more specific information about the error. As per Azure REST API guidelines - https://aka.ms/AzureRestApiGuidelines#handling-errors.
-      properties:
-        code:
-          type: string
-          description: One of a server-defined set of error codes.
-        innererror:
-          $ref: '#/components/schemas/Azure.Core.Foundations.InnerError'
-          description: Inner error.
+    SessionJobFailurePolicy:
+      type: string
+      description: Policy controlling the behavior of the Session when a job in the session fails.
+      enum:
+      - Abort
+      - Continue
+      x-ms-enum:
+        name: SessionJobFailurePolicy
+        modelAsString: true
+        values:
+        - name: Abort
+          value: Abort
+          description: New jobs submitted after a job fails will be rejected.
+        - name: Continue
+          value: Continue
+          description: New jobs submitted after a job fails will be accepted.
   parameters:
-    CommonParams.workspaceName:
-      name: workspaceName
-      in: path
-      description: Name of the Azure Quantum workspace.
-      required: true
-      x-ms-parameter-location: client
-      schema:
-        type: string
-        maxLength: 50
-        minLength: 2
-        pattern: ^[a-zA-Z][a-zA-Z0-9\-_]*$
-    CommonParams.subscriptionId:
-      name: subscriptionId
-      in: path
-      description: The Azure subscription ID.
-      required: true
-      x-ms-parameter-location: client
-      schema:
-        type: string
-        maxLength: 36
-        minLength: 36
-        pattern: ^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$
-    CustomOrderByQueryParameter:
-      name: orderby
-      in: query
-      description: The order of returned items.
-      required: false
-      x-ms-parameter-location: method
-      schema:
-        type: string
     CommonParams.resourceGroupName:
       name: resourceGroupName
       in: path
@@ -1941,19 +1911,32 @@ components:
         maxLength: 90
         minLength: 1
         pattern: ^[a-zA-Z][a-zA-Z0-9\-_\.]*$
-    CustomTopQueryParameter:
-      name: top
-      in: query
-      description: The number of jobs taken.
-      required: false
-      x-ms-parameter-location: method
+    CommonParams.subscriptionId:
+      name: subscriptionId
+      in: path
+      description: The Azure subscription ID.
+      required: true
+      x-ms-parameter-location: client
       schema:
-        type: integer
-        format: int32
-    CustomFilterQueryParameter:
-      name: filter
+        type: string
+        maxLength: 36
+        minLength: 36
+        pattern: ^[0-9a-f]{8}-(?:[0-9a-f]{4}-){3}[0-9a-f]{12}$
+    CommonParams.workspaceName:
+      name: workspaceName
+      in: path
+      description: Name of the Azure Quantum workspace.
+      required: true
+      x-ms-parameter-location: client
+      schema:
+        type: string
+        maxLength: 50
+        minLength: 2
+        pattern: ^[a-zA-Z][a-zA-Z0-9\-_]*$
+    CustomOrderByQueryParameter:
+      name: orderby
       in: query
-      description: Filter the result list using the given expression
+      description: The order of returned items.
       required: false
       x-ms-parameter-location: method
       schema:
@@ -1977,6 +1960,23 @@ components:
       schema:
         type: string
         minLength: 1
+    CustomTopQueryParameter:
+      name: top
+      in: query
+      description: The number of jobs taken.
+      required: false
+      x-ms-parameter-location: method
+      schema:
+        type: integer
+        format: int32
+    CustomFilterQueryParameter:
+      name: filter
+      in: query
+      description: Filter the result list using the given expression
+      required: false
+      x-ms-parameter-location: method
+      schema:
+        type: string
   securitySchemes:
     AzureApiKeyAuth:
       type: apiKey
