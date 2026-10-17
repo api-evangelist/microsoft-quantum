@@ -363,6 +363,22 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    KeyType:
+      type: string
+      description: The API key type.
+      enum:
+      - Primary
+      - Secondary
+      x-ms-enum:
+        name: KeyType
+        modelAsString: true
+        values:
+        - name: Primary
+          value: Primary
+          description: The primary API key.
+        - name: Secondary
+          value: Secondary
+          description: The secondary API key.
     ApiKey:
       type: object
       description: Azure quantum workspace Api key details.
@@ -375,51 +391,69 @@ components:
           type: string
           description: The Api key.
           readOnly: true
-    ApiKeys:
-      type: object
-      description: List of api keys to be generated.
-      properties:
-        keys:
-          type: array
-          description: A list of api key names.
-          items:
-            $ref: '#/components/schemas/KeyType'
-    WorkspaceProvisioningStatus:
+    ProviderStatus:
       type: string
-      description: The Workspace provisioning status.
+      description: Provisioning status field
       enum:
       - Succeeded
+      - Launching
+      - Updating
+      - Deleting
+      - Deleted
       - Failed
-      - Canceled
-      - ProviderLaunching
-      - ProviderUpdating
-      - ProviderDeleting
-      - ProviderProvisioning
       x-ms-enum:
-        name: WorkspaceProvisioningStatus
+        name: ProviderStatus
         modelAsString: true
         values:
         - name: Succeeded
           value: Succeeded
-          description: The Workspace provisioning is succeeded.
+          description: The provider is successfully provisioned.
+        - name: Launching
+          value: Launching
+          description: The provider is starting provisioning.
+        - name: Updating
+          value: Updating
+          description: The provider is updating.
+        - name: Deleting
+          value: Deleting
+          description: The provider is deleting.
+        - name: Deleted
+          value: Deleted
+          description: The provider is deleted.
         - name: Failed
           value: Failed
-          description: The Workspace provisioning failed.
-        - name: Canceled
-          value: Canceled
-          description: Resource creation was canceled.
-        - name: ProviderLaunching
-          value: ProviderLaunching
-          description: The Workspace is currently starting to provision a provider.
-        - name: ProviderUpdating
-          value: ProviderUpdating
-          description: The Workspace is currently updating a provider.
-        - name: ProviderDeleting
-          value: ProviderDeleting
-          description: The Workspace is currently deleting a provider.
-        - name: ProviderProvisioning
-          value: ProviderProvisioning
-          description: The Workspace is currently provisioning a provider.
+          description: The provider is failed.
+    WorkspaceKind:
+      type: string
+      description: The workspace type.
+      enum:
+      - V1
+      - V2
+      x-ms-enum:
+        name: WorkspaceKind
+        modelAsString: true
+        values:
+        - name: V1
+          value: V1
+          description: The workspace is a general-purpose workspace.
+        - name: V2
+          value: V2
+          description: The workspace is a V2 workspace.
+    QuantumWorkspaceListResult:
+      type: object
+      description: The response of a QuantumWorkspace list operation.
+      properties:
+        value:
+          type: array
+          description: The QuantumWorkspace items on this page
+          items:
+            $ref: '#/components/schemas/QuantumWorkspace'
+        nextLink:
+          type: string
+          format: uri
+          description: The link to the next page of items
+      required:
+      - value
     UsableStatus:
       type: string
       description: Whether the current workspace is ready to accept Jobs.
@@ -474,82 +508,6 @@ components:
           description: Resource tags.
           additionalProperties:
             type: string
-    ListKeysResult:
-      type: object
-      description: Result of list Api keys and connection strings.
-      properties:
-        apiKeyEnabled:
-          type: boolean
-          description: Indicator of enablement of the Quantum workspace Api keys.
-        primaryKey:
-          $ref: '#/components/schemas/ApiKey'
-          description: The quantum workspace primary api key.
-        secondaryKey:
-          $ref: '#/components/schemas/ApiKey'
-          description: The quantum workspace secondary api key.
-        primaryConnectionString:
-          type: string
-          description: The connection string of the primary api key.
-          readOnly: true
-        secondaryConnectionString:
-          type: string
-          description: The connection string of the secondary api key.
-          readOnly: true
-    StorageAccountResourceId:
-      type: string
-      format: arm-id
-      description: ARM Resource Id of a storage account.
-      x-ms-arm-id-details:
-        allowedResources:
-        - type: Microsoft.Storage/storageAccounts
-    WorkspaceKind:
-      type: string
-      description: The workspace type.
-      enum:
-      - V1
-      - V2
-      x-ms-enum:
-        name: WorkspaceKind
-        modelAsString: true
-        values:
-        - name: V1
-          value: V1
-          description: The workspace is a general-purpose workspace.
-        - name: V2
-          value: V2
-          description: The workspace is a V2 workspace.
-    ProviderStatus:
-      type: string
-      description: Provisioning status field
-      enum:
-      - Succeeded
-      - Launching
-      - Updating
-      - Deleting
-      - Deleted
-      - Failed
-      x-ms-enum:
-        name: ProviderStatus
-        modelAsString: true
-        values:
-        - name: Succeeded
-          value: Succeeded
-          description: The provider is successfully provisioned.
-        - name: Launching
-          value: Launching
-          description: The provider is starting provisioning.
-        - name: Updating
-          value: Updating
-          description: The provider is updating.
-        - name: Deleting
-          value: Deleting
-          description: The provider is deleting.
-        - name: Deleted
-          value: Deleted
-          description: The provider is deleted.
-        - name: Failed
-          value: Failed
-          description: The provider is failed.
     WorkspaceResourceProperties:
       type: object
       description: Properties of a Workspace
@@ -590,49 +548,51 @@ components:
           $ref: '#/components/schemas/StorageAccountResourceId'
           description: ARM Resource Id of the managed storage account associated with this workspace.
           readOnly: true
-    QuantumWorkspace:
-      type: object
-      description: The resource proxy definition object for Quantum Workspace.
-      properties:
-        properties:
-          $ref: '#/components/schemas/WorkspaceResourceProperties'
-          description: Gets or sets the properties. Define quantum workspace's specific properties.
-        identity:
-          $ref: ../../../../../common-types/resource-management/v5/managedidentity.json#/definitions/ManagedServiceIdentity
-          description: The managed service identities assigned to this resource.
-      allOf:
-      - $ref: ../../../../../common-types/resource-management/v5/types.json#/definitions/TrackedResource
-    QuantumWorkspaceListResult:
-      type: object
-      description: The response of a QuantumWorkspace list operation.
-      properties:
-        value:
-          type: array
-          description: The QuantumWorkspace items on this page
-          items:
-            $ref: '#/components/schemas/QuantumWorkspace'
-        nextLink:
-          type: string
-          format: uri
-          description: The link to the next page of items
-      required:
-      - value
-    KeyType:
+    WorkspaceProvisioningStatus:
       type: string
-      description: The API key type.
+      description: The Workspace provisioning status.
       enum:
-      - Primary
-      - Secondary
+      - Succeeded
+      - Failed
+      - Canceled
+      - ProviderLaunching
+      - ProviderUpdating
+      - ProviderDeleting
+      - ProviderProvisioning
       x-ms-enum:
-        name: KeyType
+        name: WorkspaceProvisioningStatus
         modelAsString: true
         values:
-        - name: Primary
-          value: Primary
-          description: The primary API key.
-        - name: Secondary
-          value: Secondary
-          description: The secondary API key.
+        - name: Succeeded
+          value: Succeeded
+          description: The Workspace provisioning is succeeded.
+        - name: Failed
+          value: Failed
+          description: The Workspace provisioning failed.
+        - name: Canceled
+          value: Canceled
+          description: Resource creation was canceled.
+        - name: ProviderLaunching
+          value: ProviderLaunching
+          description: The Workspace is currently starting to provision a provider.
+        - name: ProviderUpdating
+          value: ProviderUpdating
+          description: The Workspace is currently updating a provider.
+        - name: ProviderDeleting
+          value: ProviderDeleting
+          description: The Workspace is currently deleting a provider.
+        - name: ProviderProvisioning
+          value: ProviderProvisioning
+          description: The Workspace is currently provisioning a provider.
+    ApiKeys:
+      type: object
+      description: List of api keys to be generated.
+      properties:
+        keys:
+          type: array
+          description: A list of api key names.
+          items:
+            $ref: '#/components/schemas/KeyType'
     QuotaAllocations:
       type: object
       description: Quota allocations with each field representing different quota type.
@@ -649,6 +609,46 @@ components:
           minimum: 0
       required:
       - standardMinutesLifetime
+    QuantumWorkspace:
+      type: object
+      description: The resource proxy definition object for Quantum Workspace.
+      properties:
+        properties:
+          $ref: '#/components/schemas/WorkspaceResourceProperties'
+          description: Gets or sets the properties. Define quantum workspace's specific properties.
+        identity:
+          $ref: ../../../../../common-types/resource-management/v5/managedidentity.json#/definitions/ManagedServiceIdentity
+          description: The managed service identities assigned to this resource.
+      allOf:
+      - $ref: ../../../../../common-types/resource-management/v5/types.json#/definitions/TrackedResource
+    ListKeysResult:
+      type: object
+      description: Result of list Api keys and connection strings.
+      properties:
+        apiKeyEnabled:
+          type: boolean
+          description: Indicator of enablement of the Quantum workspace Api keys.
+        primaryKey:
+          $ref: '#/components/schemas/ApiKey'
+          description: The quantum workspace primary api key.
+        secondaryKey:
+          $ref: '#/components/schemas/ApiKey'
+          description: The quantum workspace secondary api key.
+        primaryConnectionString:
+          type: string
+          description: The connection string of the primary api key.
+          readOnly: true
+        secondaryConnectionString:
+          type: string
+          description: The connection string of the secondary api key.
+          readOnly: true
+    StorageAccountResourceId:
+      type: string
+      format: arm-id
+      description: ARM Resource Id of a storage account.
+      x-ms-arm-id-details:
+        allowedResources:
+        - type: Microsoft.Storage/storageAccounts
   securitySchemes:
     azure_auth:
       type: oauth2

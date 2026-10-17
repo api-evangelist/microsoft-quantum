@@ -44,34 +44,15 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    QuantumSuiteOfferProperties:
+    QuantumSuiteOffer:
       type: object
-      description: Properties of a Quantum Suite Offer
+      description: A Quantum Suite Offer that is available to a subscription.
       properties:
-        providerId:
-          type: string
-          description: The provider ID of the offer.
-        providerName:
-          type: string
-          description: The provider name of the offer.
-        companyName:
-          type: string
-          description: The name of the company that is providing this offer.
-        location:
-          type: string
-          description: The location where this offer is available.
-        description:
-          type: string
-          description: Description of the offer.
-        quotas:
-          $ref: '#/components/schemas/QuotaAllocations'
-          description: Quota allocations associated with this offer.
-      required:
-      - providerId
-      - providerName
-      - companyName
-      - location
-      - description
+        properties:
+          $ref: '#/components/schemas/QuantumSuiteOfferProperties'
+          description: The resource-specific properties for this resource.
+      allOf:
+      - $ref: ../../../../../common-types/resource-management/v5/types.json#/definitions/ProxyResource
     QuantumSuiteOfferListResult:
       type: object
       description: The response of a QuantumSuiteOffer list operation.
@@ -103,15 +84,34 @@ components:
           minimum: 0
       required:
       - standardMinutesLifetime
-    QuantumSuiteOffer:
+    QuantumSuiteOfferProperties:
       type: object
-      description: A Quantum Suite Offer that is available to a subscription.
+      description: Properties of a Quantum Suite Offer
       properties:
-        properties:
-          $ref: '#/components/schemas/QuantumSuiteOfferProperties'
-          description: The resource-specific properties for this resource.
-      allOf:
-      - $ref: ../../../../../common-types/resource-management/v5/types.json#/definitions/ProxyResource
+        providerId:
+          type: string
+          description: The provider ID of the offer.
+        providerName:
+          type: string
+          description: The provider name of the offer.
+        companyName:
+          type: string
+          description: The name of the company that is providing this offer.
+        location:
+          type: string
+          description: The location where this offer is available.
+        description:
+          type: string
+          description: Description of the offer.
+        quotas:
+          $ref: '#/components/schemas/QuotaAllocations'
+          description: Quota allocations associated with this offer.
+      required:
+      - providerId
+      - providerName
+      - companyName
+      - location
+      - description
   securitySchemes:
     azure_auth:
       type: oauth2
