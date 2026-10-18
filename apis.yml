@@ -213,6 +213,20 @@ name: Microsoft Azure Quantum
 tags:
   - Quantum
   - Quantum Computing
+  - Microsoft Azure
+  - Microsoft
+  - Q#
+  - QDK
+  - Resource Estimation
+  - IonQ
+  - Quantinuum
+  - Pasqal
+  - Rigetti
+  - Hybrid Quantum
+  - Fault Tolerance
+tags_raw:
+  - Quantum
+  - Quantum Computing
   - Azure
   - Microsoft
   - Q#
