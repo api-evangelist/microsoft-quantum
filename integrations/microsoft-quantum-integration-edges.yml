@@ -1,0 +1,137 @@
+edges:
+- partner_name: IonQ
+  partner: ionq
+  partner_match: domain
+  type: marketplace
+  marketplace: own
+  channel: distribution
+  relationship: distribution-channel
+  direction: partner-built
+  evidence: https://learn.microsoft.com/en-us/azure/quantum/provider-ionq
+  partner_domain: ionq.com
+  category: quantum hardware provider on the cloud
+  devices:
+  - IonQ Quantum simulator
+  - IonQ Aria 1
+  - IonQ Forte 1
+  - IonQ Forte Enterprise 1
+  contract_reference:
+    register: Azure Quantum providers (learn.microsoft.com azure/quantum qc-target-list + provider pages)
+    spec_file: null
+    role: microsoft-quantum-hardware-provider
+    registered_name: IonQ
+    matched_domain: ionq.com
+    matched_by: domain
+    domain_source: azure provider page own-site link
+    signal_note: a hardware provider resold through a quantum cloud is DISTRIBUTION (cloud-marketplace rule), kept
+      out of position shares; devices are context, never counted
+    detected_by: sweep-quantum-computing.py
+    detected: '2026-10-20'
+  detected_by: sweep-quantum-computing.py
+  detected: '2026-10-20'
+- partner_name: Pasqal
+  partner: pasqal
+  partner_match: domain
+  type: marketplace
+  marketplace: own
+  channel: distribution
+  relationship: distribution-channel
+  direction: partner-built
+  evidence: https://learn.microsoft.com/en-us/azure/quantum/provider-pasqal
+  partner_domain: pasqal.com
+  category: quantum hardware provider on the cloud
+  devices:
+  - Pasqal EMU_SV
+  - Pasqal EMU_MPS
+  - Pasqal EMU_FREE
+  - Pasqal FRESNEL
+  - Pasqal FRESNEL_CAN1
+  contract_reference:
+    register: Azure Quantum providers (learn.microsoft.com azure/quantum qc-target-list + provider pages)
+    spec_file: null
+    role: microsoft-quantum-hardware-provider
+    registered_name: Pasqal
+    matched_domain: pasqal.com
+    matched_by: domain
+    domain_source: azure provider page own-site link
+    signal_note: a hardware provider resold through a quantum cloud is DISTRIBUTION (cloud-marketplace rule), kept
+      out of position shares; devices are context, never counted
+    detected_by: sweep-quantum-computing.py
+    detected: '2026-10-20'
+  detected_by: sweep-quantum-computing.py
+  detected: '2026-10-20'
+- partner_name: Quantinuum
+  partner: quantinuum
+  partner_match: domain
+  type: marketplace
+  marketplace: own
+  channel: distribution
+  relationship: distribution-channel
+  direction: partner-built
+  evidence: https://learn.microsoft.com/en-us/azure/quantum/provider-quantinuum
+  partner_domain: quantinuum.com
+  category: quantum hardware provider on the cloud
+  devices:
+  - Quantinuum H2-1 Syntax Checker
+  - Quantinuum H2-2 Syntax Checker
+  - Quantinuum H2-1 Emulator
+  - Quantinuum H2-2 Emulator
+  - Quantinuum H2-1
+  - Quantinuum H2-2
+  contract_reference:
+    register: Azure Quantum providers (learn.microsoft.com azure/quantum qc-target-list + provider pages)
+    spec_file: null
+    role: microsoft-quantum-hardware-provider
+    registered_name: Quantinuum
+    matched_domain: quantinuum.com
+    matched_by: domain
+    domain_source: azure provider page own-site link
+    signal_note: a hardware provider resold through a quantum cloud is DISTRIBUTION (cloud-marketplace rule), kept
+      out of position shares; devices are context, never counted
+    detected_by: sweep-quantum-computing.py
+    detected: '2026-10-20'
+  detected_by: sweep-quantum-computing.py
+  detected: '2026-10-20'
+- partner_name: Rigetti
+  partner: rigetti
+  partner_match: domain+name-among-holders
+  type: marketplace
+  marketplace: own
+  channel: distribution
+  relationship: distribution-channel
+  direction: partner-built
+  evidence: https://learn.microsoft.com/en-us/azure/quantum/provider-rigetti
+  partner_domain: rigetti.com
+  category: quantum hardware provider on the cloud
+  devices:
+  - Rigetti Quantum Virtual Machine (QVM)
+  - Rigetti Cepheus-1-108Q
+  contract_reference:
+    register: Azure Quantum providers (learn.microsoft.com azure/quantum qc-target-list + provider pages)
+    spec_file: null
+    role: microsoft-quantum-hardware-provider
+    registered_name: Rigetti
+    matched_domain: rigetti.com
+    matched_by: domain+name-among-holders
+    domain_source: azure provider page own-site link
+    signal_note: a hardware provider resold through a quantum cloud is DISTRIBUTION (cloud-marketplace rule), kept
+      out of position shares; devices are context, never counted
+    detected_by: sweep-quantum-computing.py
+    detected: '2026-10-20'
+  detected_by: sweep-quantum-computing.py
+  detected: '2026-10-20'
+marketplace_apps:
+- marketplace: own
+  channel: partner-built
+  app: microsoft-quantum
+  url: https://learn.microsoft.com/en-us/azure/quantum/qc-target-list
+  app_count: 4
+  adapter: sweep-quantum-computing.py:microsoft-quantum
+  listed: 4
+  note: only domain-linked providers are written; the platform's own devices / functions are counted, not written
+generated: '2026-10-20'
+method: searched
+source:
+- https://learn.microsoft.com/en-us/azure/quantum/qc-target-list
+checked:
+- https://learn.microsoft.com/en-us/azure/quantum/qc-target-list
